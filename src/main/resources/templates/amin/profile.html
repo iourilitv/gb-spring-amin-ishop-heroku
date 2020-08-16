@@ -1,0 +1,83 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Profile</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
+
+    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+    <superheader th:replace="/amin/fragments/header.html :: header(
+        activePage=${activePage}, categories=${categories}, filterDef='',
+        cartItemsQuantity=${cartItemsQuantity})"></superheader>
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!-- Items list Section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- Блок Хлебные крошки and Product title Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/home'}"> Home</a>
+                                <span> Profile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки and Product title  End -->
+
+            <!-- Profile items list Begin -->
+            <div class="col-lg-12 p-0">
+                <h4><a th:href="@{/profile/form/show}">Profile form</a></h4>
+                <h4><a th:href="@{/profile/form/change/password/showForm}">Change Password</a></h4>
+                <h4><a th:href="@{/profile/cart}">Shopping Cart</a></h4>
+                <h4><a th:href="@{/profile/order/all}">Orders List</a></h4>
+            </div>
+            <!-- Profile items list End -->
+        </div>
+    </section>
+    <!-- Items list Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

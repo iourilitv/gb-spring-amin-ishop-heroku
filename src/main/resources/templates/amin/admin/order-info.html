@@ -1,0 +1,191 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Admin Order Details</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
+<!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
+
+    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!-- Order Details Section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- Блок Хлебные крошки Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
+                                <a class="color-white" th:href="@{'/admin/order/all'}"> Orders</a>
+                                <span> Order Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки End -->
+
+            <!-- Table of Order Details Begin -->
+            <div class="col-lg-12 p-0">
+                <div th:if="${order.getId() != null}">
+                    <h5 class="color-white">Order Id</h5>
+                    <table class="table color-white">
+                        <tbody><tr><td th:text="${order.getId()}"></td></tr></tbody>
+                    </table>
+                </div>
+
+                <div th:if="${order.orderStatus != null}">
+                    <h5 class="color-white">Order Status</h5>
+                    <table class="table color-white">
+                        <thead><tr>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>description</th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td th:text="${order.orderStatus.id}"></td>
+                            <td th:text="${order.orderStatus.title}"></td>
+                            <td th:text="${order.orderStatus.description}"></td>
+                        </tr></tbody>
+                    </table>
+                </div>
+
+                <h5 class="color-white">User</h5>
+                <table class="table color-white">
+                    <thead><tr>
+                        <th>id</th>
+                        <th>first name</th>
+                        <th>last name</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td th:text="${order.user.id}"></td>
+                        <td th:text="${order.user.firstName}"></td>
+                        <td th:text="${order.user.lastName}"></td>
+                    </tr></tbody>
+                </table>
+
+                <!-- Table of order items Begin -->
+                <h5 class="color-white">Order Items List</h5>
+                <table class="table color-white">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>product id</th>
+                        <th>product title</th>
+                        <th>order item price</th>
+                        <th>quantity</th>
+                        <th>order items costs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="orderItem, itrStat : ${order.orderItems}">
+                        <td th:text="${itrStat.index + 1}"></td>
+
+                        <td th:text="${orderItem.product.id}"></td>
+
+                        <td style="width: 70%">
+                            <a th:href="@{/catalog/{prod_id}/details(prod_id = ${orderItem.product.id})}"
+                               target="_blank" th:text="${orderItem.product.title}"></a>
+                        </td>
+
+                        <td th:text="${orderItem.itemPrice}"></td>
+
+                        <td th:text="${orderItem.quantity}"></td>
+
+                        <td th:text="${orderItem.itemCosts}"></td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="5">Total Cost of Order Items:</th>
+                        <td th:text="${order.totalItemsCosts}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- Table of order items Begin -->
+
+                <h5 class="color-white">Delivery Details</h5>
+                <table class="table color-white">
+                    <thead><tr>
+                        <th>id</th>
+                        <th>phone number</th>
+                        <th>delivery address</th>
+                        <th>delivery cost</th>
+                        <th>delivery expected time</th>
+                        <th>delivered time</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr th:if="${delivery} != null">
+                            <td th:text="${delivery.id}"></td>
+                            <td th:text="${delivery.phoneNumber}"></td>
+                            <td th:text="${delivery.deliveryAddress}"></td>
+                            <td th:text="${delivery.deliveryCost}"></td>
+                            <td th:text="${delivery.deliveryExpectedAt}"></td>
+                            <td th:text="${delivery.deliveredAt}"></td>
+                        </tr>
+                        <tr th:if="${delivery} == null" ><th colspan="6">No data</th></tr>
+                    </tbody>
+                </table>
+
+                <h5 class="color-white">Total Order Cost</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${order.getTotalCosts()}"></td></tr></tbody>
+                </table>
+
+                <div>
+                    <!-- button "Close" -->
+                    <a th:if="${order.orderStatus} != null" class="catalog__product-card__price btn-subscribe"
+                       th:href="@{'/admin/order/all'}">Close</a>
+                </div>
+            </div>
+            <!-- Table of Order Details End -->
+        </div>
+    </section>
+    <!-- Order Details Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

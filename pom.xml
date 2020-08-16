@@ -3,10 +3,235 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <groupId>gb-lys</groupId>
     <artifactId>gb-spring-ishop-heroku</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>gb-spring-ishop-heroku</name>
+    <description>A copy of my study project from the gb Spring 2 course to support a new team's project of gb team developing course.</description>
 
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- 07 !!! у него выключен !!! -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- 01 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- 02 -->
+        <!-- включить на этапе безопасности -->
+        <!-- ограничение доступа в классах контроллеров -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- 03 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- 08 -->
+        <!-- пришлось добавить вручную -->
+        <!-- включить на этапе безопасности -->
+        <!-- ограничение доступа в .html -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+
+        <!-- 04 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 10 -->
+        <!-- версификация схемы БД -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <!-- 06 -->
+        <!-- обновление web-страницы без перезагрузки при изменения .html -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!--            <scope>runtime</scope>-->
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 09 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- 17 добавил номер не по порядку добавления зависимости -->
+        <!-- web-server запускает web-приложение -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 13 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- 14 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 12 -->
+        <!-- Автоматически подставляет геттеры, сеттеры и конструктор -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <!--            <version>1.18.12</version>--> <!-- Не нужно при spring-boot-starter-actuator -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 05 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- 11 -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.paypal.sdk</groupId>-->
+        <!--            <artifactId>rest-api-sdk</artifactId>-->
+        <!--            <version>LATEST</version>-->
+        <!--        </dependency>-->
+
+        <!-- 15 -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 16 -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <!--            <version>2.2.0</version>-->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 18 -->
+        <!-- Spring Websocket - для двусторонней связи между клиентом и сервером -->
+        <!-- 18.1 -->
+        <!-- Подключение стартера Spring Websocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- *** поддержка WebSocket на стороне сервера *** -->
+        <!-- 18.2 -->
+        <!-- что-то для JS??? -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <!--            <version>RELEASE</version>-->
+            <version>0.40</version>
+        </dependency>
+        <!-- 18.3 -->
+        <!-- для клиента(что?) -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <!--            <version>RELEASE</version>-->
+            <version>1.1.2</version>
+        </dependency>
+        <!-- 18.4 -->
+        <!-- Подключение библиотеки для JS - STOMP — протокол простого обмена сообщениями -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+        <!-- 18.5 -->
+        <!-- для подключения скрипта JS бутстрапа -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7</version>
+        </dependency>
+        <!-- 18.6 -->
+        <!-- что-то для скрипта JS на клиенте -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <!--            <version>RELEASE</version>-->
+            <version>3.5.1</version>
+        </dependency>
+
+        <!-- 19.RabbitMQ для взаимодействия с другими сервисами -->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.7.0</version>
+        </dependency>
+
+        <!-- 20. Added automatically for import org.springframework.mock.web.MockMultipartFile -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>6.0.1</version>
+                <configuration>
+                    <configFiles>src/main/resources/flyway.conf</configFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

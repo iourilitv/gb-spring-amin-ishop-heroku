@@ -1,0 +1,179 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Admin Product Form</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="error" type="org.springframework.validation.ObjectError"*/-->
+<!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
+<!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+<!-- Page Preloder, Humberger Menu, Header Section End -->
+
+<!-- Admin Product Form Section Begin -->
+<section class="cart-list-section spad">
+    <div class="container">
+        <!-- Блок Хлебные крошки Begin -->
+        <div class="row">
+            <div class="col-lg-12 p-0">
+                <div class="details-text typography-page">
+                    <div class="dt-breadcrumb">
+                        <div class="dt-bread-option">
+                            <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
+                            <a class="color-white" th:href="@{'/admin/product/all'}">Products</a>
+                            <span>Admin Product Form</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Блок Хлебные крошки End -->
+
+        <!-- Product Form Block Begin -->
+        <div class="row">
+            <div class="col-lg-12 p-0" style="margin-bottom: 20px">
+                <h3 th:text="${product.title == null} ? 'Create New Product' : 'Update Product'"
+                class="color-white"></h3>
+            </div>
+
+            <div class="col-lg-12 p-0">
+                <form th:action="@{'/admin/product/process/edit'}" method="POST" th:object="${product}"
+                      enctype="multipart/form-data" class="col-lg-6 p-0">
+                    <!-- Error messages block -->
+                    <div th:if="${productErrors != null}" class="col-lg-12" style="margin-bottom: 15px">
+                        <h6 style="color: darkred;"
+                                th:each="error : ${productErrors}"
+                              th:text="${error.getObjectName() + '. ' + error.getDefaultMessage()}"></h6>
+                    </div>
+
+                    <!-- Id uneditable field Begin -->
+                    <label th:if="${product.id != null}" class="filter-field-label col-lg-12">
+                        <span>Id: </span>
+                        <input type="number" th:field="*{id}" th:hidden="true" th:text="*{id}">
+                    </label>
+
+                    <!-- Category field -->
+                    <label class="filter-field-label col-lg-12">
+                        <span>Category</span>
+                        <select name="category"
+                                class="select-btn-dropdown-toggle">
+                            <option th:if="${product.category == null}" class="dropdown-option"
+                                    th:text="'Все категории'"
+                                    th:selected="${product.category == null}" th:value="null"></option>
+
+                            <option th:if="${product.category == null}" class="dropdown-option"
+                                    th:each="category : ${categories}"
+                                    th:text="${category.title}"
+                                    th:value="${category.id}"></option>
+                            <option th:if="${product.category != null}" class="dropdown-option"
+                                    th:each="category : ${categories}"
+                                    th:text="${category.title}"
+                                    th:selected="${#strings.equals(product.category.id, category.id)}" th:value="${category.id}"></option>
+                        </select>
+                    </label>
+
+                    <!-- Vendor Code field -->
+                    <label class="filter-field-label col-lg-12">
+                        <span>Vendor Code</span>
+                        <input th:field="*{vendorCode}" type="text" placeholder="vendorCode" class="col-lg-12">
+                    </label>
+
+                    <!-- Image field -->
+                    <div class="filter-field-label col-lg-12" style="margin-bottom: 15px;">
+                        <span>Image</span>
+                        <div th:if="${imageFile != null}" class="col-lg-12 p-0" style="display: flex;">
+                            <label class="col-lg-4 color-white">Current image file: </label>
+                            <label class="col-lg-8" th:text="${imageFile.getName()}" style="color:#117a8b"></label>
+                        </div>
+
+                        <h6 th:if="${imageFile != null}" style="color:coral">Choose new file to replace product image</h6>
+                        <input accept="images/*" name="file" type="file" class="col-lg-12">
+                    </div>
+
+                    <!-- Title field -->
+                    <label class="filter-field-label col-lg-12">
+                        <span>Title</span>
+                        <input th:field="*{title}" type="text" placeholder="Title" class="col-lg-12">
+                    </label>
+
+                    <!-- Price field -->
+                    <label class="filter-field-label col-lg-12">
+                        <span>Price</span>
+                        <input th:field="*{price}" type="number" placeholder="Price" class="col-lg-12">
+                    </label>
+
+                    <!-- Short Description field -->
+                    <label class="filter-field-label col-lg-12">
+                        <span>Short Description</span>
+                        <input th:field="*{shortDescription}" type="text" th:rows="3" placeholder="Short Description" class="col-lg-12">
+                    </label>
+
+                    <!-- Full Description field -->
+                    <label class="filter-field-label col-lg-12">
+                        <span>Full Description</span>
+                        <input th:field="*{fullDescription}" type="text" th:rows="5" placeholder="Full Description" class="col-lg-12">
+                    </label>
+
+                    <!-- CreateAt uneditable field Begin -->
+                    <label th:if="${product.createAt != null}" class="filter-field-label col-lg-12">
+                        <span>CreateAt: </span>
+                        <input type="text" th:field="*{createAt}" th:hidden="true" th:text="*{createAt}">
+                    </label>
+
+                    <!-- Buttons -->
+                    <div class="user_form__buttons__div" style="margin-top: 15px;">
+                        <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+
+                        <a class="catalog__product-card__price btn-reset" th:href="@{'/admin/product/all'}">
+                            <span>Close form</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Product Form Block End -->
+    </div>
+</section>
+<!-- Admin Product Form Section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/amin/bootstrap.min.js}"></script>
+<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/amin/circle-progress.min.js}"></script>
+<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+<script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Admin Users</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+
+<body>
+<!--/*@thymesVar id="id" type="ru.geekbrains.spring.ishop.entity.User"*/-->
+<!--/*@thymesVar id="role" type="ru.geekbrains.spring.ishop.entity.Role"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+<!-- Page Preloder, Humberger Menu, Header Section End -->
+
+
+<!-- Items list Section Begin -->
+<section class="cart-list-section spad">
+    <div class="container">
+        <!-- *** Блок Хлебные крошки and Filters Begin *** -->
+        <div class="row">
+            <!-- Блок Хлебные крошки Begin -->
+            <div class="col-lg-10 p-0">
+                <div class="details-text typography-page">
+                    <div class="dt-breadcrumb">
+                        <div class="dt-bread-option">
+                            <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
+                            <span>Users List</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок фильтра Begin -->
+            <div class="nav-options"
+                 style="background: transparent; line-height: 1; margin-left: 20px; padding: 0">
+                <div class="nav-menu">
+                    <ul>
+                        <!-- Filters item dropdown in top menu -->
+                        <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                            <a style="padding: 12px 10px 12px 20px" th:href="@{'/admin/user/all'}">
+                                <span>Filters <i class="fa fa-angle-down"></i></span></a>
+                            <div class="megamenu-wrapper col-lg-12" style="top:130px;padding: 10px 0;">
+                                <div class="col-lg-12 col-md-7 p-0">
+                                    <div class="sidebar-option">
+                                        <div class="subscribe-option">
+                                            <form th:action="@{/admin/user/all}" method="GET">
+                                                <div class="row justify-content-center">
+                                                    <!-- Roles field of filter form -->
+                                                    <label class="filter-field-label">
+                                                        <span>Role</span>
+                                                        <select name="role"
+                                                                class="select-btn-dropdown-toggle">
+                                                            <option class="dropdown-option"
+                                                                    th:text="'All roles'"
+                                                                    th:selected="${param.role == null}" th:value="null"></option>
+
+                                                            <option class="dropdown-option"
+                                                                    th:each="role : ${roles}"
+                                                                    th:text="${role.name}"
+                                                                    th:selected="${#strings.equals(param.role, role.id)}" th:value="${role.id}"></option>
+                                                        </select>
+                                                    </label>
+                                                    <!-- Items on page limit field of filter form -->
+                                                    <label class="filter-field-label col-lg-4">
+                                                        <span>Elements on page</span>
+                                                        <input name="limit" placeholder="Товаров на странице"
+                                                               th:value="${param.limit}" type="number">
+                                                    </label>
+                                                    <!-- выпадающий список направления сортировки -->
+                                                    <label class="filter-field-label col-lg-4">
+                                                        <span>Sort direction</span>
+                                                        <select name="direction" class="select-btn-dropdown-toggle">
+                                                            <option class="dropdown-option" th:text="'С меньшим id вверху'"
+                                                                    th:selected="${#strings.equals(param.direction, 'ASC')}"
+                                                                    th:value="ASC"></option>
+                                                            <option class="dropdown-option" th:text="'С большим id вверху'"
+                                                                    th:selected="${#strings.equals(param.direction, 'DESC')}"
+                                                                    th:value="DESC"></option>
+                                                        </select>
+                                                    </label>
+                                                </div>
+
+                                                <div class="row justify-content-center">
+                                                    <button class="btn-subscribe col-lg-2" type="submit"
+                                                            style="padding: 12px 10px 12px 20px">
+                                                        <span>Submit</span>
+                                                    </button>
+
+                                                    <div class="col-lg-2">
+                                                        <a class="btn-reset" style="padding: 12px 10px 12px 20px"
+                                                           th:href="@{'/admin/user/all'}">
+                                                            <span>Clear</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- *** Блок Хлебные крошки and Filters End *** -->
+
+        <!-- Table of Items list Begin -->
+        <div class="col-lg-12 p-0">
+            <h4 th:if="${page.isEmpty()}"
+                class="color-white">The users list is empty!</h4>
+
+            <table th:if="${page.hasContent()}"
+                   class="table color-white" style="min-height: 350px">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>userName</th>
+                    <th>firstName</th>
+                    <th>lastName</th>
+                    <th>phoneNumber</th>
+                    <th>email</th>
+                    <th>deliveryAddress</th>
+                    <th>roles</th>
+                    <th>operations</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- отображаем строку только пользователю с ролью ADMIN -->
+                <tr sec:authorize="hasRole('ADMIN')"
+                    th:each="user : ${page}">
+
+                    <td th:text="${user.id}"></td>
+
+                    <td th:text="${user.userName}"></td>
+
+                    <td th:text="${user.firstName}"></td>
+
+                    <td th:text="${user.lastName}"></td>
+
+                    <td th:text="${user.phoneNumber}"></td>
+
+                    <td th:text="${user.email}"></td>
+
+                    <td th:text="${user.deliveryAddress}"></td>
+
+                    <td>
+                        <div th:if="${user.roles != null}"  th:each="role : ${user.roles}"
+                              th:text="${role.getName()}"></div>
+                    </td>
+
+                    <td>
+                        <ul th:if="${!user.userName.equals('superadmin')}" class="dropdown">
+                            <li>
+                                <a th:href="@{'/admin/user/edit/' + ${user.id} + '/user_id'}">Edit</a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{'/admin/user/delete/' + ${user.id} + '/user_id'}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Table of Items list End -->
+
+        <!-- pagination line -->
+        <div class="row justify-content-center">
+            <div th:if="${page.hasContent()}">
+                <a th:class="pagination-item-a" th:href="@{'/admin/user/all?page='
+                                   + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                    <span th:class="pagination-item-a-span">Previous</span></a>
+
+                <a th:class="${page.getNumber() + 1 == i ?
+                                    'pagination-item-a pagination-item-active' :
+                                    'pagination-item-a'}"
+                   th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                   th:href="@{'/admin/user/all?page='+ ${i} + ${filterDef}}">
+                    <span th:class="pagination-item-a-span" th:text="${i}"></span>
+                </a>
+
+                <a th:class="pagination-item-a" th:href="@{'/admin/user/all?page='
+                                   + ${page.nextOrLastPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                    <span th:class="pagination-item-a-span">Next</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Items list Section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/amin/bootstrap.min.js}"></script>
+<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/amin/circle-progress.min.js}"></script>
+<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+<script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

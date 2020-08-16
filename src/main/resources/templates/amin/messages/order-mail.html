@@ -1,0 +1,14 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order mail</title>
+</head>
+<body>
+    <h3 th:text="${'Dear ' + order.user.firstName + '.'}"></h3>
+    <h5 th:text="${notice}"></h5>
+    <h5 th:text="${'Status description: ' + order.orderStatus.description + '.'}"></h5>
+    <h4>Order details.</h4>
+    <p th:text="${order}"></p>
+</body>
+</html>

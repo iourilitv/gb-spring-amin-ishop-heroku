@@ -1,0 +1,183 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | User Profile Form</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+<!-- Page Preloder, Humberger Menu, Header Section End -->
+
+<!-- Admin page section Begin -->
+<section class="cart-list-section spad">
+    <div class="container">
+        <!-- *** Блок Хлебные крошки Begin *** -->
+        <div class="row">
+            <!-- Блок Хлебные крошки Begin -->
+            <div class="col-lg-10 p-0">
+                <div class="details-text typography-page">
+                    <div class="dt-breadcrumb">
+                        <div class="dt-bread-option">
+                            <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
+                            <a class="color-white" th:href="@{'/admin/user/all'}">Users</a>
+                            <span>User Profile Form</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки End -->
+        </div>
+        <!-- *** Блок Хлебные крошки End *** -->
+
+        <!-- Admin menu items list Begin -->
+        <div class="row">
+            <!-- Menu items list Begin -->
+            <div class="col-lg-12 p-0"
+                 style="margin-top: 20px; margin-bottom: 20px; min-height: 330px;">
+                <h2 class="color-white">User Profile Form</h2>
+                <!-- Id uneditable field Begin -->
+                <div class="col-lg-12 p-0" style="margin-top: 50px;">
+                    <h5 class="color-white">User Id</h5>
+                    <table class="table color-white">
+                        <tbody><tr><td th:text="${user.id}"></td></tr></tbody>
+                    </table>
+                </div>
+
+                <!-- userName uneditable field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">User Name</h5>
+                    <table class="table color-white">
+                        <tbody><tr><td th:text="${user.userName}"></td></tr></tbody>
+                    </table>
+                </div>
+
+                <!-- Reset Password Link -->
+                <h4 style="margin-bottom: 30px">
+                    <a th:href="@{'/admin/user/reset/password/' + ${user.id} + '/user_id'}">Reset Password</a>
+                </h4>
+
+                <!-- Table of current User's Roles Begin -->
+                <div class="col-lg-12 p-0" style="margin-bottom: 50px;">
+                    <h5 class="color-white">Current User's Roles</h5>
+                    <h4 th:if="${user.roles.isEmpty()}" class="color-white" style="margin-bottom: 30px"
+                        >No Roles User Has</h4>
+                    <table th:if="${!user.roles.isEmpty()}" class="table color-white">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>description</th>
+                            <th>operations</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- отображаем строку только пользователю с ролью ADMIN -->
+                        <tr sec:authorize="hasRole('ADMIN')"
+                            th:each="role : ${user.roles}">
+
+                            <td th:text="${role.id}"></td>
+
+                            <td th:text="${role.name}"></td>
+
+                            <td th:text="${role.description}"></td>
+
+                            <td>
+                                <ul th:if="${!user.userName.equals('superadmin')}" class="dropdown">
+                                    <li>
+                                        <a th:href="@{'/admin/user/' + ${user.id} + '/user_id/remove/' + ${role.id} + '/role_id'}">Reset</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Table of current User's Roles End -->
+
+                <!-- Table of Remaining Available Roles Begin -->
+                <div class="col-lg-12 p-0" style="margin-bottom: 30px">
+                    <h5 class="color-white">Remaining Available Roles</h5>
+                    <h4 th:if="${roles.isEmpty()}" class="color-white">No Remaining Available Roles</h4>
+                    <table th:if="${!roles.isEmpty()}" class="table color-white">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>description</th>
+                            <th>operations</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- отображаем строку только пользователю с ролью ADMIN -->
+                        <tr sec:authorize="hasRole('ADMIN')"
+                            th:each="role : ${roles}">
+
+                            <td th:text="${role.id}"></td>
+
+                            <td th:text="${role.name}"></td>
+
+                            <td th:text="${role.description}"></td>
+
+                            <td>
+                                <ul th:if="${!user.userName.equals('superadmin')}" class="dropdown">
+                                    <li>
+                                        <a th:href="@{'/admin/user/' + ${user.id} + '/user_id/add/' + ${role.id} + '/role_id'}">Set</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Table of Remaining Available Roles End -->
+
+            </div>
+            <!-- Menu items list End -->
+        </div>
+        <!-- Admin menu items list End -->
+    </div>
+</section>
+<!-- Admin page section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/amin/bootstrap.min.js}"></script>
+<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/amin/circle-progress.min.js}"></script>
+<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+<script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

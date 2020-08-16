@@ -1,0 +1,254 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Catalog</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/add-to-cart.js}"></script>
+</head>
+
+<body>
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/fragments/header.html :: header(
+    activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
+    cartItemsQuantity=${cartItemsQuantity})"></superheader>
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!--  Product cards(was Categories Grid) Section Begin -->
+    <section class="categories-grid-section spad">
+        <div class="container">
+            <!-- *** Блок Хлебные крошки and Filters Begin *** -->
+            <div class="row">
+                <!-- Блок Хлебные крошки Begin -->
+                <div class="col-lg-10 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/home'}">Home</a>
+                                <span>Catalog</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок Хлебные крошки End -->
+
+                <!-- Блок фильтра Begin -->
+                <div class="nav-options"
+                     style="background: transparent; line-height: 1; margin-left: 20px; padding: 0">
+                    <div class="nav-menu">
+                        <ul>
+                            <!-- Filters item dropdown in top menu -->
+                            <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                                <a style="padding: 12px 10px 12px 20px" th:href="@{'/catalog/all'}">
+                                    <!-- Filters Button -->
+                                    <span>Filters <i class="fa fa-angle-down"></i></span></a>
+                                <!-- Dropdown Filter Form Begin -->
+                                <div class="megamenu-wrapper col-lg-12" style="top: auto;">
+                                    <div class="col-lg-12 col-md-7 p-0">
+                                        <div class="sidebar-option">
+                                            <div class="subscribe-option">
+                                                <form th:action="@{/catalog/all}" method="GET">
+                                                    <div class="row justify-content-center">
+                                                        <!-- Categories field of filter form -->
+                                                        <label class="filter-field-label">
+                                                            <span>Category</span>
+                                                            <select name="category"
+                                                                    class="select-btn-dropdown-toggle">
+                                                                <option class="dropdown-option"
+                                                                        th:text="'Все категории'"
+                                                                        th:selected="${param.category == null}" th:value="null"></option>
+
+                                                                <option class="dropdown-option"
+                                                                        th:each="category : ${categories}"
+                                                                        th:text="${category.title}"
+                                                                        th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>
+                                                            </select>
+                                                        </label>
+                                                        <!-- Min price field of filter form -->
+                                                        <label class="filter-field-label" style="margin-left: 15px;">
+                                                            <span>Min price</span>
+                                                            <input name="minPrice" placeholder="Минимальная цена"
+                                                                   th:value="${param.minPrice}" type="number">
+                                                        </label>
+                                                        <!-- Max price field of filter form -->
+                                                        <label class="filter-field-label" style="margin-left: 15px;">
+                                                            <span>Max price</span>
+                                                            <input name="maxPrice" placeholder="Максимальная цена"
+                                                                   th:value="${param.maxPrice}" type="number">
+                                                        </label>
+                                                        <!-- Items on page limit field of filter form -->
+                                                        <label class="filter-field-label col-lg-3">
+                                                            <span>Elements on page</span>
+                                                            <input name="limit" placeholder="Товаров на странице"
+                                                                   th:value="${param.limit}" type="number">
+                                                        </label>
+                                                        <!-- выпадающий список направления сортировки -->
+                                                        <label class="filter-field-label col-lg-3">
+                                                            <span>Sort direction</span>
+                                                            <select name="direction" class="select-btn-dropdown-toggle">
+                                                                <option class="dropdown-option" th:text="'С наименьшей ценой вверху'"
+                                                                        th:selected="${#strings.equals(param.direction, 'ASC')}"
+                                                                        th:value="ASC"></option>
+                                                                <option class="dropdown-option" th:text="'С наибольшей ценой вверху'"
+                                                                        th:selected="${#strings.equals(param.direction, 'DESC')}"
+                                                                        th:value="DESC"></option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="row justify-content-center">
+                                                        <button class="btn-subscribe col-lg-2" type="submit"
+                                                                style="padding: 12px 10px 12px 20px">
+                                                            <span>Submit</span>
+                                                        </button>
+
+                                                        <div class="col-lg-2">
+                                                            <a class="btn-reset" style="padding: 12px 10px 12px 20px"
+                                                               th:href="@{'/catalog/all'}">
+                                                                <span>Clear</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Dropdown Filter Form End -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Блок фильтра End -->
+            </div>
+            <!-- *** Блок Хлебные крошки and Filters End *** -->
+
+            <!--  Product cards Block Begin -->
+            <div class="row">
+                <!-- cards left part -->
+                <div class="col-lg-12 p-0">
+                    <!-- cards line -->
+                    <div class="row">
+                        <!-- card item -->
+                        <div class="col-lg-4" th:each="p : ${page}">
+                            <div class="cg-item">
+                                <!-- card img -->
+                                <a class="cg-pic set-bg">
+                                    <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
+                                    <img th:src="@{'/images/amin/' + ${p.images[0].path}}" alt="product card item image" src="">
+                                </a>
+                                <div>
+                                    <a class="catalog__product-card__category" th:href="@{'/catalog/all?category=' + ${p.category.id}}">
+                                        <span th:text="${p.category.title}">Category</span>
+                                    </a>
+                                </div>
+                                <!-- card texts block -->
+                                <div class="cg-text">
+                                    <h5 class="min-height-85px">
+                                        <a th:href="@{/catalog/{prod_id}/details(prod_id = ${p.id})}"
+                                           th:text="${p.title}"></a>
+                                    </h5>
+
+                                    <ul>
+                                        <li>by <span>Admin</span></li>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+
+                                    <!-- Product card Price -->
+                                    <div>
+                                        <div class="catalog__product-card__price">
+                                            <span th:text="${p.price}">Price of product</span>
+                                        </div>
+
+                                        <div class="catalog__product-card__price">
+                                            <span th:text="'руб'">RUR</span>
+                                        </div>
+
+                                        <a sec:authorize="isAnonymous()"
+                                           class="catalog__product-card__price btn-to-cart color-white"
+                                           th:href="@{'/login'}"
+                                           th:text="'Add To Cart'"></a>
+                                        <a sec:authorize="isAuthenticated()" th:id="${p.id}" th:onclick="'addToCartByProdId('+${p.id}+')'"
+                                           class="catalog__product-card__price btn-to-cart color-white"
+                                           th:text="${quantities['__${p.id}__']} == null or ${quantities['__${p.id}__']} == 0 ? 'Add To Cart' : 'Add To Cart(' + ${quantities['__${p.id}__']} + ')'"
+                                           style="color: white"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- pagination line -->
+                    <div class="row justify-content-center">
+                        <div th:if="${page.hasContent()}">
+                            <a th:class="pagination-item-a" th:href="@{'/catalog/all?page='
+                                   + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                                <span th:class="pagination-item-a-span">Previous</span></a>
+
+                            <a th:class="${page.getNumber() + 1 == i ?
+                                    'pagination-item-a pagination-item-active' :
+                                    'pagination-item-a'}"
+                               th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                               th:href="@{'/catalog/all?page='+ ${i} + ${filterDef}}">
+                                <span th:class="pagination-item-a-span" th:text="${i}"></span>
+                            </a>
+
+                            <a th:class="pagination-item-a" th:href="@{'/catalog/all?page='
+                                   + ${page.nextOrLastPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                                <span th:class="pagination-item-a-span">Next</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  Product cards Block End -->
+        </div>
+    </section>
+    <!-- Product cards(was Categories Grid) Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+
+</html>

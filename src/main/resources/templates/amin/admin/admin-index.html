@@ -1,0 +1,91 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Admin Index Page</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+<!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!-- Admin page section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- *** Блок Хлебные крошки Begin *** -->
+            <div class="row">
+                <!-- Блок Хлебные крошки Begin -->
+                <div class="col-lg-10 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <span>Admin Index Page</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок Хлебные крошки End -->
+            </div>
+            <!-- *** Блок Хлебные крошки End *** -->
+
+            <!-- Admin menu items list Begin -->
+            <div class="row">
+                <!-- Menu items list Begin -->
+                <div class="col-lg-12 p-0"
+                     style="margin-top: 20px; margin-bottom: 20px; min-height: 330px;">
+                    <h4><a th:href="@{/admin/product/all}">Products</a></h4>
+                    <h4><a th:href="@{/admin/category/all}">Categories</a></h4>
+                    <h4 sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/user/all}">Users</a></h4>
+                    <h4 sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/user_role/all}">User Roles</a></h4>
+                    <h4><a th:href="@{/admin/address/all}">Addresses</a></h4>
+                    <h4><a th:href="@{/admin/order_status/all}">Order Statuses</a></h4>
+                    <h4><a th:href="@{/admin/order/all}">Orders</a></h4>
+                </div>
+                <!-- Menu items list End -->
+            </div>
+            <!-- Admin menu items list End -->
+        </div>
+    </section>
+    <!-- Admin page section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/amin/bootstrap.min.js}"></script>
+<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/amin/circle-progress.min.js}"></script>
+<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+<script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

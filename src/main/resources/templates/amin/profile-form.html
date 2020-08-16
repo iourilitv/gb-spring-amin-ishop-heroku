@@ -1,0 +1,185 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | User Profile Form</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="first_name" type="java.lang.String"*/-->
+<!--/*@thymesVar id="deliveryAddress" type="ru.geekbrains.spring.ishop.entity.Address"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/fragments/header.html :: header(
+        activePage='', categories=${categories}, filterDef='',
+        cartItemsQuantity=${cartItemsQuantity})"></superheader>
+
+<!-- Page Preloder, Humberger Menu, Header Section End -->
+
+<!-- User Profile Form Section Begin -->
+<section class="cart-list-section spad">
+    <div class="container">
+        <!-- Блок Хлебные крошки Begin-->
+        <div class="row">
+            <div class="col-lg-12 p-0">
+                <div class="details-text typography-page">
+                    <div class="dt-breadcrumb">
+                        <div class="dt-bread-option">
+                            <a class="color-white" th:href="@{'/profile'}"> Profile</a>
+                            <span> User Profile Form</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Блок Хлебные крошки End -->
+
+        <!-- User Profile Form Block Begin -->
+        <div class="row">
+            <!-- Id uneditable field Begin -->
+            <div class="col-lg-12 p-0">
+                <h5 class="color-white">User Id</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${user.id}"></td></tr></tbody>
+                </table>
+            </div>
+            <!-- Id uneditable field End -->
+
+            <!-- userName uneditable field Begin -->
+            <div class="col-lg-12 p-0">
+                <h5 class="color-white">User Name</h5>
+                <table class="table color-white">
+                    <tbody><tr><td th:text="${user.userName}"></td></tr></tbody>
+                </table>
+            </div>
+            <!-- userName uneditable field End -->
+
+            <!-- Change Password Link Begin -->
+            <div style="margin-bottom: 20px">
+                <h4><a th:href="@{/profile/form/change/password/showForm}" th:text="'Password Changing Form'"></a></h4>
+            </div>
+
+            <!-- Form: firstName field Begin -->
+            <form th:action="@{'/profile/form/process/update/first_name'}"
+                  th:object="${user}" method="POST" class="col-lg-12 p-0">
+                <!-- firstName field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">User First Name</h5>
+                    <table class="table color-white" style="margin-bottom: 0;">
+                        <tbody><tr><td>
+                            <label style="margin-bottom: 0;">
+                                <input type="text" name="firstName" th:value="${user.firstName != null ? user.firstName : ' '}">
+                            </label>
+                        </td></tr></tbody>
+                    </table>
+                </div>
+                <!-- firstName field End -->
+                <!-- Save Changing Button -->
+                <div class="user_form__buttons__div">
+                    <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+                </div>
+            </form>
+            <!-- Form: firstName field End -->
+
+            <!-- Form: lastName field Begin -->
+            <form th:action="@{'/profile/form/process/update/last_name'}"
+                  th:object="${user}" method="POST" class="col-lg-12 p-0">
+                <!-- lastName field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">User Last Name</h5>
+                    <table class="table color-white" style="margin-bottom: 0;">
+                        <tbody><tr><td>
+                            <label style="margin-bottom: 0;">
+                                <input type="text" name="lastName" th:value="${user.lastName != null ? user.lastName : ' '}">
+                            </label>
+                    </table>
+                </div>
+                <!-- lastName field End -->
+                <!-- Save Changing Button -->
+                <div class="user_form__buttons__div">
+                    <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+                </div>
+            </form>
+            <!-- Form: lastName field End -->
+
+            <!-- Form: deliveryAddress field Begin -->
+            <form th:action="@{'/profile/form/process/update/deliveryAddress'}"
+                  th:object="${deliveryAddress}" method="POST" class="col-lg-12 p-0">
+                <h5 class="color-white">Delivery Address</h5>
+                <table class="table color-white" style="margin-bottom: 0;">
+                    <thead><tr>
+                        <th>country</th>
+                        <th>city</th>
+                        <th>address</th>
+                    </tr></thead>
+                    <tbody><tr>
+                        <td><label>
+                            <input type="text" name="country" th:value="${user.deliveryAddress != null ? user.deliveryAddress.country : ' '}">
+                        </label></td>
+
+                        <td><label>
+                            <input type="text" name="city" th:value="${user.deliveryAddress != null ? user.deliveryAddress.city : ' '}">
+                        </label></td>
+
+                        <td><label style="margin-bottom: 0;">
+                            <input type="text" name="address" th:value="${user.deliveryAddress != null ? user.deliveryAddress.address : ' '}">
+                        </label></td>
+                    </tr></tbody>
+                </table>
+                <!-- Save Changing Button -->
+                <div class="user_form__buttons__div">
+                    <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+                </div>
+            </form>
+            <!-- Form: deliveryAddress field End -->
+
+            <!-- User Profile Form Close Button -->
+            <div class="user_form__buttons__div">
+                <a class="catalog__product-card__price btn-reset" th:href="@{'/profile'}">
+                    <span>Close form</span>
+                </a>
+            </div>
+        </div>
+        <!-- User Profile Form Block End -->
+    </div>
+</section>
+<!-- User Profile Form Section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/amin/fragments/footer.html"></footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/amin/bootstrap.min.js}"></script>
+<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/amin/circle-progress.min.js}"></script>
+<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+<script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Orders List</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="orderStatus" type="ru.geekbrains.spring.ishop.entity.OrderStatus"*/-->
+<!--/*@thymesVar id="orderStatuses" type=""*/-->
+<!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
+<!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
+<!--/*@thymesVar id="orderItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
+<!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
+<!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
+
+    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+    <superheader th:replace="/amin/fragments/header.html :: header(
+        activePage=${activePage}, categories=${categories}, filterDef='',
+        cartItemsQuantity=${cartItemsQuantity})"></superheader>
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!-- Items list Section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- *** Блок Хлебные крошки and Filters Begin *** -->
+            <div class="row">
+                <!-- Блок Хлебные крошки Begin -->
+                <div class="col-lg-10 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/profile'}">Profile</a>
+                                <span>Orders List</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок Хлебные крошки End -->
+
+                <!-- Блок фильтра Begin -->
+                <div class="nav-options"
+                     style="background: transparent; line-height: 1; margin-left: 20px; padding: 0">
+                    <div class="nav-menu">
+                        <ul>
+                            <!-- Filters item dropdown in top menu -->
+                            <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                                <a style="padding: 12px 10px 12px 20px" th:href="@{'/profile/order/all'}">
+                                    <span>Filters <i class="fa fa-angle-down"></i></span></a>
+                                <div class="megamenu-wrapper col-lg-12" style="top: auto;">
+                                    <div class="col-lg-12 col-md-7 p-0">
+                                        <div class="sidebar-option">
+                                            <div class="subscribe-option">
+                                                <form th:action="@{/profile/order/all}" method="GET">
+                                                    <div class="row justify-content-center">
+                                                    <!-- Order Status field of filter form -->
+                                                    <label class="filter-field-label col-lg-3">
+                                                        <span>Order Status</span>
+                                                        <select name="orderStatus"
+                                                                class="select-btn-dropdown-toggle">
+                                                            <option class="dropdown-option"
+                                                                    th:text="'Все статусы'"
+                                                                    th:selected="${param.orderStatus == null}" th:value="null"></option>
+
+                                                            <option class="dropdown-option"
+                                                                    th:each="orderStatus : ${orderStatuses}"
+                                                                    th:text="${orderStatus.title}"
+                                                                    th:selected="${#strings.equals(param.orderStatus, orderStatus.id)}" th:value="${orderStatus.id}"></option>
+                                                        </select>
+                                                    </label>
+                                                    <!-- Items on page limit field of filter form -->
+                                                    <label class="filter-field-label col-lg-3">
+                                                        <span>Elements on page</span>
+                                                        <input name="limit" placeholder="Товаров на странице"
+                                                               th:value="${param.limit}" type="number">
+                                                    </label>
+                                                    <!-- выпадающий список направления сортировки -->
+                                                    <label class="filter-field-label col-lg-3">
+                                                        <span>Sort direction</span>
+                                                        <select name="direction" class="select-btn-dropdown-toggle">
+                                                            <option class="dropdown-option" th:text="'Созданные ранее вверху'"
+                                                                    th:selected="${#strings.equals(param.direction, 'ASC')}"
+                                                                    th:value="ASC"></option>
+                                                            <option class="dropdown-option" th:text="'Созданные позднее вверху'"
+                                                                    th:selected="${#strings.equals(param.direction, 'DESC')}"
+                                                                    th:value="DESC"></option>
+                                                        </select>
+                                                    </label>
+                                                    </div>
+
+                                                    <div class="row justify-content-center">
+                                                        <button class="btn-subscribe col-lg-2" type="submit"
+                                                                style="padding: 12px 10px 12px 20px">
+                                                            <span>Submit</span>
+                                                        </button>
+
+                                                        <div class="col-lg-2">
+                                                            <a class="btn-reset" style="padding: 12px 10px 12px 20px"
+                                                               th:href="@{'/profile/order/all'}">
+                                                                <span>Clear</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Блок фильтра End -->
+            </div>
+            <!-- *** Блок Хлебные крошки and Filters End *** -->
+
+            <!-- Table of Orders list Begin -->
+            <div class="col-lg-12 p-0">
+                <h4 th:if="${page.isEmpty()}"
+                    class="color-white">The orders list is empty!</h4>
+                <table th:if="${page.hasContent()}"
+                       class="table color-white">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>id</th>
+                        <th>order status</th>
+                        <th>user</th>
+<!--                        <th>order items details</th>-->
+                        <th>total items costs</th>
+                        <th>total costs</th>
+<!--                        <th>delivery details</th>-->
+                        <th>created at</th>
+                        <th>updated at</th>
+                        <th>operations</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order, itrStat : ${page}">
+                        <td th:text="${itrStat.index + 1}"></td>
+
+                        <td th:text="${order.id}"></td>
+
+                        <td th:text="${order.orderStatus.title}"></td>
+
+                        <td th:text="${order.user.userName}"></td>
+
+<!--                        <td th:text="${order.orderItems}"></td>-->
+
+                        <td th:text="${order.totalItemsCosts}"></td>
+
+                        <td th:text="${order.totalCosts}"></td>
+
+<!--                        <td th:text="${order.delivery}"></td>-->
+
+                        <td th:text="${order.createdAt}"></td>
+
+                        <td th:text="${order.updatedAt}"></td>
+
+                        <td>
+                            <ul class="dropdown">
+                                <li>
+                                    <a th:href="@{'/profile/order/show/' + ${order.id} + '/order_id'}">Show</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Table of Orders list End -->
+
+            <!-- pagination line -->
+            <div class="row justify-content-center">
+                <div th:if="${page.hasContent()}">
+                    <a th:class="pagination-item-a" th:href="@{'/profile/order/all?page='
+                                   + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                        <span th:class="pagination-item-a-span">Previous</span></a>
+
+                    <a th:class="${page.getNumber() + 1 == i ?
+                                    'pagination-item-a pagination-item-active' :
+                                    'pagination-item-a'}"
+                       th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                       th:href="@{'/profile/order/all?page='+ ${i} + ${filterDef}}">
+                        <span th:class="pagination-item-a-span" th:text="${i}"></span>
+                    </a>
+
+                    <a th:class="pagination-item-a" th:href="@{'/profile/order/all?page='
+                                   + ${page.nextOrLastPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                        <span th:class="pagination-item-a-span">Next</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Items list Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

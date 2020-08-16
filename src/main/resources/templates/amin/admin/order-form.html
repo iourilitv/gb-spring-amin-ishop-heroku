@@ -1,0 +1,276 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Admin Order Form</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/change-order-status.js}"></script>
+</head>
+
+<body>
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="order" type="ru.geekbrains.spring.ishop.entity.Order"*/-->
+<!--/*@thymesVar id="orderStatuses" type="java.util.List"*/-->
+<!--/*@thymesVar id="orderStatus" type="ru.geekbrains.spring.ishop.entity.OrderStatus"*/-->
+<!--/*@thymesVar id="oStatus" type="ru.geekbrains.spring.ishop.entity.OrderStatus"*/-->
+<!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
+<!--/*@thymesVar id="orderItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
+
+    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!-- Order Details Section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- Блок Хлебные крошки Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
+                                <a class="color-white" th:href="@{'/admin/order/all'}"> Orders</a>
+                                <span> Order Form</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки End -->
+
+            <!-- Order Form Block Begin -->
+            <div class="row">
+                <!-- Id uneditable field Begin -->
+                <div th:if="${order.id != null}"
+                        class="col-lg-12 p-0">
+                    <h5 class="color-white">Order Id</h5>
+                    <table class="table color-white">
+                        <tbody><tr><td th:text="${order.getId()}"></td></tr></tbody>
+                    </table>
+                </div>
+                <!-- Id uneditable field End -->
+
+                <!-- Form: Order Status Begin -->
+                <form th:if="${order.id != null}"
+                        th:action="@{'/admin/order/process/update/orderStatus'}"
+                      th:object="${orderStatus}" method="POST" class="col-lg-12 p-0">
+                    <h5 class="color-white">Order Status</h5>
+                    <table class="table color-white" style="margin-bottom: 0;">
+                        <thead><tr>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>description</th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td id="o_s_id_td" th:text="*{id}" style="width: 5%"></td>
+
+                            <td style="width: 25%"><label class="filter-field-label" style="margin-bottom: 0">
+                                <select id="o_s_title" name="title" th:onchange="'changeOrderStatus()'"
+                                        class="select-btn-dropdown-toggle" style="margin-bottom: 0;">
+                                    <option class="dropdown-option"
+                                            th:each="oStatus : ${orderStatuses}"
+                                            th:text="${oStatus.title}"
+                                            th:selected="${#strings.equals(order.orderStatus.title, oStatus.title)}"
+                                            th:value="${oStatus.title}"></option>
+                                </select>
+                            </label></td>
+
+                            <td id="o_s_description_td" th:text="*{description}" style="width: auto"></td>
+                        </tr></tbody>
+                    </table>
+
+                    <!-- hidden fields of OrderStatus: id, description -->
+                    <input id="o_s_id_input" th:field="*{id}" type="hidden">
+                    <input id="o_s_description_input" th:field="*{description}" type="hidden">
+
+                    <!-- Buttons -->
+                    <div class="user_form__buttons__div">
+                        <button id="o_s_button" style="visibility: hidden; font-size: 0; margin-bottom: 0; padding: 0 18px 0;"
+                                type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+                    </div>
+                </form>
+                <!-- Form: Order Status End -->
+
+                <!-- User uneditable field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">User</h5>
+                    <table class="table color-white">
+                        <thead><tr>
+                            <th>id</th>
+                            <th>first name</th>
+                            <th>last name</th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td th:text="${order.user.id}"></td>
+                            <td th:text="${order.user.firstName}"></td>
+                            <td th:text="${order.user.lastName}"></td>
+                        </tr></tbody>
+                    </table>
+                </div>
+                <!-- User uneditable field End -->
+
+                <!-- Form: Table of orderItems field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">Order Items List</h5>
+                    <table class="table color-white">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>product id</th>
+                            <th>product title</th>
+                            <th>order item price</th>
+                            <th>quantity</th>
+                            <th>order items costs</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="orderItem, itrStat : ${order.orderItems}">
+                            <td th:text="${itrStat.index + 1}"></td>
+
+                            <td th:text="${orderItem.product.id}"></td>
+
+                            <td style="width: 70%">
+                                <a th:href="@{/catalog/{prod_id}/details(prod_id = ${orderItem.product.id})}"
+                                   target="_blank" th:text="${orderItem.product.title}"></a>
+                            </td>
+
+                            <td th:text="${orderItem.itemPrice}"></td>
+
+                            <td th:text="${orderItem.quantity}"></td>
+
+                            <td th:text="${orderItem.itemCosts}"></td>
+                        </tr>
+
+                        <tr>
+                            <th colspan="5">Total Cost of Order Items:</th>
+                            <td th:text="${order.totalItemsCosts}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Form: Table of orderItems field Begin -->
+
+                <!-- Form: Delivery Begin -->
+                <form th:action="@{'/admin/order/process/update/delivery'}"
+                      th:object="${delivery}" method="POST" class="col-lg-12 p-0">
+                    <h5 class="color-white">Delivery</h5>
+                    <table class="table color-white" style="margin-bottom: 0;">
+                        <thead><tr>
+                            <th>id</th>
+                            <th>order</th>
+                            <th>phoneNumber</th>
+                            <th>deliveryAddress</th>
+                            <th>deliveryCost</th>
+                            <th>deliveryExpectedAt</th>
+                            <th>deliveredAt</th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td><label>
+                                    <input type="text" th:field="*{id}" th:hidden="true" th:text="*{id}">
+                                </label></td>
+
+                            <td><label>
+                                    <input th:if="*{order != null}"
+                                            type="text" th:field="*{order}" th:hidden="true" th:text="*{order.id}">
+                                </label></td>
+
+                            <td><label>
+                                <input type="text" th:field="*{phoneNumber}">
+                            </label></td>
+
+                            <td><label style="margin-bottom: 0;">
+                                <input type="text" th:field="*{deliveryAddress}" th:hidden="true" th:text="*{deliveryAddress}">
+                            </label></td>
+
+                            <td><label>
+                                <input type="number" th:field="*{deliveryCost}">
+                            </label></td>
+
+                            <td><label>
+                                <input type="text" th:field="*{deliveryExpectedAt}">
+                            </label></td>
+
+                            <td><label>
+                                <input type="text" th:field="*{deliveredAt}">
+                            </label></td>
+                        </tr></tbody>
+                    </table>
+                    <!-- Buttons -->
+                    <div class="user_form__buttons__div">
+                        <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+                    </div>
+                </form>
+                <!-- Form: Delivery End -->
+
+                <!-- Total Order Cost uneditable field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">Total Order Cost</h5>
+                    <table class="table color-white">
+                        <tbody><tr><td th:text="${order.totalCosts}"></td></tr></tbody>
+                    </table>
+                </div>
+                <!-- Total Order Cost uneditable field End -->
+
+                <!-- CreatedAt uneditable field Begin -->
+                <div class="col-lg-12 p-0">
+                    <h5 class="color-white">CreatedAt</h5>
+                    <table class="table color-white">
+                        <tbody><tr><td th:text="${order.createdAt}"></td></tr></tbody>
+                    </table>
+                </div>
+                <!-- CreatedAt uneditable field End -->
+
+                <!-- Order Details Close Button -->
+                <div class="user_form__buttons__div">
+                    <a class="catalog__product-card__price btn-reset" th:href="@{'/admin/order/all'}">
+                        <span>Close form</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Order Details Block End -->
+        </div>
+    </section>
+    <!-- Order Details Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

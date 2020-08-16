@@ -1,0 +1,298 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--<superheader th:fragment="header (activePage, categories, filterDef, showFilters, cartItemsQuantity)">-->
+<superheader th:fragment="header (activePage, categories, filterDef, cartItemsQuantity)">
+
+<!-- Page Preloder -->
+<!-- //TODO Не работает без .js -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Menu Begin - left pop up vertical menu -->
+<!-- //TODO Не работает без .js -->
+<div class="humberger-menu-overlay"></div>
+<div class="humberger-menu-wrapper">
+    <div class="hw-logo">
+        <a href="#"><img th:src="@{/img/amin/f-logo.png}" alt="hw-logo" src=""></a>
+    </div>
+    <div class="hw-menu mobile-menu">
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+
+            <li><a href="#">Pages <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="./categories-list.html">Categories</a></li>
+                    <li><a href="./categories-grid.html">Categories grid</a></li>
+                    <li><a href="./typography.html">Typography</a></li>
+                    <li><a href="./details-post-default.html">Post default</a></li>
+                    <li><a href="./details-post-gallery.html">Post gallery</a></li>
+                    <li><a href="./details-post-review.html">Post review</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Reviews <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Playstation</a></li>
+                    <li><a href="#">Windows</a></li>
+                    <li><a href="#">Mobile</a></li>
+                    <li><a href="#">Xbox</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Windows <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Playstation</a></li>
+                    <li><a href="#">Windows</a></li>
+                    <li><a href="#">Mobile</a></li>
+                    <li><a href="#">Xbox</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Videos <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Playstation</a></li>
+                    <li><a href="#">Windows</a></li>
+                    <li><a href="#">Mobile</a></li>
+                    <li><a href="#">Xbox</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="hw-copyright">
+        Copyright © 2019 Colorlib Inc. All rights reserved
+    </div>
+    <div class="hw-social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-youtube-play"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+    </div>
+    <div class="hw-insta-media">
+        <div class="section-title">
+            <h5>Instagram</h5>
+        </div>
+        <div class="insta-pic">
+            <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="instagram/ip-1.jpg" src="">
+            <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="instagram/ip-2.jpg" src="">
+            <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="instagram/ip-3.jpg" src="">
+            <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="instagram/ip-4.jpg" src="">
+        </div>
+    </div>
+</div>
+<!-- Humberger Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header-section">
+    <!-- overhead login line -->
+    <div class="ht-options">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8">
+                    <div class="ht-widget">
+                        <ul>
+                            <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
+
+                            <li><i class="fa fa-clock-o"></i> May 21, 2020</li>
+
+                            <li class="signup-switch signup-open">
+                                <a sec:authorize="isAnonymous()" class="fa fa-sign-out login-link"
+                                   th:href="@{'/login'}" th:text="' Login'"></a>
+                                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                                    <button class="fa fa-sign-out login-link cancel-button-style" type="submit">Logout</button>
+                                </form>
+                            </li>
+
+                            <li>
+                                <a sec:authorize="isAnonymous()" class="fa login-link"
+                                   th:href="@{'/register/showForm'}" th:text="' Register'">
+                                </a>
+                                <a sec:authorize="isAuthenticated()" sec:authentication="principal.username"
+                                   class="fa login-link"
+                                   th:href="@{'/profile'}">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-4" style="display: flex">
+                    <div sec:authorize="hasRole('EMPLOYEE')" style="width: 50%">
+                        <a class="fa login-link" th:href="@{'/admin'}"
+                           style="padding-top: 5px; color: steelblue">Admin Mode</a>
+                    </div>
+                    <div sec:authorize="!hasRole('EMPLOYEE')" style="width: 50%">
+                        <a class="fa login-link"></a>
+                    </div>
+
+                    <div class="ht-social" style="width: 50%">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Amin logo overhead line -->
+    <div class="logo">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a href="./index.html"><img th:src="@{/img/amin/logo.png}" alt="Amin logo line" src=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- top navigation line -->
+    <div class="nav-options">
+        <div class="container">
+            <!-- on left: icon of Humberger Menu(left pop up vertical menu)  -->
+            <div class="humberger-menu humberger-open">
+                <i class="fa fa-bars"></i>
+            </div>
+            <!-- on right: icon of searching pop up window  -->
+            <div class="nav-search search-switch">
+                <i class="fa fa-search"></i>
+            </div>
+            <!-- center: the main navigation bar  -->
+            <div class="nav-menu">
+                <ul>
+                    <!-- Home item in top menu -->
+                    <li th:class="${activePage == 'Home' ? 'mega-menu active' : 'mega-menu'}">
+                        <a th:href="@{'/home'}"><span th:text="'Home '"></span></a>
+                    </li>
+                    <!-- Catalog item dropdown in top menu -->
+                    <li th:class="${activePage == 'Catalog' ? 'mega-menu active' : 'mega-menu'}">
+                        <a th:href="@{'/catalog/all'}">
+                            <span>Catalog <i class="fa fa-angle-down"></i></span></a>
+                        <div class="megamenu-wrapper">
+                            <ul class="mw-nav">
+                                <li th:each="category : ${categories}">
+                                    <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
+                                    <a th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}">
+                                        <span th:text="${category.title}"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- Filters item dropdown in top menu -->
+<!--                    <li th:if="${showFilters} == true" th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">-->
+<!--                        <a th:href="@{'/catalog/all'}">-->
+<!--                            <span>Filters <i class="fa fa-angle-down"></i></span></a>-->
+<!--                        <div class="megamenu-wrapper col-lg-6">-->
+<!--                            <div class="col-lg-12 col-md-7 p-0">-->
+<!--                                <div class="sidebar-option">-->
+<!--                                    <div class="subscribe-option">-->
+<!--                                        <form th:action="@{/catalog/all}" method="GET">-->
+<!--                                            &lt;!&ndash; Categories field of filter form &ndash;&gt;-->
+<!--                                            <label class="filter-field-label">-->
+<!--                                                <span>Category</span>-->
+<!--                                                <select name="category"-->
+<!--                                                        class="select-btn-dropdown-toggle">-->
+<!--                                                    <option class="dropdown-option"-->
+<!--                                                            th:text="'Все категории'"-->
+<!--                                                            th:selected="${param.category == null}" th:value="null"></option>-->
+
+<!--                                                    &lt;!&ndash;/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/&ndash;&gt;-->
+<!--                                                    <option class="dropdown-option"-->
+<!--                                                            th:each="category : ${categories}"-->
+<!--                                                            th:text="${category.title}"-->
+<!--                                                            th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>-->
+<!--                                                </select>-->
+<!--                                            </label>-->
+<!--                                            &lt;!&ndash; Min price field of filter form &ndash;&gt;-->
+<!--                                            <label class="filter-field-label">-->
+<!--                                                <span>Min price</span>-->
+<!--                                                <input name="minPrice" placeholder="Минимальная цена"-->
+<!--                                                       th:value="${param.minPrice}" type="number">-->
+<!--                                            </label>-->
+<!--                                            &lt;!&ndash; Max price field of filter form &ndash;&gt;-->
+<!--                                            <label class="filter-field-label">-->
+<!--                                                <span>Max price</span>-->
+<!--                                                <input name="maxPrice" placeholder="Максимальная цена"-->
+<!--                                                       th:value="${param.maxPrice}" type="number">-->
+<!--                                            </label>-->
+<!--                                            &lt;!&ndash; Items on page limit field of filter form &ndash;&gt;-->
+<!--                                            <label class="filter-field-label">-->
+<!--                                                <span>Elements on page</span>-->
+<!--                                                <input name="limit" placeholder="Товаров на странице"-->
+<!--                                                       th:value="${param.limit}" type="number">-->
+<!--                                            </label>-->
+<!--                                            &lt;!&ndash; выпадающий список направления сортировки &ndash;&gt;-->
+<!--                                            <label class="filter-field-label">-->
+<!--                                                <span>Sort direction</span>-->
+<!--                                                <select name="direction" class="select-btn-dropdown-toggle">-->
+<!--                                                    <option class="dropdown-option" th:text="'По возрастанию цены'"-->
+<!--                                                            th:selected="${#strings.equals(param.direction, 'ASC')}"-->
+<!--                                                            th:value="ASC"></option>-->
+<!--                                                    <option class="dropdown-option" th:text="'По убыванию цены'"-->
+<!--                                                            th:selected="${#strings.equals(param.direction, 'DESC')}"-->
+<!--                                                            th:value="DESC"></option>-->
+<!--                                                </select>-->
+<!--                                            </label>-->
+
+<!--                                            <div>-->
+<!--                                                <button class="btn-subscribe" type="submit">-->
+<!--                                                    <span>Submit</span>-->
+<!--                                                </button>-->
+
+<!--                                                <div>-->
+<!--                                                    <a class="btn-reset" th:href="@{'/catalog/all'}">-->
+<!--                                                        <span>Clear</span>-->
+<!--                                                    </a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+
+                    <!-- Contacts item dropdown in top menu -->
+                    <li th:class="${activePage == 'Contacts' ? 'active' : ''}">
+                        <a th:href="@{/contacts}">
+                            <span>Contacts <i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <ul class="dropdown">
+                            <li th:class="${activePage == 'How to pay' ? 'mega-menu active' : 'mega-menu'}">
+                                <a th:href="@{/contacts/how_to_pay}">How to pay</a>
+                            </li>
+
+                            <li th:class="${activePage == 'Delivery' ? 'mega-menu active' : 'mega-menu'}">
+                                <a th:href="@{/contacts/delivery}">Delivery</a>
+                            </li>
+
+                            <li th:class="${activePage == 'Contact' ? 'mega-menu active' : 'mega-menu'}">
+                                <a th:href="@{/contacts/contact}">Contact</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Cart item in top menu -->
+                    <!--/*@thymesVar id="quantities" type=""*/-->
+                    <li th:class="${activePage == 'Cart' ? 'mega-menu active' : 'mega-menu'}">
+                        <a sec:authorize="isAnonymous()"
+                           th:href="@{/login}"><span>Cart </span></a>
+                        <a sec:authorize="isAuthenticated()"
+                           id="cart"
+                           th:href="@{/profile/cart}"
+                           th:text="${cartItemsQuantity} == null or ${cartItemsQuantity} == 0 ?
+                                            'Cart' : 'Cart(' + ${cartItemsQuantity} + ')'"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+
+</superheader>

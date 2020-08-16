@@ -1,0 +1,234 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Admin Products</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+</head>
+
+<body>
+<!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
+<!--/*@thymesVar id="product" type="ru.geekbrains.spring.ishop.entity.Product"*/-->
+<!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
+        filterDef='')"></superheader>
+<!-- Page Preloder, Humberger Menu, Header Section End -->
+
+<!-- Items list Section Begin -->
+<section class="cart-list-section spad">
+    <div class="container">
+        <!-- *** Блок Хлебные крошки Begin *** -->
+        <div class="row">
+            <div class="col-lg-10 p-0">
+                <div class="details-text typography-page">
+                    <div class="dt-breadcrumb">
+                        <div class="dt-bread-option">
+                            <a class="color-white" th:href="@{'/admin'}">Admin Index Page</a>
+                            <span>Products List</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- *** Блок Хлебные крошки End *** -->
+
+        <!-- *** Блок Create and Filters Begin *** -->
+        <div class="row">
+            <!-- Create New Product link Begin -->
+            <div class="col-lg-3 p-0">
+                <h4><a th:href="@{'/admin/product/create'}">Create New Product</a></h4>
+            </div>
+            <!-- Create New Product link End -->
+
+            <!-- Блок фильтра Begin -->
+            <div class="col-lg-8 p-0" style="display:flex; justify-content:flex-end; margin: 0 0 15px 50px;">
+                <div class="nav-options"
+                     style="background: transparent; line-height: 1; margin-left: 20px; padding: 0">
+                    <div class="nav-menu">
+                        <ul>
+                            <!-- Filters item dropdown in top menu -->
+                            <li th:class="${!param.isEmpty() ? 'mega-menu active' : 'mega-menu'}">
+                                <a style="padding: 12px 10px 12px 20px" th:href="@{'/admin/product/all'}">
+                                    <span>Filters <i class="fa fa-angle-down"></i></span></a>
+                                <div class="megamenu-wrapper col-lg-12" style="top:38px;left: auto;padding: 10px 0;">
+                                    <div class="col-lg-12 col-md-7 p-0">
+                                        <div class="sidebar-option">
+                                            <div class="subscribe-option">
+                                                <form th:action="@{/admin/product/all}" method="GET">
+                                                    <div class="row justify-content-center">
+                                                        <!-- Categories field of filter form -->
+                                                        <label class="filter-field-label">
+                                                            <span>Category</span>
+                                                            <select name="category"
+                                                                    class="select-btn-dropdown-toggle">
+                                                                <option class="dropdown-option"
+                                                                        th:text="'Все категории'"
+                                                                        th:selected="${param.category == null}" th:value="null"></option>
+
+                                                                <option class="dropdown-option"
+                                                                        th:each="category : ${categories}"
+                                                                        th:text="${category.title}"
+                                                                        th:selected="${#strings.equals(param.category, category.id)}" th:value="${category.id}"></option>
+                                                            </select>
+                                                        </label>
+                                                        <!-- Items on page limit field of filter form -->
+                                                        <label class="filter-field-label col-lg-4">
+                                                            <span>Elements on page</span>
+                                                            <input name="limit" placeholder="Товаров на странице"
+                                                                   th:value="${param.limit}" type="number">
+                                                        </label>
+                                                        <!-- выпадающий список направления сортировки -->
+                                                        <label class="filter-field-label col-lg-4">
+                                                            <span>Sort direction</span>
+                                                            <select name="direction" class="select-btn-dropdown-toggle">
+                                                                <option class="dropdown-option" th:text="'С меньшим id вверху'"
+                                                                        th:selected="${#strings.equals(param.direction, 'ASC')}"
+                                                                        th:value="ASC"></option>
+                                                                <option class="dropdown-option" th:text="'С большим id вверху'"
+                                                                        th:selected="${#strings.equals(param.direction, 'DESC')}"
+                                                                        th:value="DESC"></option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="row justify-content-center">
+                                                        <button class="btn-subscribe col-lg-2" type="submit"
+                                                                style="padding: 12px 10px 12px 20px">
+                                                            <span>Submit</span>
+                                                        </button>
+
+                                                        <div class="col-lg-2">
+                                                            <a class="btn-reset" style="padding: 12px 10px 12px 20px"
+                                                               th:href="@{'/admin/product/all'}">
+                                                                <span>Clear</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок фильтра End -->
+        </div>
+        <!-- *** Блок Create and Filters End *** -->
+
+        <!-- Table of Products list Begin -->
+        <div class="col-lg-12 p-0">
+            <h4 th:if="${page.isEmpty()}"
+                class="color-white">The products list is empty!</h4>
+            <table th:if="${page.hasContent()}"
+                   class="table color-white" style="min-height: 350px">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>id</th>
+                    <th>category</th>
+                    <th>vendorCode</th>
+                    <th>image</th>
+                    <th>title</th>
+                    <th>price</th>
+                    <th>operations</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product, itrStat : ${page}">
+                    <td th:text="${itrStat.index + 1}"></td>
+
+                    <td th:text="${product.id}"></td>
+
+                    <td th:text="${product.category.title}"></td>
+
+                    <td th:text="${product.vendorCode}"></td>
+
+                    <td th:text="${product.images.get(0).path}"></td>
+
+                    <td th:text="${product.title}"></td>
+
+                    <td th:text="${product.price}"></td>
+
+                    <td>
+                        <ul class="dropdown">
+                            <li>
+                                <a th:href="@{'/admin/product/edit/' + ${product.id} + '/prod_id'}">Edit</a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{'/admin/product/delete/' + ${product.id} + '/prod_id'}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Table of Products list End -->
+
+        <!-- pagination line -->
+        <div class="row justify-content-center">
+            <div th:if="${page.hasContent()}">
+                <a th:class="pagination-item-a" th:href="@{'/admin/product/all?page='
+                                   + ${page.previousOrFirstPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                    <span th:class="pagination-item-a-span">Previous</span></a>
+
+                <a th:class="${page.getNumber() + 1 == i ?
+                                    'pagination-item-a pagination-item-active' :
+                                    'pagination-item-a'}"
+                   th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                   th:href="@{'/admin/product/all?page='+ ${i} + ${filterDef}}">
+                    <span th:class="pagination-item-a-span" th:text="${i}"></span>
+                </a>
+
+                <a th:class="pagination-item-a" th:href="@{'/admin/product/all?page='
+                                   + ${page.nextOrLastPageable().getPageNumber() + 1}
+                                   + ${filterDef}}">
+                    <span th:class="pagination-item-a-span">Next</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Items list Section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/amin/bootstrap.min.js}"></script>
+<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/amin/circle-progress.min.js}"></script>
+<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+<script th:src="@{/js/amin/main.js}"></script>
+</body>
+</html>

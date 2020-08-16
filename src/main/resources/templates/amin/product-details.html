@@ -1,0 +1,348 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Product details</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/add-to-cart.js}"></script>
+</head>
+<!-- example: details-post-default.html -->
+<body>
+<!--/*@thymesVar id="categories" type=""*/-->
+
+<!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/fragments/header.html :: header(
+    activePage='', categories=${categories}, filterDef='',
+    cartItemsQuantity=${cartItemsQuantity})"></superheader>
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+
+    <!-- Details Post Section Begin -->
+    <section class="details-post-section spad">
+        <div class="container">
+            <!-- Блок Хлебные крошки and Product title Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/catalog/all'}">Catalog</a>
+                                <span>Product Details</span>
+                            </div>
+                            <h3 th:text="${product.id} + '. ' + ${product.title}"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки and Product title  End -->
+
+            <!-- Блок В корзину Begin -->
+            <div class="row">
+                <!-- Small images column -->
+                <div class="col-lg-2 p-0">
+                    <div class="cl-item">
+                        <div class="cl-pic">
+                            <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
+                            <img th:src="@{'/images/amin/' + ${product.images[0].path}}" alt="product image" src="">
+                        </div>
+                    </div>
+                </div>
+                <!-- Big images column -->
+                <div class="col-lg-6 p-0">
+                    <div class="cl-item">
+                        <div class="cl-pic" style="max-width:none">
+                            <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
+                            <img style="height: calc(256px * 2); width: calc(385px * 2);"
+                                 th:src="@{'/images/amin/' + ${product.images[0].path}}" alt="product image" src="">
+                        </div>
+                    </div>
+                </div>
+                <!-- To Cart Button column -->
+                <div class="col-lg-4 p-0">
+                    <div class="cl-item">
+                        <div class="cl-text">
+                            <div class="label margin-bottom-35px">
+                                <span style="font-size: 24px"
+                                      th:text="${product.category.title}">
+                                </span>
+                            </div>
+
+                            <ul style="margin-bottom:35px">
+                                <li>by <span>Admin</span></li>
+                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                <li><i class="fa fa-comment-o"></i> 20</li>
+                            </ul>
+
+                            <div>
+                                <div class="catalog__product-card__price margin-left-8px
+                                margin-bottom-35px font-size-36px">
+                                    <span th:text="${product.price}">Price of product</span>
+                                </div>
+
+                                <div class="catalog__product-card__price">
+                                    <span th:text="'руб'">RUR</span>
+                                </div>
+                            </div>
+
+                            <a sec:authorize="isAnonymous()"
+                               class="catalog__product-card__price btn-to-cart margin-8px color-white"
+                               th:href="@{'/login'}"
+                               th:text="'Add To Cart'"
+                               style="font-size: 26px; font-weight: 700"></a>
+                            <a sec:authorize="isAuthenticated()" th:id="${product.id}" th:onclick="'addToCartByProdId('+${product.id}+')'"
+                               class="catalog__product-card__price btn-to-cart margin-8px color-white"
+                               th:text="${quantity} == 0 ? 'Add To Cart' : 'Add To Cart(' + ${quantity} + ')'"
+                               style="font-size: 26px; font-weight: 700; color: white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок В корзину End -->
+
+            <!-- Левый Блок Подробное описание and Comments Begin -->
+            <div class="row">
+                <div class="col-lg-8 p-0">
+                    <div class="details-text">
+                        <h4 class="details-h4">Description</h4>
+                        <div class="dt-last-desc">
+                            <p th:text="${product.shortDescription}"></p>
+                            <p th:text="${product.fullDescription}"></p>
+                        </div>
+
+                        <!-- Блок Комментариев Begin -->
+                        <!-- //TODO переделать на поле комментарии Пользователя в Продукте -->
+                        <div class="dt-comment">
+                            <h4>3 comment</h4>
+                            <div class="dc-item">
+                                <div class="dc-pic">
+                                    <img th:src="@{/img/amin/products/details/comment/comment-1.jpg}" alt="" src="">
+                                </div>
+                                <div class="dc-text">
+                                    <h5>Brandon Kelley</h5>
+                                    <span class="c-date">15 Aug 2017</span>
+                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                        adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
+                                        dolore magnam.</p>
+                                    <a href="#" class="reply-btn"><span>Reply</span></a>
+                                </div>
+                            </div>
+                            <div class="dc-item reply-item">
+                                <div class="dc-pic">
+                                    <img th:src="@{/img/amin/products/details/comment/comment-2.jpg}" alt="" src="">
+                                </div>
+                                <div class="dc-text">
+                                    <h5>Brandon Kelley</h5>
+                                    <span class="c-date">15 Aug 2017</span>
+                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                        adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
+                                        dolore magnam.</p>
+                                    <a href="#" class="reply-btn"><span>Reply</span></a>
+                                </div>
+                            </div>
+                            <div class="dc-item">
+                                <div class="dc-pic">
+                                    <img th:src="@{/img/amin/products/details/comment/comment-3.jpg}" alt="" src="">
+                                </div>
+                                <div class="dc-text">
+                                    <h5>Matthew Nelson</h5>
+                                    <span class="c-date">15 Aug 2017</span>
+                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                        adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
+                                        dolore magnam.</p>
+                                    <a href="#" class="reply-btn"><span>Reply</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dt-leave-comment">
+                            <h4>Leave a comment</h4>
+                            <form action="#">
+                                <div class="input-list">
+                                    <label>
+                                        <input type="text" placeholder="Name">
+                                    </label>
+                                    <label>
+                                        <input type="text" placeholder="Email">
+                                    </label>
+                                    <label>
+                                        <input type="text" placeholder="Website">
+                                    </label>
+                                </div>
+                                <label>
+                                    <textarea placeholder="Message"></textarea>
+                                </label>
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правый блок Begin -->
+                <div class="col-lg-4 col-md-7">
+                    <div class="sidebar-option">
+                        <div class="hardware-guides">
+                            <div class="section-title">
+                                <h5>Hardware guides</h5>
+                            </div>
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img th:src="@{/img/amin/trending/trending-1.jpg}" alt="trending-1.jpg" src="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="#">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
+                                    </h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 12</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img th:src="@{/img/amin/trending/trending-2.jpg}" alt="trending-2.jpg" src="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="#">Facebook wants to read your thoughts with its augmented...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 12</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img th:src="@{/img/amin/trending/trending-3.jpg}" alt="trending-3.jpg" src="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660 Ti and 32GB of RAM is down...</a>
+                                    </h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 12</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insta-media">
+                            <div class="section-title">
+                                <h5>Instagram</h5>
+                            </div>
+                            <div class="insta-pic">
+                                <img th:src="@{/img/amin/instagram/ip-1.jpg}" alt="instagram ip-1.jpg" src="">
+                                <img th:src="@{/img/amin/instagram/ip-2.jpg}" alt="instagram ip-2.jpg" src="">
+                                <img th:src="@{/img/amin/instagram/ip-3.jpg}" alt="instagram ip-3.jpg" src="">
+                                <img th:src="@{/img/amin/instagram/ip-4.jpg}" alt="instagram ip-4.jpg" src="">
+                            </div>
+                        </div>
+
+                        <div class="best-of-post">
+                            <div class="section-title">
+                                <h5>Best of</h5>
+                            </div>
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-1" data-cpvalue="95"
+                                                  data-cpcolor="#c20000"></span>
+                                            <div class="review-point">9.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-2" data-cpvalue="85"
+                                                  data-cpcolor="#c20000"></span>
+                                            <div class="review-point">8.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-3" data-cpvalue="80"
+                                                  data-cpcolor="#c20000"></span>
+                                            <div class="review-point">8.0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Левый Блок Подробное описание and Comments End -->
+        </div>
+    </section>
+    <!-- Details Post Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+
+</html>

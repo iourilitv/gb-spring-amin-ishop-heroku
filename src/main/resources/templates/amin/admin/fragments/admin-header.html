@@ -1,0 +1,61 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<superheader th:fragment="header (filterDef)">
+
+    <!-- Header Section Begin -->
+    <header class="header-section">
+        <!-- overhead login line -->
+        <div class="ht-options">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="ht-widget">
+                            <ul>
+                                <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
+
+                                <li><i class="fa fa-clock-o"></i> May 21, 2020</li>
+
+                                <li class="signup-switch signup-open">
+                                    <a sec:authorize="isAnonymous()" class="fa fa-sign-out login-link"
+                                       th:href="@{'/login'}" th:text="' Login'"></a>
+                                    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                                        <button class="fa fa-sign-out login-link cancel-button-style" type="submit">Logout</button>
+                                    </form>
+                                </li>
+
+                                <li>
+                                    <a sec:authorize="isAnonymous()" class="fa login-link"
+                                       th:href="@{'/register/showForm'}" th:text="' Register'">
+                                    </a>
+                                    <a sec:authorize="isAuthenticated()" sec:authentication="principal.username"
+                                       class="fa login-link"
+                                       th:href="@{'/profile'}">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-4" style="display: flex">
+                        <div style="width: 50%">
+                            <a class="fa login-link" th:href="@{'/'}"
+                               style="padding-top: 5px; color: steelblue">Leave Admin Mode</a>
+                        </div>
+
+                        <div class="ht-social" style="width: 50%">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-envelope-o"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+</superheader>

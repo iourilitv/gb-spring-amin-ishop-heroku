@@ -1,0 +1,151 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Cart</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+
+    <!-- Подключаем скрипты для Websocket -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/amin/topics/change-quantity.js}"></script>
+</head>
+
+<body>
+<!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
+<!--/*@thymesVar id="categories" type=""*/-->
+<!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
+<!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
+<!--/*@thymesVar id="cartItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
+
+    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+<superheader th:replace="/amin/fragments/header.html :: header(
+        activePage=${activePage}, categories=${categories}, filterDef='',
+        cartItemsQuantity=${cartItemsQuantity})"></superheader>
+
+    <!-- Page Preloder, Humberger Menu, Header Section End -->
+    
+    <!-- Items list Section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- Блок Хлебные крошки and Product title Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/profile'}">Profile</a>
+                                <span>Shopping Cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки and Product title  End -->
+
+            <!-- Table of CartItems list Begin -->
+            <div class="col-lg-12 p-0">
+                <h4 th:if="${cart.cartItems.isEmpty()}"
+                    class="color-white">The shopping cart is empty!</h4>
+                <table th:unless="${cart.cartItems.isEmpty()}"
+                        class="table color-white">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>price</th>
+                            <th>quantity</th>
+                            <th>cost</th>
+                            <th>operations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="cartItem, itrStat : ${cart.cartItems}">
+                            <td th:text="${itrStat.index + 1}"></td>
+
+                            <td th:text="${cartItem.product.id}"></td>
+
+                            <td style="width: 50%">
+                                <a th:href="@{/catalog/{prod_id}/details(prod_id = ${cartItem.product.id})}"
+                                   target="_blank" th:text="${cartItem.product.title}">
+                                </a>
+                            </td>
+
+                            <td th:text="${cartItem.product.price}"></td>
+
+                            <td>
+                                <label>
+                                    <input type="number" th:id="'quantity' + ${cartItem.product.id}"
+                                           th:value="${cartItem.quantity}" style="width: 100px"
+                                           th:onchange="'changeQuantity('+${cartItem.product.id}+')'">
+                                </label>
+                            </td>
+
+                            <td th:id="'cartItemCost' + ${cartItem.product.id}" th:text="${cartItem.itemCosts}"></td>
+
+                            <td>
+                                <a class="btn btn-warning" th:href="@{'/profile/cart/delete/' + ${cartItem.product.id} + '/prod_id'}"
+                                   style="font-size: 11px">Delete</a>
+<!--                                <a class="btn btn-info" th:href="@{'/profile/cart/saveForLater/' + ${product.id}}">Save for later</a>-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th colspan="5">Total in cart:</th>
+
+                            <td id="totalCost" th:text="${cart.totalCost}"></td>
+                            <!-- button Clear the cart -->
+                            <td>
+                                <a class="btn btn-reset" th:href="@{'/profile/cart/clear'}">Clear</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div th:unless="${cart.cartItems.isEmpty()}">
+                    <!-- button Proceed to checkout(.. items) -->
+                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/proceedToCheckout'}">Proceed to checkout</a>
+                </div>
+            </div>
+            <!-- Table of CartItems list End -->
+        </div>
+    </section>
+    <!-- Items list Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
+    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/amin/main.js}"></script>
+</body>
+
+</html>
