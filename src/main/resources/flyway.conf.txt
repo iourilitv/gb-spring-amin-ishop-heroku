@@ -1,0 +1,9 @@
+#flyway.url=jdbc:mysql://u4p9c3m7pwjlm2dh:giwc7wudvgf88n3y@sabaik6fx8he7pua.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/oc2boo0465ze9f2r?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+#flyway.schemas=oc2boo0465ze9f2r
+#flyway.user=u4p9c3m7pwjlm2dh
+#flyway.password=giwc7wudvgf88n3y
+
+flyway.url=jdbc:mysql://vto4nq1wmzuav3kg:c3eu9bkmhy5bgyrr@m60mxazb4g6sb4nn.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/pj17thr7c5avnehc?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+flyway.schemas=pj17thr7c5avnehc
+flyway.user=vto4nq1wmzuav3kg
+flyway.password=c3eu9bkmhy5bgyrr
