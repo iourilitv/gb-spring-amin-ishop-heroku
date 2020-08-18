@@ -243,6 +243,7 @@
 <!--            </plugin>-->
 <!--        </plugins>-->
 <!--    </build>-->
+
     <build>
         <finalName>gb-spring-ishop-heroku</finalName>
         <plugins>
