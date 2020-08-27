@@ -32,8 +32,8 @@
 <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
-        filterDef='')"></superheader>
+<superheader th:replace="~{amin/admin/fragments/admin-header.html :: header(
+        filterDef='')}"></superheader>
 <!-- Page Preloder, Humberger Menu, Header Section End -->
 
 <!-- Items list Section Begin -->
@@ -218,7 +218,7 @@
 <!-- Items list Section End -->
 
 <!-- Footer Section Begin -->
-<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<footer th:replace="~{amin/admin/fragments/admin-footer.html}"></footer>
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->

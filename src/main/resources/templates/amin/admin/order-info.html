@@ -33,9 +33,8 @@
 <!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
-        filterDef='')"></superheader>
-
+    <superheader th:replace="~{amin/admin/fragments/admin-header.html :: header(
+        filterDef='')}"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Order Details Section Begin -->
@@ -175,7 +174,7 @@
     <!-- Order Details Section End -->
 
     <!-- Footer Section Begin -->
-    <footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+    <footer th:replace="~{amin/admin/fragments/admin-footer.html}"></footer>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->

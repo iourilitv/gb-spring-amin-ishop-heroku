@@ -31,9 +31,9 @@
 <!--/*@thymesVar id="activePage" type="java.lang.String"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <superheader th:replace="/amin/fragments/header.html :: header(
+    <superheader th:replace="~{amin/fragments/header.html :: header(
         activePage=${activePage}, categories=${categories}, filterDef='',
-        cartItemsQuantity=${cartItemsQuantity})"></superheader>
+        cartItemsQuantity=${cartItemsQuantity})}"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Items list Section Begin -->
@@ -67,7 +67,7 @@
     <!-- Items list Section End -->
 
     <!-- Footer Section Begin -->
-    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <footer th:replace="~{amin/fragments/footer.html}"></footer>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->

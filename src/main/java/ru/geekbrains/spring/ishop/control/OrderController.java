@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
-import ru.geekbrains.spring.ishop.informing.rabbit.RabbitSender;
 import ru.geekbrains.spring.ishop.informing.subjects.OrderSubject;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
@@ -30,16 +29,14 @@ public class OrderController {
     private final ShoppingCartService cartService;
     private final OrderService orderService;
     private final OrderFilter orderFilter;
-    private final RabbitSender rabbitSender;
     private final OrderSubject orderSubject;
 
     @Autowired
-    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, RabbitSender rabbitSender, OrderSubject orderSubject) {
+    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, OrderSubject orderSubject) {
         this.categoryService = categoryService;
         this.cartService = cartService;
         this.orderService = orderService;
         this.orderFilter = orderFilter;
-        this.rabbitSender = rabbitSender;
         this.orderSubject = orderSubject;
     }
 
@@ -77,12 +74,6 @@ public class OrderController {
 
     @GetMapping("/proceedToCheckout")
     public RedirectView proceedToCheckoutOrder() {
-        //отправляем сообщение в RabbitReceiver в другом сервисе
-        try {
-            rabbitSender.sendMessage("Create");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return new RedirectView("/amin/profile/order/show/0/order_id");
     }
 

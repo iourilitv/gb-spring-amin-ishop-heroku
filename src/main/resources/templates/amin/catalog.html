@@ -36,10 +36,10 @@
 <!--/*@thymesVar id="categories" type=""*/-->
 <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
 
-<!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="/amin/fragments/header.html :: header(
+    <!-- Page Preloder, Humberger Menu, Header Section Begin -->
+    <superheader th:replace="~{amin/fragments/header.html :: header(
     activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
-    cartItemsQuantity=${cartItemsQuantity})"></superheader>
+    cartItemsQuantity=${cartItemsQuantity})}"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!--  Product cards(was Categories Grid) Section Begin -->
@@ -237,7 +237,7 @@
     <!-- Product cards(was Categories Grid) Section End -->
 
     <!-- Footer Section Begin -->
-    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <footer th:replace="~{amin/fragments/footer.html}"></footer>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->

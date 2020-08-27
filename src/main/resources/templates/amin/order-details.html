@@ -33,10 +33,9 @@
 <!--/*@thymesVar id="delivery" type="ru.geekbrains.spring.ishop.utils.SystemDelivery"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="/amin/fragments/header.html :: header(
+    <superheader th:replace="~{amin/fragments/header.html :: header(
         activePage='', categories=${categories}, filterDef='',
-        cartItemsQuantity=${cartItemsQuantity})"></superheader>
-
+        cartItemsQuantity=${cartItemsQuantity})}"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
 
     <!-- Order Details Section Begin -->
@@ -184,7 +183,7 @@
     <!-- Order Details Section End -->
 
     <!-- Footer Section Begin -->
-    <footer th:replace="/amin/fragments/footer.html"></footer>
+    <footer th:replace="~{amin/fragments/footer.html}"></footer>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->

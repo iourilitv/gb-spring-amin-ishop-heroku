@@ -27,14 +27,13 @@
     <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
 </head>
 
-
 <body>
 <!--/*@thymesVar id="id" type="ru.geekbrains.spring.ishop.entity.User"*/-->
 <!--/*@thymesVar id="role" type="ru.geekbrains.spring.ishop.entity.Role"*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="/amin/admin/fragments/admin-header.html :: header(
-        filterDef='')"></superheader>
+<superheader th:replace="~{amin/admin/fragments/admin-header.html :: header(
+        filterDef='')}"></superheader>
 <!-- Page Preloder, Humberger Menu, Header Section End -->
 
 
@@ -218,7 +217,7 @@
 <!-- Items list Section End -->
 
 <!-- Footer Section Begin -->
-<footer th:replace="/amin/admin/fragments/admin-footer.html"></footer>
+<footer th:replace="~{amin/admin/fragments/admin-footer.html}"></footer>
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
