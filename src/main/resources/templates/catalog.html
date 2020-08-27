@@ -16,20 +16,20 @@
     <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/my-changes.css}" type="text/css">
 
     <!-- Подключаем скрипты для Websocket -->
     <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
     <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
-    <script type="text/javascript" th:src="@{/js/amin/topics/add-to-cart.js}"></script>
+    <script type="text/javascript" th:src="@{/js/topics/add-to-cart.js}"></script>
 </head>
 
 <body>
@@ -37,7 +37,7 @@
 <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-    <superheader th:replace="~{amin/fragments/header.html :: header(
+    <superheader th:replace="~{fragments/header.html :: header(
     activePage=${activePage}, categories=${categories}, filterDef=${filterDef},
     cartItemsQuantity=${cartItemsQuantity})}"></superheader>
     <!-- Page Preloder, Humberger Menu, Header Section End -->
@@ -163,7 +163,7 @@
                                 <!-- card img -->
                                 <a class="cg-pic set-bg">
                                     <!-- //TODO p.images[0] - Убрать жесткую привязку к позиции картинки в коллекции -->
-                                    <img th:src="@{'/images/amin/' + ${p.images[0].path}}" alt="product card item image" src="">
+                                    <img th:src="@{'/images/' + ${p.images[0].path}}" alt="product card item image" src="">
                                 </a>
                                 <div>
                                     <a class="catalog__product-card__category" th:href="@{'/catalog/all?category=' + ${p.category.id}}">
@@ -237,18 +237,18 @@
     <!-- Product cards(was Categories Grid) Section End -->
 
     <!-- Footer Section Begin -->
-    <footer th:replace="~{amin/fragments/footer.html}"></footer>
+    <footer th:replace="~{fragments/footer.html}"></footer>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{/js/amin/bootstrap.min.js}"></script>
-    <script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
-    <script th:src="@{/js/amin/circle-progress.min.js}"></script>
-    <script th:src="@{/js/amin/jquery.barfiller.js}"></script>
-    <script th:src="@{/js/amin/jquery.slicknav.js}"></script>
-    <script th:src="@{/js/amin/owl.carousel.min.js}"></script>
-    <script th:src="@{/js/amin/main.js}"></script>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/circle-progress.min.js}"></script>
+    <script th:src="@{/js/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 
 </html>
