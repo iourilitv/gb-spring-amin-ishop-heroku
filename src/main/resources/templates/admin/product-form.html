@@ -15,15 +15,15 @@
     <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" th:href="@{/css/amin/bootstrap.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/font-awesome.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/elegant-icons.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/owl.carousel.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/barfiller.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/magnific-popup.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/slicknav.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/style.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/amin/my-changes.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/my-changes.css}" type="text/css">
 </head>
 
 <body>
@@ -32,7 +32,7 @@
 <!--/*@thymesVar id="filterDef" type="java.lang.StringBuilder"*/-->
 
 <!-- Page Preloder, Humberger Menu, Header Section Begin -->
-<superheader th:replace="~{amin/admin/fragments/admin-header.html :: header(
+<superheader th:replace="~{admin/fragments/admin-header.html :: header(
         filterDef='')}"></superheader>
 <!-- Page Preloder, Humberger Menu, Header Section End -->
 
@@ -163,17 +163,17 @@
 <!-- Admin Product Form Section End -->
 
 <!-- Footer Section Begin -->
-<footer th:replace="~{amin/admin/fragments/admin-footer.html}"></footer>
+<footer th:replace="~{admin/fragments/admin-footer.html}"></footer>
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
-<script th:src="@{/js/amin/jquery-3.3.1.min.js}"></script>
-<script th:src="@{/js/amin/bootstrap.min.js}"></script>
-<script th:src="@{/js/amin/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{/js/amin/circle-progress.min.js}"></script>
-<script th:src="@{/js/amin/jquery.barfiller.js}"></script>
-<script th:src="@{/js/amin/jquery.slicknav.js}"></script>
-<script th:src="@{/js/amin/owl.carousel.min.js}"></script>
-<script th:src="@{/js/amin/main.js}"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/circle-progress.min.js}"></script>
+<script th:src="@{/js/jquery.barfiller.js}"></script>
+<script th:src="@{/js/jquery.slicknav.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>
