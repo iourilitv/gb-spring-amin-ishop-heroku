@@ -36,7 +36,7 @@ public class RegistrationController {
     @GetMapping("/showForm")
     public String showRegistrationFormPage(Model theModel) {
         theModel.addAttribute("systemUser", new SystemUser());
-        return "amin/registration-form";
+        return "registration-form";
     }
 
     // Binding Result после @ValidModel !!!
@@ -48,7 +48,7 @@ public class RegistrationController {
         String userName = theSystemUser.getUserName();
         logger.debug("Processing registration form for: " + userName);
         if (theBindingResult.hasErrors()) {
-            return "amin/registration-form";
+            return "registration-form";
         }
         User existing = userService.findByUserName(userName);
         if (existing != null) {
@@ -56,7 +56,7 @@ public class RegistrationController {
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "User with current username already exists");
             logger.debug("User name already exists.");
-            return "amin/registration-form";
+            return "registration-form";
         }
         userService.save(theSystemUser);
         logger.debug("Successfully created user: " + userName);
@@ -64,7 +64,7 @@ public class RegistrationController {
         theModel.addAttribute("confirmationMessage", "You have been registered successfully!");
         theModel.addAttribute("confirmationAHref", "/login");
         theModel.addAttribute("confirmationAText", "Login with new user");
-        return "amin/confirmation";
+        return "confirmation";
     }
 
 }

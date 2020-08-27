@@ -65,7 +65,7 @@ public class CatalogController {
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
 
         //вызываем файл catalog.html
-        return "amin/catalog";
+        return "catalog";
     }
 
     @GetMapping("/{prod_id}/details")
@@ -79,7 +79,7 @@ public class CatalogController {
         //добавляем общее количество товаров в корзине
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-        return "amin/product-details";
+        return "product-details";
     }
 
 }

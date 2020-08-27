@@ -50,14 +50,14 @@ public class UserProfileFormController {
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
 
-        return "amin/profile-form";
+        return "profile-form";
     }
 
     @GetMapping("/change/password/showForm")
     public String showPasswordChangingPage(HttpSession session, Model theModel) {
         User theUser = (User) session.getAttribute("user");
         theModel.addAttribute("systemUser", new SystemUser(theUser));
-        return "amin/password-changing-form";
+        return "password-changing-form";
     }
 
     @PostMapping("/process/change/password")
@@ -68,14 +68,14 @@ public class UserProfileFormController {
         String userName = theSystemUser.getUserName();
         logger.debug("Processing password changing form for: " + userName);
         if (theBindingResult.hasErrors()) {
-            return "amin/password-changing-form";
+            return "password-changing-form";
         }
         User existing = userService.findByUserName(userName);
         if (existing == null) {
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "There is no user with current username!");
             logger.debug("There is no user with current username.");
-            return "amin/password-changing-form";
+            return "password-changing-form";
         }
         userService.updatePassword(userName, theSystemUser.getPassword());
         logger.debug("Successfully updated user password: " + userName);
@@ -83,7 +83,7 @@ public class UserProfileFormController {
         theModel.addAttribute("confirmationMessage", "The password has been changed successfully!");
         theModel.addAttribute("confirmationAHref", "/");
         theModel.addAttribute("confirmationAText", "Go to home page");
-        return "amin/confirmation";
+        return "confirmation";
     }
 
     @PostMapping("/process/update/deliveryAddress")
@@ -99,7 +99,7 @@ public class UserProfileFormController {
             userService.updateDeliveryAddress(user, deliveryAddress);
             session.setAttribute("user", userService.findById(user.getId()));
         }
-        return new RedirectView("/amin/profile/form/show");
+        return new RedirectView("/profile/form/show");
     }
 
     @PostMapping("/process/update/first_name")
@@ -113,7 +113,7 @@ public class UserProfileFormController {
         User user = (User)session.getAttribute("user");
         userService.updateFirstName(user, first_name);
         session.setAttribute("user", userService.findById(user.getId()));
-        return new RedirectView("/amin/profile/form/show");
+        return new RedirectView("/profile/form/show");
     }
 
     @PostMapping("/process/update/last_name")
@@ -127,7 +127,7 @@ public class UserProfileFormController {
         User user = (User)session.getAttribute("user");
         userService.updateLastName(user, last_name);
         session.setAttribute("user", userService.findById(user.getId()));
-        return new RedirectView("/amin/profile/form/show");
+        return new RedirectView("/profile/form/show");
     }
 
 }

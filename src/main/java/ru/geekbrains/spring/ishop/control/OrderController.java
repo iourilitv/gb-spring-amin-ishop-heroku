@@ -68,18 +68,18 @@ public class OrderController {
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
 
         //вызываем файл orders.html
-        return "amin/orders";
+        return "orders";
     }
 
     @GetMapping("/proceedToCheckout")
     public RedirectView proceedToCheckoutOrder() {
-        return new RedirectView("/amin/profile/order/show/0/order_id");
+        return new RedirectView("/profile/order/show/0/order_id");
     }
 
     @GetMapping("/rollBack")
     public RedirectView proceedToRollBackToCart(HttpSession session) {
         orderService.rollBackToCart(session);
-        return new RedirectView("/amin/profile/cart");
+        return new RedirectView("/profile/cart");
     }
 
     @GetMapping("/create")
@@ -91,9 +91,9 @@ public class OrderController {
             session.removeAttribute("order");
             //send email to the user
             orderSubject.requestToSendMessage(order, TextTemplates.SUBJECT_NEW_ORDER_CREATED);
-            return new RedirectView("/amin/profile/order/all");
+            return new RedirectView("/profile/order/all");
         }
-        return new RedirectView("/amin/profile/order/rollBack");
+        return new RedirectView("/profile/order/rollBack");
     }
 
     @GetMapping("/show/{order_id}/order_id")
@@ -108,7 +108,7 @@ public class OrderController {
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
 
-        return "amin/order-details";
+        return "order-details";
     }
 
 }

@@ -39,7 +39,7 @@ public class ShoppingCartController {
         //добавляем общее количество товаров в корзине
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-        return "amin/cart";
+        return "cart";
     }
 
     @GetMapping("/delete/{prod_id}/prod_id")

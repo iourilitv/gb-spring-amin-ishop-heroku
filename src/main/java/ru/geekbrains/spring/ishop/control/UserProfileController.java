@@ -33,7 +33,7 @@ public class UserProfileController {
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
 
-        return "amin/profile";
+        return "profile";
     }
 
 }

@@ -13,7 +13,7 @@ public class LoginController {
     public String showMyLoginPage(HttpServletRequest request, HttpSession session) {
         //it is required in order to redirect on the previous page before the login form showing
         session.setAttribute("referer", request.getHeader("referer"));
-        return "amin/login";
+        return "login";
     }
 
 }
