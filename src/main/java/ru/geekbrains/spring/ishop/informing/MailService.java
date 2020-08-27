@@ -43,9 +43,11 @@ public class MailService implements INotifier {
                     logger.info("******** sendMessageFromQueue() ***********\n" + "QueueToSend: " + queueToSend);
                     AbstractMailMessage message = queueToSend.remove();
                     logger.info("******** Trying to send the message from queue ***********\n" + "Message subject: " + message.getSubject());
-                    if(message instanceof OrderEmailMessage) {
-                        sendOrderMail((OrderEmailMessage) message);
-                    }
+
+                    // it has been deactivated because it does not work on heroku.com(login: failed)
+//                    if(message instanceof OrderEmailMessage) {
+//                        sendOrderMail((OrderEmailMessage) message);
+//                    }
 
                     //the same if() for another types of AbstractMailMessage
 

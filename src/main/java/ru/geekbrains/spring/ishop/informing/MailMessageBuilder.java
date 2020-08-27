@@ -28,7 +28,7 @@ public class MailMessageBuilder {
         }
         context.setVariable("notice", notice);
 
-        return templateEngine.process("amin/messages/order-mail", context);
+        return templateEngine.process("messages/order-mail", context);
     }
 
 }
