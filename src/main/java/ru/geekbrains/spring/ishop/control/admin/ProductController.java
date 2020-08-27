@@ -67,7 +67,7 @@ public class ProductController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Products");
-        return "amin/admin/products";
+        return "admin/products";
     }
 
     @GetMapping("/create")
@@ -76,7 +76,7 @@ public class ProductController {
             Product product = new Product();
             session.setAttribute("product", product);
         }
-        return new RedirectView("/amin/admin/product/edit/0/prod_id");
+        return new RedirectView("/admin/product/edit/0/prod_id");
     }
 
     @GetMapping("/edit/{prod_id}/prod_id")
@@ -101,7 +101,7 @@ public class ProductController {
         model.addAttribute("categories", categories);
         model.addAttribute("productErrors", session.getAttribute("productErrors"));
 
-        return "amin/admin/product-form";
+        return "admin/product-form";
     }
 
     @GetMapping("/delete/{prod_id}/prod_id")
@@ -137,9 +137,9 @@ public class ProductController {
         if(bindingResult.hasErrors()){
             session.setAttribute("productErrors", bindingResult.getAllErrors());
             if(prod_id == null) {
-                return new RedirectView("/amin/admin/product/edit/0/prod_id");
+                return new RedirectView("/admin/product/edit/0/prod_id");
             } else {
-                return new RedirectView("/amin/admin/product/edit/" + prod_id + "/prod_id");
+                return new RedirectView("/admin/product/edit/" + prod_id + "/prod_id");
             }
         }
 
@@ -167,7 +167,7 @@ public class ProductController {
         }
         productService.addImage(product, productImage);
         productService.save(product);
-        return new RedirectView("/amin/admin/product/all");
+        return new RedirectView("/admin/product/all");
     }
 
 }

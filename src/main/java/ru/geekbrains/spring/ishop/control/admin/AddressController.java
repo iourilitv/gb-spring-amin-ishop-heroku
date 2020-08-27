@@ -20,7 +20,7 @@ public class AddressController {
     @GetMapping("/all")
     public String addressesList(@RequestParam Map<String, String> params,
                             Model model) {
-        return "amin/admin/addresses";
+        return "admin/addresses";
     }
 
 }

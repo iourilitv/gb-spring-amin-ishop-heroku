@@ -49,13 +49,13 @@ public class CategoryController {
         model.addAttribute("page", page);
         //активную страницу
         model.addAttribute("activePage", "Categories");
-        return "amin/admin/categories";
+        return "admin/categories";
     }
 
     @GetMapping("/create")
     public RedirectView createNewCategory(Model model) {
         model.addAttribute("category", new Category());
-        return new RedirectView("/amin/admin/category/edit/0/cat_id");
+        return new RedirectView("/admin/category/edit/0/cat_id");
     }
 
     @GetMapping("/edit/{cat_id}/cat_id")
@@ -70,7 +70,7 @@ public class CategoryController {
 
         //TODO доделать как ProductController
 
-        return "amin/admin/category-form";
+        return "admin/category-form";
     }
 
     @GetMapping("/delete/{cat_id}/cat_id")
@@ -88,7 +88,7 @@ public class CategoryController {
 //            return "redirect:/admin/product/category/form";
 //        }
         categoryService.save(category);
-        return new RedirectView("/amin/admin/category/all");
+        return new RedirectView("/admin/category/all");
     }
 
     @PostMapping("/process/edit")
@@ -96,7 +96,7 @@ public class CategoryController {
                                       BindingResult bindingResult, HttpSession session) {
         //TODO доделать
 
-        return new RedirectView("/amin/admin/category/all");
+        return new RedirectView("/admin/category/all");
     }
 
 }

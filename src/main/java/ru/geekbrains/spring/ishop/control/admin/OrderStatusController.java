@@ -20,7 +20,7 @@ public class OrderStatusController {
     @GetMapping("/all")
     public String orderStatusesList(@RequestParam Map<String, String> params,
                             Model model) {
-        return "amin/admin/order-statuses";
+        return "admin/order-statuses";
     }
     
 }

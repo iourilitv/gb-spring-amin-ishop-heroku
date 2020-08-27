@@ -48,7 +48,7 @@ public class UserController {
         model.addAttribute("roles", roles);
         //активную страницу
         model.addAttribute("activePage", "Users");
-        return "amin/admin/users";
+        return "admin/users";
     }
 
     @GetMapping("/reset/password/{user_id}/user_id")
@@ -59,7 +59,7 @@ public class UserController {
         //TODO replace user.getUserName(), for password, with a random secure password generator
         userService.updatePassword(user.getUserName(), user.getUserName());
 
-        return new RedirectView("/amin/admin/user/all");
+        return new RedirectView("/admin/user/all");
     }
 
     @GetMapping("/edit/{user_id}/user_id")
@@ -74,19 +74,19 @@ public class UserController {
         model.addAttribute("user", user);
         List<Role> remainingRoles = userService.getRemainingAvailableRoles(user_id);
         model.addAttribute("roles", remainingRoles);
-        return "amin/admin/user-form";
+        return "admin/user-form";
     }
 
     @GetMapping("/{user_id}/user_id/add/{role_id}/role_id")
     public RedirectView addRoleToUser(@PathVariable Long user_id, @PathVariable Short role_id, HttpSession session) {
         userService.addRoleToUser(user_id, role_id);
-        return new RedirectView("/amin/admin/user/edit/" + user_id + "/user_id");
+        return new RedirectView("/admin/user/edit/" + user_id + "/user_id");
     }
 
     @GetMapping("/{user_id}/user_id/remove/{role_id}/role_id")
     public RedirectView removeRoleFromUser(@PathVariable Long user_id, @PathVariable Short role_id, HttpSession session) {
         userService.removeRoleFromUser(user_id, role_id);
-        return new RedirectView("/amin/admin/user/edit/" + user_id + "/user_id");
+        return new RedirectView("/admin/user/edit/" + user_id + "/user_id");
     }
 
     @GetMapping("/delete/{user_id}/user_id")

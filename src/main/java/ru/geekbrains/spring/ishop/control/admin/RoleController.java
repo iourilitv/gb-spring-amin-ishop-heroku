@@ -31,7 +31,7 @@ public class RoleController {
 
     @GetMapping
     public String sectionRoot() {
-        return "redirect:/admin/role/all";
+        return "redirect:/admin/user_role/all";
     }
 
     @GetMapping("/all")
@@ -48,13 +48,13 @@ public class RoleController {
 //        model.addAttribute("page", page);
 //        //активную страницу
 //        model.addAttribute("activePage", "Categories");
-        return "amin/admin/roles";
+        return "admin/roles";
     }
 
     @GetMapping("/create")
     public RedirectView createNewRole(Model model) {
 //        model.addAttribute("category", new Category());
-        return new RedirectView("/amin/admin/role/edit/0/role_id");
+        return new RedirectView("/admin/role/edit/0/role_id");
     }
 
     @GetMapping("/edit/{role_id}/role_id")
@@ -69,14 +69,14 @@ public class RoleController {
 
         //TODO доделать как ProductController
 
-        return "amin/admin/role-form";
+        return "admin/role-form";
     }
 
     @GetMapping("/delete/{role_id}/role_id")
     public String deleteCategory(@PathVariable Long role_id) {
 //        Category category = categoryService.findById(cat_id);
 //        categoryService.delete(category);
-        return "redirect:/admin/role/all";
+        return "redirect:/admin/user_role/all";
     }
 
     @PostMapping("/process/create")
@@ -87,7 +87,7 @@ public class RoleController {
 //            return "redirect:/admin/product/category/form";
 //        }
 //        categoryService.save(category);
-        return new RedirectView("/amin/admin/role/all");
+        return new RedirectView("/admin/role/all");
     }
 
     @PostMapping("/process/edit")
@@ -95,7 +95,7 @@ public class RoleController {
                                       BindingResult bindingResult, HttpSession session) {
         //TODO доделать
 
-        return new RedirectView("/amin/admin/category/all");
+        return new RedirectView("/admin/category/all");
     }
 
 }

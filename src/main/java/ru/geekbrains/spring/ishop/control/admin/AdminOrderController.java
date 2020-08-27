@@ -65,7 +65,7 @@ public class AdminOrderController {
         //коллекцию статусов заказа
         model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
 
-        return "amin/admin/orders-list";
+        return "admin/orders-list";
     }
 
     @GetMapping("/show/{order_id}/order_id")
@@ -74,7 +74,7 @@ public class AdminOrderController {
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());
-        return "amin/admin/order-info";
+        return "admin/order-info";
     }
 
     @GetMapping("/edit/{order_id}/order_id")
@@ -85,13 +85,13 @@ public class AdminOrderController {
         model.addAttribute("orderStatuses", orderService.findAllOrderStatuses());
         model.addAttribute("orderStatus", systemOrder.getOrderStatus());
         model.addAttribute("delivery", systemOrder.getSystemDelivery());
-        return "amin/admin/order-form";
+        return "admin/order-form";
     }
 
     @GetMapping("/delete/{order_id}/order_id")
     public RedirectView removeOrder(@PathVariable("order_id") Long orderId) {
         orderService.delete(orderId);
-        return new RedirectView("/amin/admin/order/all");
+        return new RedirectView("/admin/order/all");
     }
 
     @GetMapping("/cancel/{order_id}/order_id")
@@ -99,7 +99,7 @@ public class AdminOrderController {
         orderService.cancelOrder(orderId);
         //send email to the user
         orderSubject.requestToSendMessage(orderService.findById(orderId), TextTemplates.SUBJECT_ORDER_STATUS_CHANGED);
-        return new RedirectView("/amin/admin/order/all");
+        return new RedirectView("/admin/order/all");
     }
 
     @PostMapping("/process/update/orderStatus")
@@ -113,7 +113,7 @@ public class AdminOrderController {
             //send email to the user
             orderSubject.requestToSendMessage(order, TextTemplates.SUBJECT_ORDER_STATUS_CHANGED);
         }
-        return new RedirectView("/amin/admin/order/edit/" +
+        return new RedirectView("/admin/order/edit/" +
                 systemOrder.getId() + "/order_id");
     }
 
@@ -127,7 +127,7 @@ public class AdminOrderController {
             //сохраняем изменение в БД
             orderService.updateDelivery(systemOrder);
         }
-        return new RedirectView("/amin/admin/order/edit/" +
+        return new RedirectView("/admin/order/edit/" +
                 systemOrder.getId() + "/order_id");
     }
 
