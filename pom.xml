@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>gb-lys</groupId>
-    <artifactId>gb-spring-ishop-heroku</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>gb-spring-ishop-heroku</name>
+    <artifactId>gb-spring-amin-ishop-heroku</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>gb-spring-amin-ishop-heroku</name>
     <description>A copy of my study project from the gb Spring 2 course to support a new team's project of gb team developing course.</description>
 
     <properties>
