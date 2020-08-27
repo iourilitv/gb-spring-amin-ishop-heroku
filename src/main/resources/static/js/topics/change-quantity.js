@@ -6,7 +6,7 @@ window.onload = connect();
 function connect() {
     /* ВНИМАНИЕ! Нужно обязательно добавлять префикс /amin
     из параметра server.servlet.context-path=/amin в application.properties */
-    var socket = new SockJS('/amin/changeQuantity');
+    var socket = new SockJS('/changeQuantity');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
