@@ -1,1 +1,1 @@
-web:    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
+web: java $JAVA_OPTS -jar target/gb-spring-amin-ishop-heroku-1.0.jar -Dserver.port=$PORT

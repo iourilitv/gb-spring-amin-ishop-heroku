@@ -1,3 +1,152 @@
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS products_images;
+DROP TABLE IF EXISTS order_statuses;
+
+CREATE TABLE `categories` (
+                              `id` smallint NOT NULL AUTO_INCREMENT,
+                              `title` varchar(255) NOT NULL,
+                              PRIMARY KEY (`id`),
+                              UNIQUE KEY `title_UNIQUE` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+    COMMENT='SMALLINT == short';
+
+CREATE TABLE products (
+                          id bigint NOT NULL AUTO_INCREMENT,
+                          category_id smallint NOT NULL,
+                          vendor_code VARCHAR(8) NOT NULL,
+                          title VARCHAR(255) NOT NULL,
+                          short_description VARCHAR(1000) NOT NULL,
+                          full_description VARCHAR(5000) NOT NULL,
+                          price DECIMAL(19,2) NOT NULL,
+                          create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                          update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                          PRIMARY KEY (id),
+                          UNIQUE KEY UK_title_products (title),
+                          KEY fk_category_id_idx (category_id),
+                          CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES categories (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE products_images (
+                                 id bigint NOT NULL AUTO_INCREMENT,
+                                 product_id bigint NOT NULL,
+                                 path VARCHAR(250) NOT NULL,
+                                 PRIMARY KEY (id),
+                                 KEY fk_product_id_idx (product_id),
+                                 CONSTRAINT fk_product_id_images FOREIGN KEY (product_id) REFERENCES products (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `order_statuses` (
+                                  `id` smallint NOT NULL AUTO_INCREMENT,
+                                  `title` varchar(255) NOT NULL,
+                                  `description` text,
+                                  PRIMARY KEY (`id`),
+                                  UNIQUE KEY `title_UNIQUE` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+    COMMENT='SMALLINT == short';
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+drop table if exists orders;
+drop table if exists deliveries;
+drop table if exists order_item;
+drop table if exists users_roles;
+drop table if exists users;
+drop table if exists addresses;
+drop table if exists roles;
+
+CREATE TABLE `roles` (
+                         `id` smallint NOT NULL AUTO_INCREMENT,
+                         `name` varchar(255) NOT NULL,
+                         `description` varchar(5000) NOT NULL,
+                         PRIMARY KEY (`id`),
+                         UNIQUE KEY `UK_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `addresses` (
+                             `id` bigint NOT NULL AUTO_INCREMENT,
+                             `country` varchar(50) NOT NULL,
+                             `city` varchar(50) NOT NULL,
+                             `address` varchar(500) NOT NULL,
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `UK_city_address` (`city`, `address`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `users` (
+                         `id` bigint NOT NULL AUTO_INCREMENT,
+                         `username` varchar(255) NOT NULL,
+                         `password` char(80) NOT NULL,
+                         `first_name` varchar(255) NOT NULL,
+                         `last_name` varchar(255) NOT NULL,
+                         `phone_number` varchar(255) NOT NULL,
+                         `email` varchar(255) NOT NULL,
+                         `delivery_address_id` bigint NULL DEFAULT NULL,
+                         PRIMARY KEY (`id`),
+                         UNIQUE KEY `UK_username` (`username`),
+                         UNIQUE KEY `UK_email` (`email`),
+                         KEY `fk_users_delivery_address_id_idx` (`delivery_address_id`),
+                         CONSTRAINT `fk_users_delivery_address_id` FOREIGN KEY (`delivery_address_id`) REFERENCES `addresses` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `users_roles` (
+                               `user_id` bigint NOT NULL,
+                               `role_id` smallint NOT NULL,
+                               PRIMARY KEY (`user_id`, `role_id`),
+                               CONSTRAINT `fk_ur_user_id` FOREIGN KEY (`user_id`)
+                                   REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                               CONSTRAINT `fk_ur_role_id` FOREIGN KEY (`role_id`)
+                                   REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `order_item` (
+                              `id` bigint NOT NULL AUTO_INCREMENT,
+                              `order_id` bigint NOT NULL,
+                              `product_id` bigint NOT NULL,
+                              `item_price` decimal(19,2) NOT NULL,
+                              `quantity` int NOT NULL,
+                              `item_costs` decimal(19,2) NOT NULL,
+                              PRIMARY KEY (`id`),
+                              KEY `fk_oi_order_id_idx` (`order_id`),
+                              KEY `fk_oi_product_id_idx` (`product_id`),
+                              CONSTRAINT `fk_oi_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+                              CONSTRAINT `fk_oi_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `deliveries` (
+                              `id` bigint NOT NULL AUTO_INCREMENT,
+                              `order_id` bigint NOT NULL,
+                              `phone_number` varchar(255) NOT NULL,
+                              `delivery_address_id` bigint NOT NULL,
+                              `delivery_cost` decimal(19,2) NULL DEFAULT NULL,
+                              `delivery_expected_at` DATETIME NULL DEFAULT NULL,
+                              `delivered_at` DATETIME NULL DEFAULT NULL,
+                              PRIMARY KEY (`id`),
+                              KEY `fk_del_order_id_idx` (`order_id`),
+                              KEY `fk_del_delivery_address_id01_idx` (`delivery_address_id`),
+                              CONSTRAINT `fk_del_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+                              CONSTRAINT `fk_del_delivery_address_id` FOREIGN KEY (`delivery_address_id`) REFERENCES `addresses` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `orders` (
+                          `id` bigint NOT NULL AUTO_INCREMENT,
+                          `status_id` smallint NOT NULL,
+                          `user_id` bigint NOT NULL,
+                          `total_items_costs` decimal(19,2) NOT NULL,
+                          `total_costs` decimal(19,2) NOT NULL,
+                          `delivery_id` bigint NULL DEFAULT NULL,
+                          `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+                          `updated_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+                          PRIMARY KEY (`id`),
+                          KEY `fk_orders_status_id_idx` (`status_id`),
+                          KEY `fk_orders_user_id_idx` (`user_id`),
+                          KEY `fk_orders_delivery_id_idx` (`delivery_id`),
+                          CONSTRAINT `fk_orders_status_id` FOREIGN KEY (`status_id`) REFERENCES `order_statuses` (`id`),
+                          CONSTRAINT `fk_orders_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+                          CONSTRAINT `fk_orders_delivery_id` FOREIGN KEY (`delivery_id`) REFERENCES `deliveries` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+# filling database with some data
+
 INSERT INTO `categories` (`title`) VALUES
 ('Электроника'), ('Офисная техника'), ('Бытовая техника'),
 ('Обувь'), ('Одежда'), ('Книги'), ('Pets');
@@ -38,3 +187,17 @@ INSERT INTO `order_statuses` (`title`, `description`) VALUES
 ('Delivered', 'Доставлен: Заказ получен пользователем'),
 ('Completed', 'Выполнен(Закрыт): Заказ выполнен полностью(товар доставлен и оплата получена)'),
 ('Canceled', 'Отменен: Заказ отменен');
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO `roles` (`name`, `description`) VALUES
+('ROLE_SUPERADMIN', 'Главный администратор интернет-магазина. Доступ ко всем разделам магазина и всем операциям'),
+('ROLE_ADMIN', 'Администратор интернет-магазина. Доступ ко всем разделам магазина. Нет прав на создание и изменение администраторов'),
+('ROLE_EMPLOYEE', 'Сотрудник организации. Общий уровень доступа к внутренним ресурсам интернет-магазина. Нет доступа к пользователям'),
+('ROLE_MANAGER', 'Менеджер интернет-магазина. Доступ к заказам в магазине');
+
+INSERT INTO `addresses` (`country`, `city`, `address`)
+VALUES
+('USA', 'New York', '18a Diagon Alley'),
+('RF', 'Moscow', '12 Lenina');
+
