@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'ElegantIcons';
-	src:url('../../fonts/amin/ElegantIcons.eot');
-	src:url('../../fonts/amin/ElegantIcons.eot?#iefix') format('embedded-opentype'),
-		url('../../fonts/amin/ElegantIcons.woff') format('woff'),
-		url('../../fonts/amin/ElegantIcons.ttf') format('truetype'),
-		url('../../fonts/amin/ElegantIcons.svg#ElegantIcons') format('svg');
+	src:url('../fonts/amin/ElegantIcons.eot');
+	src:url('../fonts/amin/ElegantIcons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/amin/ElegantIcons.woff') format('woff'),
+		url('../fonts/amin/ElegantIcons.ttf') format('truetype'),
+		url('../fonts/amin/ElegantIcons.svg#ElegantIcons') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
