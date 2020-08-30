@@ -50,15 +50,13 @@ public class ProductService {
         return productRepository.findAll(filter.getSpec(), pageRequest);
     }
 
-//    @Transactional(readOnly = true)
-//    public Optional<Product> findByIdOptional(Long id) {
-//        return productRepository.findById(id).orElseThrow(() -> new NotFoundException("The Product with id=" + id + " is not found!"));
-//    }
+    //TODO for REST only temporarily
     @Transactional(readOnly = true)
     public Product findByIdOptional(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new NotFoundException("The Product with id=" + id + " is not found!"));
     }
 
+    //TODO replace with findByIdOptional without renaming
     public Product findById(Long id) {
         return productRepository.getOne(id);
     }
