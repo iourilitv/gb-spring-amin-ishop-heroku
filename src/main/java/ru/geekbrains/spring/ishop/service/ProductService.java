@@ -5,14 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.entity.ProductImage;
+import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.ProductImageRepository;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
 import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -35,11 +38,25 @@ public class ProductService {
         this.utilFilter = utilFilter;
     }
 
+    @Transactional(readOnly = true)
+    public List<Product> getAll() {
+        return productRepository.findAll();
+    }
+
     public Page<Product> findAll(ProductFilter filter, String property) {
         //инициируем объект пагинации с сортировкой
         Pageable pageRequest = PageRequest.of(utilFilter.getPageIndex(),
                 utilFilter.getLimit(), utilFilter.getDirection(), property);
         return productRepository.findAll(filter.getSpec(), pageRequest);
+    }
+
+//    @Transactional(readOnly = true)
+//    public Optional<Product> findByIdOptional(Long id) {
+//        return productRepository.findById(id).orElseThrow(() -> new NotFoundException("The Product with id=" + id + " is not found!"));
+//    }
+    @Transactional(readOnly = true)
+    public Product findByIdOptional(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new NotFoundException("The Product with id=" + id + " is not found!"));
     }
 
     public Product findById(Long id) {
