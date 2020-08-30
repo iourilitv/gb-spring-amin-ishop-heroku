@@ -11,10 +11,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import ru.geekbrains.spring.ishop.rest.converters.DeliveryToOutDeliveryConverter;
-import ru.geekbrains.spring.ishop.rest.converters.OrderItemToOutOrderItemConverter;
-import ru.geekbrains.spring.ishop.rest.converters.OrderToOutOrderConverter;
-import ru.geekbrains.spring.ishop.rest.converters.ProductToOutProductConverter;
+import ru.geekbrains.spring.ishop.rest.converters.*;
 
 import java.util.Locale;
 
@@ -53,6 +50,7 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addConverter(new OrderToOutOrderConverter());
         registry.addConverter(new OrderItemToOutOrderItemConverter());
         registry.addConverter(new DeliveryToOutDeliveryConverter());
+        registry.addConverter(new UserToOutUserConverter());
     }
 
 }

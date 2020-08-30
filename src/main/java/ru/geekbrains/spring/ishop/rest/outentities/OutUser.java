@@ -3,28 +3,26 @@ package ru.geekbrains.spring.ishop.rest.outentities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class OutUser extends AbstractOutEntity {
     private Long id;
 
-//    private String orderStatusTitle;
+    private String userName;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String phoneNumber;
+
+    private String email;
+
+    private String outDeliveryAddress;
+
+    //TODO add to the parent entity
+//    private LocalDateTime createdAt;
 //
-//    private OutUser outUser;
-//
-//    private String title;
-//
-//    private BigDecimal price;
-//
-//    private String shortDescription;
-//
-//    private String fullDescription;
-//
-//    private LocalDateTime createAt;
-//
-//    private LocalDateTime updateAt;
+//    private LocalDateTime updatedAt;
 
 }

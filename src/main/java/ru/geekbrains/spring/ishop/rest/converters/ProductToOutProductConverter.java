@@ -2,6 +2,7 @@ package ru.geekbrains.spring.ishop.rest.converters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Product;
 import ru.geekbrains.spring.ishop.rest.outentities.OutProduct;
@@ -18,7 +19,8 @@ public class ProductToOutProductConverter implements Converter<Product, OutProdu
     }
 
     @Override
-    public OutProduct convert(Product product) {
+    public OutProduct convert(@Nullable Product product) {
+        assert product != null;
         return outEntityService.createOutProduct(product);
     }
 

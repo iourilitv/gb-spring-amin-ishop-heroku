@@ -27,7 +27,13 @@ GET http://localhost:8080/api/v1/order/1/id
 #  "outUser": {
 #    "store": "gb-spring-amin-ishop-heroku",
 #    "entity": "OutUser",
-#    "id": 2
+#    "id": 2,
+#    "userName": "liyuse",
+#    "firstName": "Yury",
+#    "lastName": "Litvinenko",
+#    "phoneNumber": "8-999-9999999",
+#    "email": "liyuse@ yandex.ru",
+#    "outDeliveryAddress": "Address: {id=3, Country=Russia, City=Королев МО, Address=Секина 99, кв.99}"
 #  },
 #  "outOrderItems": [
 #    {

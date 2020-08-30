@@ -41,14 +41,14 @@ public class OutEntityService {
     public OutUser createOutUser(User user) {
         OutUser out = new OutUser();
         out.setId(user.getId());
-
+        out.setUserName(user.getUserName());
+        out.setFirstName(user.getFirstName());
+        out.setLastName(user.getLastName());
+        out.setPhoneNumber(user.getPhoneNumber());
+        out.setEmail(user.getEmail());
+        assert user.getDeliveryAddress() != null;
+        out.setOutDeliveryAddress(createOutDeliveryAddress(user.getDeliveryAddress()));
         return out;
-    }
-
-    private List<OutOrderItem> getOutOrderItemList(List<OrderItem> orderItems) {
-        List<OutOrderItem> outList = new ArrayList<>();
-        orderItems.forEach(item -> outList.add(createOutOrderItem(item)));
-        return outList;
     }
 
     public OutOrderItem createOutOrderItem(OrderItem orderItem) {
@@ -67,22 +67,25 @@ public class OutEntityService {
         out.setId(delivery.getId());
         out.setOrderId(delivery.getOrder().getId());
         out.setPhoneNumber(delivery.getPhoneNumber());
-        out.setOutDeliveryAddress(createOutDeliveryAddress(delivery));
+        out.setOutDeliveryAddress(createOutDeliveryAddress(delivery.getDeliveryAddress()));
         out.setDeliveryCost(delivery.getDeliveryCost());
         out.setDeliveryExpectedAt(delivery.getDeliveryExpectedAt());
         out.setDeliveredAt(delivery.getDeliveredAt());
         return out;
     }
 
-    private String createOutDeliveryAddress(Delivery delivery) {
-        return "Address: {id=" +
-                delivery.getDeliveryAddress().getId() +
-                ", Country=" +
-                delivery.getDeliveryAddress().getCountry() +
-                ", City=" +
-                delivery.getDeliveryAddress().getCity() +
-                ", Address=" +
-                delivery.getDeliveryAddress().getAddress() +
+    private List<OutOrderItem> getOutOrderItemList(List<OrderItem> orderItems) {
+        List<OutOrderItem> outList = new ArrayList<>();
+        orderItems.forEach(item -> outList.add(createOutOrderItem(item)));
+        return outList;
+    }
+
+    //TODO replace with an object of OutAddress(need to create)
+    private String createOutDeliveryAddress(Address address) {
+        return "Address: {id=" + address.getId() +
+                ", Country=" + address.getCountry() +
+                ", City=" + address.getCity() +
+                ", Address=" + address.getAddress() +
                 "}";
     }
 
