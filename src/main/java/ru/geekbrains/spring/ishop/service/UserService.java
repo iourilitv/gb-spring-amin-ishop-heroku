@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.Role;
+import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
@@ -83,6 +84,12 @@ public class UserService implements IUserService {
         return userRepository.findAll(filter.getSpec(), pageRequest);
     }
 
+    //TODO for REST only temporarily
+    @Transactional(readOnly = true)
+    public User findByIdOptional(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("The User with id=" + id + " is not found!"));
+    }
+    //TODO replace with findByIdOptional without renaming
     @Override
     @Transactional
     public User findById(Long user_id) {

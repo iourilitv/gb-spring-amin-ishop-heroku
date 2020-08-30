@@ -30,8 +30,8 @@ public class OrderResource extends AbstractResource {
 
     /**
      * Без него по умолчанию вернет код ошибки 500 - ошибка на сервере
-     * @param id - product id
-     * @return - json объект OutProduct или если нет, объект исключения NotFoundException "404, "The Product with id=99 is not found!""
+     * @param id - order id
+     * @return - json объект OutOrder или если нет, объект исключения NotFoundException "404, "The Order with id=99 is not found!""
      */
     @GetMapping(path = "/{id}/id", produces = MediaType.APPLICATION_JSON_VALUE)
     public OutOrder findById(@PathVariable("id") long id) {

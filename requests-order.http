@@ -14,6 +14,11 @@ GET http://localhost:8080/api/v1/order/99/id
 
 GET http://localhost:8080/api/v1/order/wrong_argument/id
 # testing a request with an illegal argument - Work correctly
+#{
+#  "status": 400,
+#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
+#  "timestamp": 1598793884529
+#}
 
 ###
 
