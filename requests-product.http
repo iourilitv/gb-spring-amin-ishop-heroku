@@ -1,22 +1,6 @@
 # For REST Resources testing
 
-GET http://localhost:8080/api/v1/product/2/id
-# getting a product by id - Works correctly!
-#{
-#  "store": "gb-spring-amin-ishop-heroku",
-#  "entity": "OutProduct",
-#  "id": 2,
-#  "categoryTitle": "Офисная техника",
-#  "vendorCode": "00000002",
-#  "title": "Pantum / Монохромный лазерный принтер P2207",
-#  "price": 5095.00,
-#  "shortDescription": "Монохромный лазерный принтер. Компактный дизайн, низкая стоимость печати и оригинальные заправочные комплекты.",
-#  "fullDescription": "add full_description",
-#  "createAt": "2020-08-19T08:06:15",
-#  "updateAt": "2020-08-19T08:06:15"
-#}
-
-###
+#******* Product **************
 
 GET http://localhost:8080/api/v1/product/99/id
 # Testing "Getting a product with id is out of range" - Works correctly.
@@ -37,6 +21,28 @@ GET http://localhost:8080/api/v1/product/wrong_argument/id
 #}
 
 ###
+
+GET http://localhost:8080/api/v1/product/2/id
+# getting a product by id - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entity": "OutProduct",
+#  "id": 2,
+#  "categoryTitle": "Офисная техника",
+#  "vendorCode": "00000002",
+#  "title": "Pantum / Монохромный лазерный принтер P2207",
+#  "price": 5095.00,
+#  "shortDescription": "Монохромный лазерный принтер. Компактный дизайн, низкая стоимость печати и оригинальные заправочные комплекты.",
+#  "fullDescription": "add full_description",
+#  "createAt": "2020-08-19T08:06:15",
+#  "updateAt": "2020-08-19T08:06:15"
+#}
+
+###
+
+
+
+
 
 GET http://localhost:8080/api/v1.0/product/21/id
 # testing a wrong request - Work correctly

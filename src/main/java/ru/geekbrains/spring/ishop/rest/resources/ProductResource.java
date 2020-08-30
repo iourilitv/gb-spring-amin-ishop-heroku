@@ -1,11 +1,10 @@
-package ru.geekbrains.spring.ishop.rest;
+package ru.geekbrains.spring.ishop.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.rest.converters.ProductToOutProductConverter;
 import ru.geekbrains.spring.ishop.rest.outentities.OutProduct;
-import ru.geekbrains.spring.ishop.rest.resources.AbstractResource;
 import ru.geekbrains.spring.ishop.service.ProductService;
 
 @RestController

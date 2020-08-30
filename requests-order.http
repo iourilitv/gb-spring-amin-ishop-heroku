@@ -1,0 +1,95 @@
+# For REST Resources testing
+
+#******* Order **************
+
+GET http://localhost:8080/api/v1/order/99/id
+# Testing "Getting a product with id is out of range" - Works correctly.
+#{
+#  "status": 404,
+#  "message": "The Order with id=99 is not found!",
+#  "timestamp": 1598786448626
+#}
+
+###
+
+GET http://localhost:8080/api/v1/order/wrong_argument/id
+# testing a request with an illegal argument - Work correctly
+
+###
+
+GET http://localhost:8080/api/v1/order/1/id
+# getting a order by id - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entity": "OutOrder",
+#  "id": 1,
+#  "orderStatusTitle": "Transferred to delivery",
+#  "outUser": {
+#    "store": "gb-spring-amin-ishop-heroku",
+#    "entity": "OutUser",
+#    "id": 2
+#  },
+#  "outOrderItems": [
+#    {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entity": "OutOrderItem",
+#      "id": 1,
+#      "outProduct": {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entity": "OutProduct",
+#        "id": 10,
+#        "categoryTitle": "Pets",
+#        "vendorCode": "00000010",
+#        "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
+#        "price": 904.00,
+#        "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
+#        "fullDescription": "add full_description",
+#        "createdAt": "2020-08-19T08:06:15",
+#        "updatedAt": "2020-08-19T08:06:15"
+#      },
+#      "itemPrice": 904.00,
+#      "quantity": 2,
+#      "itemCosts": 1808.00,
+#      "orderId": 1
+#    },
+#    {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entity": "OutOrderItem",
+#      "id": 2,
+#      "outProduct": {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entity": "OutProduct",
+#        "id": 9,
+#        "categoryTitle": "Книги",
+#        "vendorCode": "00000009",
+#        "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#        "price": 979.00,
+#        "shortDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#        "fullDescription": "add full_description",
+#        "createdAt": "2020-08-19T08:06:15",
+#        "updatedAt": "2020-08-19T08:06:15"
+#      },
+#      "itemPrice": 979.00,
+#      "quantity": 1,
+#      "itemCosts": 979.00,
+#      "orderId": 1
+#    }
+#  ],
+#  "totalItemsCosts": 2787.00,
+#  "totalCosts": 2887.00,
+#  "outDelivery": {
+#    "store": "gb-spring-amin-ishop-heroku",
+#    "entity": "OutDelivery",
+#    "id": 1,
+#    "orderId": 1,
+#    "phoneNumber": "8-999-9999999",
+#    "outDeliveryAddress": "Address: {id=3, Country=Russia, City=Королев МО, Address=Секина 99, кв.99}",
+#    "deliveryCost": 100.00,
+#    "deliveryExpectedAt": "2020-08-26T13:00:00",
+#    "deliveredAt": null
+#  },
+#  "createdAt": "2020-08-26T12:08:17",
+#  "updatedAt": "2020-08-27T13:43:00"
+#}
+
+###

@@ -3,12 +3,12 @@ package ru.geekbrains.spring.ishop.rest.converters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring.ishop.entity.Product;
-import ru.geekbrains.spring.ishop.rest.outentities.OutProduct;
+import ru.geekbrains.spring.ishop.entity.Order;
+import ru.geekbrains.spring.ishop.rest.outentities.OutOrder;
 import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 
 @Service
-public class ProductToOutProductConverter implements Converter<Product, OutProduct> {
+public class OrderToOutOrderConverter implements Converter<Order, OutOrder> {
 
     private OutEntityService outEntityService;
 
@@ -18,8 +18,8 @@ public class ProductToOutProductConverter implements Converter<Product, OutProdu
     }
 
     @Override
-    public OutProduct convert(Product product) {
-        return outEntityService.createOutProduct(product);
+    public OutOrder convert(Order order) {
+        return outEntityService.createOutOrder(order);
     }
 
 }

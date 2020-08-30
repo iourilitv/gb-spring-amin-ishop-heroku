@@ -5,6 +5,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.*;
+import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.AddressRepository;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;
 import ru.geekbrains.spring.ishop.repository.OrderRepository;
@@ -52,6 +53,12 @@ public class OrderService {
         return orderRepository.findAll(filter.getSpec(), pageRequest);
     }
 
+    //TODO for REST only temporarily
+    @Transactional(readOnly = true)
+    public Order findByIdOptional(Long id) {
+        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("The Order with id=" + id + " is not found!"));
+    }
+    //TODO replace with findByIdOptional without renaming
     @Transactional
     public Order findById(Long id) {
         return orderRepository.getOne(id);
