@@ -30,7 +30,7 @@ public class EventService {
         event.setDescription("Customer has created a new order");
 
         //TODO for test only
-        event.setEntity(orderService.findById(1L));
+        event.setEntity(orderService.findById(id));
 
 //        event.setDeliveryStatus();
 
