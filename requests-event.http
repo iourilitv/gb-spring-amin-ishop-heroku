@@ -1,0 +1,163 @@
+# For REST Resources testing
+
+#******* Event **************
+
+GET http://localhost:8080/api/v1/event/99/id
+# Testing "Getting a product with id is out of range" - Works correctly.
+#
+
+###
+
+GET http://localhost:8080/api/v1/event/wrong_argument/id
+# testing a request with an illegal argument - Work correctly
+#{
+#  "status": 400,
+#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
+#  "timestamp": 1598958854132
+#}
+
+###
+
+GET http://localhost:8080/api/v1/event/1/id
+# getting a user by id - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Event",
+#  "body": {
+#    "createdAt": "2020-09-01T16:24:18.131",
+#    "description": "Customer has created a new order",
+#    "id": 1,
+#    "type": "order",
+#    "title": "OrderCreated",
+#    "delivered_at": null,
+#    "entity": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "Order$HibernateProxy$rpHtyq1P",
+#      "body": {
+#        "delivery": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "Delivery",
+#          "body": {
+#            "phoneNumber": "8-999-9999999",
+#            "deliveryAddress": {
+#              "store": "gb-spring-amin-ishop-heroku",
+#              "entityClassSimpleName": "Address",
+#              "body": {
+#                "country": "Russia",
+#                "address": "Секина 99, кв.99",
+#                "city": "Королев МО",
+#                "id": 3
+#              }
+#            },
+#            "id": 1,
+#            "deliveryExpectedAt": "2020-08-26T13:00:00",
+#            "order": 1,
+#            "deliveryCost": 100.00,
+#            "deliveredAt": null
+#          }
+#        },
+#        "createdAt": "2020-08-26T12:08:17",
+#        "totalCosts": 2887.00,
+#        "orderStatus": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "OrderStatus",
+#          "body": {
+#            "description": "Передан в доставку: Заказ скомплектован и ждет доставки",
+#            "id": 3,
+#            "title": "Transferred to delivery"
+#          }
+#        },
+#        "totalItemsCosts": 2787.00,
+#        "id": 1,
+#        "user": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "User",
+#          "body": {
+#            "firstName": "Yury",
+#            "lastName": "Litvinenko",
+#            "phoneNumber": "8-999-9999999",
+#            "deliveryAddress": {
+#              "store": "gb-spring-amin-ishop-heroku",
+#              "entityClassSimpleName": "Address",
+#              "body": {
+#                "country": "Russia",
+#                "address": "Секина 99, кв.99",
+#                "city": "Королев МО",
+#                "id": 3
+#              }
+#            },
+#            "id": 2,
+#            "userName": "liyuse",
+#            "email": "liyuse@ yandex.ru"
+#          }
+#        },
+#        "orderItems": [
+#          {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityClassSimpleName": "OrderItem",
+#            "body": {
+#              "itemCosts": 1808.00,
+#              "product": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityClassSimpleName": "Product",
+#                "body": {
+#                  "price": 904.00,
+#                  "id": 10,
+#                  "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
+#                  "category": {
+#                    "store": "gb-spring-amin-ishop-heroku",
+#                    "entityClassSimpleName": "Category",
+#                    "body": {
+#                      "id": 7,
+#                      "title": "Pets"
+#                    }
+#                  },
+#                  "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
+#                  "vendorCode": "00000010"
+#                }
+#              },
+#              "quantity": 2,
+#              "itemPrice": 904.00,
+#              "id": 1,
+#              "order": 1
+#            }
+#          },
+#          {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityClassSimpleName": "OrderItem",
+#            "body": {
+#              "itemCosts": 979.00,
+#              "product": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityClassSimpleName": "Product",
+#                "body": {
+#                  "price": 979.00,
+#                  "id": 9,
+#                  "shortDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#                  "category": {
+#                    "store": "gb-spring-amin-ishop-heroku",
+#                    "entityClassSimpleName": "Category",
+#                    "body": {
+#                      "id": 6,
+#                      "title": "Книги"
+#                    }
+#                  },
+#                  "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#                  "vendorCode": "00000009"
+#                }
+#              },
+#              "quantity": 1,
+#              "itemPrice": 979.00,
+#              "id": 2,
+#              "order": 1
+#            }
+#          }
+#        ],
+#        "updatedAt": "2020-08-27T13:43:00"
+#      }
+#    },
+#    "deliveryStatus": null
+#  }
+#}
+
+###

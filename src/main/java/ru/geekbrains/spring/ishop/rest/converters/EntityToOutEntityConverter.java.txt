@@ -1,0 +1,28 @@
+package ru.geekbrains.spring.ishop.rest.converters;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
+import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService2;
+
+import javax.persistence.Entity;
+
+@Service
+public class EntityToOutEntityConverter implements Converter<Entity, OutEntity> {
+
+    private OutEntityService2 outEntityService;
+
+    @Autowired
+    public void setOutEntityService(OutEntityService2 outEntityService) {
+        this.outEntityService = outEntityService;
+    }
+
+    @Override
+    public OutEntity convert(@Nullable Entity entity) {
+        assert entity != null;
+        return outEntityService.createOutEntity(entity);
+    }
+
+}
