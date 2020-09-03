@@ -64,17 +64,19 @@ public class EventService {
         event.setActionType("Initialized");
         event.setTitle("Initial event");
         event.setDescription("This store app has been initialized");
+        eventRepository.save(event);
     }
 
     //TODO for test only - for production use repository
     public Event createEvent(String entityType, String actionType, Long entityId) {
         Event event = new Event();
-        event.setEntityType("Order");
-        event.setActionType("Created");
+        event.setEntityType(entityType);
+        event.setActionType(actionType);
         event.setTitle(event.getEntityType() + " " + event.getActionType());
-        event.setDescription("Customer has created a new order");
-        event.setEntityId(1L);
+        event.setDescription(entityType + " has been " + actionType);
+        event.setEntityId(entityId);
         event.setCreatedAt(LocalDateTime.now());
+        eventRepository.save(event);
         return event;
     }
 
