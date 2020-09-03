@@ -193,6 +193,7 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/id
 #    "title": "Order Created"
 #  }
 #}
+#org.apache.http.ConnectionClosedException: Premature end of chunk coded message body: closing chunk expected
 
 ###
 
