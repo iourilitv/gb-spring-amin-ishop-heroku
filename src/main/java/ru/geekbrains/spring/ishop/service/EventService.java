@@ -54,18 +54,18 @@ public class EventService {
 //        this.userService = userService;
 //    }
 
-    @Transactional
-    @PostConstruct
-    public void initInitialEvent() {
-        if(findByTitle("Initial event") !=null) {
-            return;
-        }
-        Event event = new Event();
-        event.setActionType("Initialized");
-        event.setTitle("Initial event");
-        event.setDescription("This store app has been initialized");
-        eventRepository.save(event);
-    }
+//    @Transactional
+//    @PostConstruct
+//    public void initInitialEvent() {
+//        if(findByTitle("Initial event") !=null) {
+//            return;
+//        }
+//        Event event = new Event();
+//        event.setActionType("Initialized");
+//        event.setTitle("Initial event");
+//        event.setDescription("This store app has been initialized");
+//        eventRepository.save(event);
+//    }
 
     //TODO for test only - for production use repository
     public Event createEvent(String entityType, String actionType, Long entityId) {
