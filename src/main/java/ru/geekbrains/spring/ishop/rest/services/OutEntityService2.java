@@ -59,7 +59,7 @@ public class OutEntityService2 {
 
         log.info("EntityType: " + event.getEntityType() + ". EntityId: " + event.getEntityId());
 
-//        eventService.fillEntityField(event.getEntityType(), event.getEntityId(), entityFields);
+        eventService.fillEntityField(event.getEntityType(), event.getEntityId(), entityFields);
         entityFields.put("createdAt", event.getCreatedAt());
         entityFields.put("serverAcceptedAt", event.getServerAcceptedAt());
 

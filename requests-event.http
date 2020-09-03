@@ -180,26 +180,44 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/server_unaccepted/first
 ###
 
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/id
-# getting a user by id - Works correctly!
+# getting a user by id - Works not correctly!There is no entity in the Event.
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Event",
+#  "body": {
+#    "createdAt": "2020-09-03T08:07:37",
+#    "entityType": "Order",
+#    "serverAcceptedAt": null,
+#    "description": "Order has been Created",
+#    "id": 1,
+#    "title": "Order Created"
+#  }
+#}
+
+###
+
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/99/id
+## testing not existing user by out of range id - Works correctly!
+##
 #{
 #  "status": 404,
-#  "message": "Event with id=1 is not found!",
-#  "timestamp": 1599117670092
+#  "message": "Event with id=99 is not found!",
+#  "timestamp": 1599121018355
 #}
 
 ###
 # for test only
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/create/Order/entity_type/Created/action_type/1/entity_id
-#
+# testing of event creating - work correctly!
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
 #  "entityClassSimpleName": "Event",
 #  "body": {
-#    "createdAt": "2020-09-03T07:17:55.936",
+#    "createdAt": "2020-09-03T08:07:36.871",
 #    "entityType": "Order",
 #    "serverAcceptedAt": null,
-#    "description": "Customer has created a new order",
-#    "id": null,
+#    "description": "Order has been Created",
+#    "id": 1,
 #    "title": "Order Created"
 #  }
 #}
