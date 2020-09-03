@@ -64,6 +64,10 @@ public class OrderService {
         return orderRepository.getOne(id);
     }
 
+    public OrderStatus findOrderStatusById(Long id) {
+        return orderStatusRepository.findById(Short.valueOf(String.valueOf(id))).orElseThrow(() -> new NotFoundException("The OrderStatus with id=" + id + " is not found!"));
+    }
+
     public OrderStatus findOrderStatusByTitle(String title) {
         return orderStatusRepository.getOrderStatusByTitleEquals(title);
     }
@@ -236,6 +240,10 @@ public class OrderService {
         orderItem.setItemCosts(BigDecimal.ZERO);
         orderItem.setItemCosts(orderItem.getItemPrice()
                 .multiply(BigDecimal.valueOf(orderItem.getQuantity())));
+    }
+
+    public OrderItem findOrderItemById(Long id) {
+        return orderItemRepository.findById(id).orElseThrow(() -> new NotFoundException("The OrderItem with id=" + id + " is not found!"));
     }
 
     public OrderItem findOrderItemByProdId(List<OrderItem> orderItems, Long prodId) {

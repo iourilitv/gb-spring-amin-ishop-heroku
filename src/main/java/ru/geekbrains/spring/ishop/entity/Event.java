@@ -5,11 +5,10 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.lang.annotation.Annotation;
 import java.time.LocalDateTime;
 
-//@Entity
-//@Table(name = "events")
+@Entity
+@Table(name = "events")
 @Data
 public class Event {
     @Id
@@ -17,9 +16,10 @@ public class Event {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "type", unique = true)
+    //TODO сделать сущностью ActionType
+    @Column(name = "action_type")
     @NotNull(message = "не может быть пустым")
-    private String type;
+    private String actionType;
 
     @Column(name = "title")
     @NotNull(message = "не может быть пустым")
@@ -29,19 +29,20 @@ public class Event {
     @NotNull(message = "не может быть пустым")
     private String description;
 
-    @Column(name = "entity")
-    private Object entity;
-
-    @Column(name = "delivery_status")
+    //TODO сделать сущностью EntityType
+    @Column(name = "entity_type", unique = true)
     @NotNull(message = "не может быть пустым")
-    private String deliveryStatus;
+    private String entityType;
+
+    @Column(name = "entity_id")
+    private Long entityId;
 
     @Column(name = "created_at")
     @CreationTimestamp
     //TIMESTAMP NOT NULL DEFAULT NOW(),
     private LocalDateTime createdAt;
 
-    @Column(name = "delivered_at")
-    private LocalDateTime deliveredAt;
+    @Column(name = "server_accepted_at")
+    private LocalDateTime serverAcceptedAt;
 
 }

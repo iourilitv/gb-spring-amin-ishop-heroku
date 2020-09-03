@@ -1,61 +1,67 @@
 package ru.geekbrains.spring.ishop.rest.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
+import ru.geekbrains.spring.ishop.service.EventService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class OutEntityService2 {
-    Logger log = LoggerFactory.getLogger(this.getClass());
+    private EventService eventService;
+
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     public OutEntity createOutEntity(Object entity) {
     OutEntity out = new OutEntity(entity.getClass().getSimpleName());
     Map<String, Object> entityFields = out.getBody();
 
-    if(entity instanceof Event) {
-        fillEventEntityFields((Event)entity, entityFields);
-    } else if(entity instanceof Order) {
-        fillOrderEntityFields((Order)entity, entityFields);
-    } else if(entity instanceof OrderStatus) {
-        fillOrderStatusEntityFields((OrderStatus)entity, entityFields);
-    } else if(entity instanceof User) {
-        fillUserEntityFields((User)entity, entityFields);
-    } else if(entity instanceof OrderItem) {
-        fillOrderItemEntityFields((OrderItem)entity, entityFields);
-    } else if(entity instanceof Product) {
-        fillProductEntityFields((Product)entity, entityFields);
-    } else if(entity instanceof Category) {
-        fillCategoryEntityFields((Category)entity, entityFields);
-    } else if(entity instanceof Delivery) {
-        fillDeliveryEntityFields((Delivery)entity, entityFields);
-    } else if(entity instanceof Address) {
-        fillAddressEntityFields((Address)entity, entityFields);
-    }
+        if(entity instanceof Event) {
+            fillEventEntityFields((Event)entity, entityFields);
+        } else if(entity instanceof Order) {
+            fillOrderEntityFields((Order)entity, entityFields);
+        } else if(entity instanceof OrderStatus) {
+            fillOrderStatusEntityFields((OrderStatus)entity, entityFields);
+        } else if(entity instanceof User) {
+            fillUserEntityFields((User)entity, entityFields);
+        } else if(entity instanceof OrderItem) {
+            fillOrderItemEntityFields((OrderItem)entity, entityFields);
+        } else if(entity instanceof Product) {
+            fillProductEntityFields((Product)entity, entityFields);
+        } else if(entity instanceof Category) {
+            fillCategoryEntityFields((Category)entity, entityFields);
+        } else if(entity instanceof Delivery) {
+            fillDeliveryEntityFields((Delivery)entity, entityFields);
+        } else if(entity instanceof Address) {
+            fillAddressEntityFields((Address)entity, entityFields);
+        }
 
         return out;
-}
+    }
 
     private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
 
         log.info("*********** fillStoreEventEntityFields ***********");
 
         entityFields.put("id", event.getId());
-        entityFields.put("type", event.getType());
         entityFields.put("title", event.getTitle());
         entityFields.put("description", event.getDescription());
+        entityFields.put("entityType", event.getEntityType());
 
-//        entityFields.put("entity", entity.getEntity());
-        entityFields.put("entity", createOutEntity(event.getEntity()));
+        log.info("EntityType: " + event.getEntityType() + ". EntityId: " + event.getEntityId());
 
-        entityFields.put("deliveryStatus", event.getDeliveryStatus());
+//        eventService.fillEntityField(event.getEntityType(), event.getEntityId(), entityFields);
         entityFields.put("createdAt", event.getCreatedAt());
-        entityFields.put("delivered_at", event.getDeliveredAt());
+        entityFields.put("serverAcceptedAt", event.getServerAcceptedAt());
 
         log.info("entityFields: " + entityFields);
 

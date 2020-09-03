@@ -18,6 +18,11 @@ GET http://localhost:8080/api/v1/event/wrong_argument/id
 
 ###
 
+GET http://localhost:8080/api/v1/event/server_unaccepted/first
+#
+
+###
+
 GET http://localhost:8080/api/v1/event/2/id
 # getting a user by id - Works correctly!
 #{
@@ -160,10 +165,15 @@ GET http://localhost:8080/api/v1/event/2/id
 #  }
 #}
 
-###
 #********* App for Developing Stage *********
-GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/2/id
+###
+
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/id
 # getting a user by id - Works correctly!
 #
 
 ###
+# for test only
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/create/Order/entity_type/Created/action_type/1/entity_id
+# getting a user by id - Works correctly!
+#

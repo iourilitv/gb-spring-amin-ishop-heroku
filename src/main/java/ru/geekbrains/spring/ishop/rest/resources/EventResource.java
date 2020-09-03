@@ -2,6 +2,7 @@ package ru.geekbrains.spring.ishop.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,11 @@ public class EventResource extends AbstractResource {
         this.eventService = eventService;
     }
 
+    @GetMapping(path = "/server_unaccepted/first", produces = MediaType.APPLICATION_JSON_VALUE)
+    public OutEntity findFirstServerUnaccepted() {
+        return outEntityService.createOutEntity(eventService.findFirstByServerAcceptedAtIsNull());
+    }
+
     /**
      * Без него по умолчанию вернет код ошибки 500 - ошибка на сервере
      * @param id - event id
@@ -36,7 +42,14 @@ public class EventResource extends AbstractResource {
      */
     @GetMapping(path = "/{id}/id", produces = MediaType.APPLICATION_JSON_VALUE)
     public OutEntity findById(@PathVariable("id") long id) {
-        return outEntityService.createOutEntity(eventService.findByIdOptional(id));
+        return outEntityService.createOutEntity(eventService.findById(id));
+    }
+
+    @GetMapping(path = "/create/{entityType}/entity_type/{actionType}/action_type/{entityId}/entity_id", produces = MediaType.APPLICATION_JSON_VALUE)
+    public OutEntity createEvent(@PathVariable String entityType,
+                                 @PathVariable String actionType,
+                                 @PathVariable long entityId) {
+        return outEntityService.createOutEntity(eventService.createEvent(entityType, actionType, entityId));
     }
 
 }
