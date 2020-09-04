@@ -8,16 +8,149 @@
 
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/99/orderId
 ## testing not existing order by out of range id - Works correctly!
-#
+#{
+#  "status": 404,
+#  "message": "The Order with id=99 is not found!",
+#  "timestamp": 1599216396751
+#}
 
 ###
 
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/wrong_argument/orderId
 # testing a request with an illegal argument - Work correctlly!
-#
+#{
+#  "status": 400,
+#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
+#  "timestamp": 1599216408124
+#}
 
 ###
 # returns ResponseEntity<OutEntity>
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId
 # getting a order by id - Works correctly!
-#
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Order",
+#  "body": {
+#    "delivery": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "Delivery",
+#      "body": {
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "Address",
+#          "body": {
+#            "country": "USA",
+#            "address": "18a Diagon Alley",
+#            "city": "New York",
+#            "id": 1
+#          }
+#        },
+#        "id": 1,
+#        "deliveryExpectedAt": "2020-09-01T10:00:00",
+#        "order": 1,
+#        "deliveryCost": 100.00,
+#        "deliveredAt": null
+#      }
+#    },
+#    "createdAt": "2020-09-01T16:18:17",
+#    "totalCosts": 2962.00,
+#    "orderStatus": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "OrderStatus",
+#      "body": {
+#        "description": "Создан: Заказ сформирован пользователем и сохранен в списке заказов",
+#        "id": 1,
+#        "title": "Created"
+#      }
+#    },
+#    "totalItemsCosts": 2862.00,
+#    "id": 1,
+#    "user": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "User",
+#      "body": {
+#        "firstName": "superadmin first_name",
+#        "lastName": "superadmin last_name",
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "Address",
+#          "body": {
+#            "country": "USA",
+#            "address": "18a Diagon Alley",
+#            "city": "New York",
+#            "id": 1
+#          }
+#        },
+#        "id": 1,
+#        "userName": "superadmin",
+#        "email": "superadmin@ mail.com"
+#      }
+#    },
+#    "orderItems": [
+#      {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entityClassSimpleName": "OrderItem",
+#        "body": {
+#          "itemCosts": 904.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityClassSimpleName": "Product",
+#            "body": {
+#              "price": 904.00,
+#              "id": 10,
+#              "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityClassSimpleName": "Category",
+#                "body": {
+#                  "id": 7,
+#                  "title": "Pets"
+#                }
+#              },
+#              "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
+#              "vendorCode": "00000010"
+#            }
+#          },
+#          "quantity": 1,
+#          "itemPrice": 904.00,
+#          "id": 1,
+#          "order": 1
+#        }
+#      },
+#      {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entityClassSimpleName": "OrderItem",
+#        "body": {
+#          "itemCosts": 1958.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityClassSimpleName": "Product",
+#            "body": {
+#              "price": 979.00,
+#              "id": 9,
+#              "shortDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityClassSimpleName": "Category",
+#                "body": {
+#                  "id": 6,
+#                  "title": "Книги"
+#                }
+#              },
+#              "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#              "vendorCode": "00000009"
+#            }
+#          },
+#          "quantity": 2,
+#          "itemPrice": 979.00,
+#          "id": 2,
+#          "order": 1
+#        }
+#      }
+#    ],
+#    "updatedAt": "2020-09-01T16:18:17"
+#  }
+#}

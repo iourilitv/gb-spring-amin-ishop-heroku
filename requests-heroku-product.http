@@ -8,16 +8,42 @@
 
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/product/99/productId
 ## testing not existing product by out of range id - Works correctly!
-#
+#{
+#  "status": 404,
+#  "message": "The Product with id=99 is not found!",
+#  "timestamp": 1599216455637
+#}
 
 ###
 
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/product/wrong_argument/productId
 # testing a request with an illegal argument - Work correctlly!
-#
+#{
+#  "status": 400,
+#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
+#  "timestamp": 1599216467208
+#}
 
 ###
 # returns ResponseEntity<OutEntity>
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/product/2/productId
 # getting a product by id - Works correctly!
-#
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Product",
+#  "body": {
+#    "price": 5095.00,
+#    "id": 2,
+#    "shortDescription": "Монохромный лазерный принтер. Компактный дизайн, низкая стоимость печати и оригинальные заправочные комплекты.",
+#    "category": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "Category",
+#      "body": {
+#        "id": 2,
+#        "title": "Офисная техника"
+#      }
+#    },
+#    "title": "Pantum / Монохромный лазерный принтер P2207",
+#    "vendorCode": "00000002"
+#  }
+#}

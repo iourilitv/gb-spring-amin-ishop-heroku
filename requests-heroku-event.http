@@ -18,7 +18,11 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/99/eventId
 
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/wrong_argument/eventId
 # testing a request with an illegal argument - Work correctlly!
-#
+#{
+#  "status": 400,
+#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
+#  "timestamp": 1599216243804
+#}
 
 ###
 
@@ -26,12 +30,22 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/wrong_argument/even
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/serverUnaccepted/first
 # getting the first server unaccepted event - Works correctly!
 #{
-
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Event",
+#  "body": {
+#    "createdAt": null,
+#    "entityType": null,
+#    "serverAcceptedAt": null,
+#    "description": null,
+#    "id": null,
+#    "title": null
+#  }
+#}
 
 ###
 # returns ResponseEntity<OutEntity>
 GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/eventId
-# getting a user by id - Works correctly!.
+# getting a event by id - Works correctly!.
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
 #  "entityClassSimpleName": "Event",
@@ -164,7 +178,7 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/eventId
 #    },
 #    "createdAt": "2020-09-03T08:07:37",
 #    "entityType": "Order",
-#    "serverAcceptedAt": null,
+#    "serverAcceptedAt": "2020-09-04T03:24:33",
 #    "description": "Order has been Created",
 #    "id": 1,
 #    "title": "Order Created"
