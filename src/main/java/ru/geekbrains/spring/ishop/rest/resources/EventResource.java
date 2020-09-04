@@ -23,7 +23,7 @@ public class EventResource extends AbstractResource {
     private EventService eventService;
 
     @Autowired
-    public void setEntityService(OutEntityService outEntityService) {
+    public void setOutEntityService(OutEntityService outEntityService) {
         this.outEntityService = outEntityService;
     }
 
