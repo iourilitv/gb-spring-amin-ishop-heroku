@@ -1,41 +1,23 @@
 # For REST Resources testing
 
 #******* User **************
-
-GET http://localhost:8080/api/v1/user/99/id
-# Testing "Getting a product with id is out of range" - Works correctly.
-#{
-#  "status": 404,
-#  "message": "The User with id=99 is not found!",
-#  "timestamp": 1598793868634
-#}
-
+###
+# HEROKU
+#********* App for Developing Stage *********
 ###
 
-GET http://localhost:8080/api/v1/user/wrong_argument/id
-# testing a request with an illegal argument - Work correctly
-#{
-#  "status": 400,
-#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
-#  "timestamp": 1598793884529
-#}
-
-###
-
-GET http://localhost:8080/api/v1/user/1/id
-# getting a user by id - Works correctly!
-#{
-#  "store": "gb-spring-amin-ishop-heroku",
-#  "entity": "OutUser",
-#  "id": 1,
-#  "userName": "superadmin",
-#  "firstName": "superadmin first_name",
-#  "lastName": "superadmin last_name",
-#  "phoneNumber": "+79991234567",
-#  "email": "superadmin@ mail.com",
-#  "outDeliveryAddress": "Address: {id=1, Country=USA, City=New York, Address=18a Diagon Alley}"
-#}
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/user/99/userId
+## testing not existing user by out of range id - Works correctly!
 #
-#Response code: 200; Time: 478ms; Content length: 367 bytes
 
 ###
+
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/user/wrong_argument/userId
+# testing a request with an illegal argument - Work correctlly!
+#
+
+###
+# returns ResponseEntity<OutEntity>
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/user/1/userId
+# getting a user by id - Works correctly!
+#
