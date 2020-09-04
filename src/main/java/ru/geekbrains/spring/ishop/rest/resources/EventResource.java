@@ -44,14 +44,6 @@ public class EventResource extends AbstractResource {
                 .body(outEntityService.createOutEntity(eventService.findFirstByServerAcceptedAtIsNull()));
     }
 
-//    //TODO for Test only(it should be POST)
-//    @GetMapping(path = "/create/{entityType}/entityType/{actionType}/actionType/{entityId}/actionType", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public OutEntity createEvent(@PathVariable String entityType,
-//                                 @PathVariable String actionType,
-//                                 @PathVariable long entityId) {
-//        return outEntityService.createOutEntity(eventService.createEvent(entityType, actionType, entityId));
-//    }
-
     @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt")
     public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEventOutEntity(
             @RequestBody @Valid LocalDateTime serverAcceptedAt,
@@ -61,24 +53,5 @@ public class EventResource extends AbstractResource {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
     }
-
-    //TODO for future
-//    @PutMapping(value = "/{eventId}/eventId/update")
-//    public ResponseEntity<OutEntity> updateEvent(
-//            @RequestBody @Valid OutEntity outEntity,
-//            @PathVariable("eventId") Long eventId) {
-//
-//        OutEntity eventOutEntity = (OutEntity)outEntity.getBody();
-//
-//        LocalDateTime serverAcceptedAt = (LocalDateTime)eventOutEntity.getBody().get("serverAcceptedAt");
-//        log.info("******* LocalDateTime ******** " + serverAcceptedAt);
-//
-//        log.info("******* OutEntity ******** " + outEntity);
-//
-//        Event oldEvent = eventService.findById(eventId);
-//
-//        oldEvent.setServerAcceptedAt(serverAcceptedAt);
-//        return ResponseEntity.ok().body(outEntityService.createOutEntity(oldEvent));
-//    }
 
 }
