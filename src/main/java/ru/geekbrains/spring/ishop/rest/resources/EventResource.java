@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring.ishop.entity.Event;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
-import ru.geekbrains.spring.ishop.rest.services.OutEntityService2;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.service.EventService;
 
 import javax.validation.Valid;
@@ -18,12 +18,12 @@ import java.time.LocalDateTime;
 @Slf4j
 public class EventResource extends AbstractResource {
 
-    private OutEntityService2 outEntityService;
+    private OutEntityService outEntityService;
 
     private EventService eventService;
 
     @Autowired
-    public void setEntityService(OutEntityService2 outEntityService) {
+    public void setEntityService(OutEntityService outEntityService) {
         this.outEntityService = outEntityService;
     }
 

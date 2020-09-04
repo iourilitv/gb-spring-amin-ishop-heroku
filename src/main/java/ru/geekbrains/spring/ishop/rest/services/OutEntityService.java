@@ -1,93 +1,152 @@
 package ru.geekbrains.spring.ishop.rest.services;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
+import ru.geekbrains.spring.ishop.service.EventService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@Slf4j
 public class OutEntityService {
+    private EventService eventService;
 
-    public OutProduct createOutProduct(Product product) {
-        OutProduct out = new OutProduct();
-        out.setId(product.getId());
-        out.setCategoryTitle(product.getCategory().getTitle());
-        out.setVendorCode(product.getVendorCode());
-        out.setTitle(product.getTitle());
-        out.setPrice(product.getPrice());
-        out.setShortDescription(product.getShortDescription());
-        out.setFullDescription(product.getFullDescription());
-        out.setCreatedAt(product.getCreateAt());
-        out.setUpdatedAt(product.getUpdateAt());
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
+
+    public OutEntity createOutEntity(Object entity) {
+    OutEntity out = new OutEntity(entity.getClass().getSimpleName());
+    Map<String, Object> entityFields = out.getBody();
+
+        if(entity instanceof Event) {
+            fillEventEntityFields((Event)entity, entityFields);
+        } else if(entity instanceof Order) {
+            fillOrderEntityFields((Order)entity, entityFields);
+        } else if(entity instanceof OrderStatus) {
+            fillOrderStatusEntityFields((OrderStatus)entity, entityFields);
+        } else if(entity instanceof User) {
+            fillUserEntityFields((User)entity, entityFields);
+        } else if(entity instanceof OrderItem) {
+            fillOrderItemEntityFields((OrderItem)entity, entityFields);
+        } else if(entity instanceof Product) {
+            fillProductEntityFields((Product)entity, entityFields);
+        } else if(entity instanceof Category) {
+            fillCategoryEntityFields((Category)entity, entityFields);
+        } else if(entity instanceof Delivery) {
+            fillDeliveryEntityFields((Delivery)entity, entityFields);
+        } else if(entity instanceof Address) {
+            fillAddressEntityFields((Address)entity, entityFields);
+        }
+
         return out;
     }
 
-    public OutOrder createOutOrder(Order order) {
-        OutOrder out = new OutOrder();
-        out.setId(order.getId());
-        out.setOrderStatusTitle(order.getOrderStatus().getTitle());
-        out.setOutUser(createOutUser(order.getUser()));
-        out.setOutOrderItems(getOutOrderItemList(order.getOrderItems()));
-        out.setTotalItemsCosts(order.getTotalItemsCosts());
-        out.setTotalCosts(order.getTotalCosts());
-        out.setOutDelivery(createOutDelivery(order.getDelivery()));
-        out.setCreatedAt(order.getCreatedAt());
-        out.setUpdatedAt(order.getUpdatedAt());
-        return out;
+    private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
+
+        log.info("*********** fillStoreEventEntityFields ***********");
+
+        entityFields.put("id", event.getId());
+        entityFields.put("title", event.getTitle());
+        entityFields.put("description", event.getDescription());
+        entityFields.put("entityType", event.getEntityType());
+
+        log.info("EntityType: " + event.getEntityType() + ". EntityId: " + event.getEntityId());
+
+        eventService.fillEntityFieldInEventOutEntity(event.getEntityType(), event.getEntityId(), entityFields);
+        entityFields.put("createdAt", event.getCreatedAt());
+        entityFields.put("serverAcceptedAt", event.getServerAcceptedAt());
+
+        log.info("entityFields: " + entityFields);
+
     }
 
-    public OutUser createOutUser(User user) {
-        OutUser out = new OutUser();
-        out.setId(user.getId());
-        out.setUserName(user.getUserName());
-        out.setFirstName(user.getFirstName());
-        out.setLastName(user.getLastName());
-        out.setPhoneNumber(user.getPhoneNumber());
-        out.setEmail(user.getEmail());
+    private void fillOrderEntityFields(Order order, Map<String, Object> entityFields) {
+
+        log.info("*********** fillOrderEntityFields ***********");
+
+        entityFields.put("id", order.getId());
+        entityFields.put("orderStatus", createOutEntity(order.getOrderStatus()));
+        entityFields.put("user", createOutEntity(order.getUser()));
+
+        List<OutEntity> orderItems = new ArrayList<>();
+        order.getOrderItems().forEach(entity -> orderItems.add(createOutEntity(entity)));
+        entityFields.put("orderItems", orderItems);
+
+        log.info("orderItems: " + orderItems);
+
+        entityFields.put("totalItemsCosts", order.getTotalItemsCosts());
+        entityFields.put("totalCosts", order.getTotalCosts());
+        entityFields.put("delivery", createOutEntity(order.getDelivery()));
+
+        entityFields.put("createdAt", order.getCreatedAt());
+        entityFields.put("updatedAt", order.getUpdatedAt());
+
+        log.info("entityFields: " + entityFields);
+
+    }
+
+    private void fillOrderStatusEntityFields(OrderStatus orderStatus, Map<String, Object> entityFields) {
+        entityFields.put("id", orderStatus.getId());
+        entityFields.put("title", orderStatus.getTitle());
+        entityFields.put("description", orderStatus.getDescription());
+    }
+
+    private void fillUserEntityFields(User user, Map<String, Object> entityFields) {
+        entityFields.put("id", user.getId());
+        entityFields.put("userName", user.getUserName());
+        entityFields.put("firstName", user.getFirstName());
+        entityFields.put("lastName", user.getLastName());
+        entityFields.put("phoneNumber", user.getPhoneNumber());
+        entityFields.put("email", user.getEmail());
         assert user.getDeliveryAddress() != null;
-        out.setOutDeliveryAddress(createOutDeliveryAddress(user.getDeliveryAddress()));
-        return out;
+        entityFields.put("deliveryAddress", createOutEntity(user.getDeliveryAddress()));
     }
 
-    public OutOrderItem createOutOrderItem(OrderItem orderItem) {
-        OutOrderItem out = new OutOrderItem();
-        out.setId(orderItem.getId());
-        out.setOutProduct(createOutProduct(orderItem.getProduct()));
-        out.setItemPrice(orderItem.getItemPrice());
-        out.setQuantity(orderItem.getQuantity());
-        out.setItemCosts(orderItem.getItemCosts());
-        out.setOrderId(orderItem.getOrder().getId());
-        return out;
+    private void fillOrderItemEntityFields(OrderItem orderItem, Map<String, Object> entityFields) {
+        entityFields.put("id", orderItem.getId());
+        entityFields.put("product", createOutEntity(orderItem.getProduct()));
+        entityFields.put("itemPrice", orderItem.getItemPrice());
+        entityFields.put("quantity", orderItem.getQuantity());
+        entityFields.put("itemCosts", orderItem.getItemCosts());
+        entityFields.put("order", orderItem.getOrder().getId());
     }
 
-    public OutDelivery createOutDelivery(Delivery delivery) {
-        OutDelivery out = new OutDelivery();
-        out.setId(delivery.getId());
-        out.setOrderId(delivery.getOrder().getId());
-        out.setPhoneNumber(delivery.getPhoneNumber());
-        out.setOutDeliveryAddress(createOutDeliveryAddress(delivery.getDeliveryAddress()));
-        out.setDeliveryCost(delivery.getDeliveryCost());
-        out.setDeliveryExpectedAt(delivery.getDeliveryExpectedAt());
-        out.setDeliveredAt(delivery.getDeliveredAt());
-        return out;
+    private void fillProductEntityFields(Product product, Map<String, Object> entityFields) {
+        entityFields.put("id", product.getId());
+        entityFields.put("category", createOutEntity(product.getCategory()));
+        entityFields.put("vendorCode", product.getVendorCode());
+        entityFields.put("title", product.getTitle());
+        entityFields.put("price", product.getPrice());
+        entityFields.put("shortDescription", product.getShortDescription());
     }
 
-    private List<OutOrderItem> getOutOrderItemList(List<OrderItem> orderItems) {
-        List<OutOrderItem> outList = new ArrayList<>();
-        orderItems.forEach(item -> outList.add(createOutOrderItem(item)));
-        return outList;
+    private void fillCategoryEntityFields(Category category, Map<String, Object> entityFields) {
+        entityFields.put("id", category.getId());
+        entityFields.put("title", category.getTitle());
     }
 
-    //TODO replace with an object of OutAddress(need to create)
-    private String createOutDeliveryAddress(Address address) {
-        return "Address: {id=" + address.getId() +
-                ", Country=" + address.getCountry() +
-                ", City=" + address.getCity() +
-                ", Address=" + address.getAddress() +
-                "}";
+    private void fillDeliveryEntityFields(Delivery delivery, Map<String, Object> entityFields) {
+        entityFields.put("id", delivery.getId());
+        entityFields.put("order", delivery.getOrder().getId());
+        entityFields.put("phoneNumber", delivery.getPhoneNumber());
+        entityFields.put("deliveryAddress", createOutEntity(delivery.getDeliveryAddress()));
+        entityFields.put("deliveryCost", delivery.getDeliveryCost());
+        entityFields.put("deliveryExpectedAt", delivery.getDeliveryExpectedAt());
+        entityFields.put("deliveredAt", delivery.getDeliveredAt());
     }
 
+    private void fillAddressEntityFields(Address address, Map<String, Object> entityFields) {
+        entityFields.put("id", address.getId());
+        entityFields.put("country", address.getCountry());
+        entityFields.put("city", address.getCity());
+        entityFields.put("address", address.getAddress());
+    }
 
 }

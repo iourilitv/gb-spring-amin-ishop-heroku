@@ -1,6 +1,5 @@
 package ru.geekbrains.spring.ishop.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,9 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.EventRepository;
-import ru.geekbrains.spring.ishop.rest.services.OutEntityService2;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +17,10 @@ import java.util.Map;
 @Slf4j
 //@RequiredArgsConstructor //TODO Learn why it does not work
 public class EventService {
-    private OutEntityService2 outEntityService;
+    private OutEntityService outEntityService;
 
     @Autowired
-    public void setOutEntityService(OutEntityService2 outEntityService) {
+    public void setOutEntityService(OutEntityService outEntityService) {
         this.outEntityService = outEntityService;
     }
 
