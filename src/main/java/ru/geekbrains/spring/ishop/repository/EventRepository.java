@@ -13,6 +13,7 @@ public interface EventRepository extends
 
     Optional<Event> findFirstByServerAcceptedAtIsNull();
 
+    //TODO Refactoring: make Optional<Event>
     Event findByTitle(String title);
 
 }

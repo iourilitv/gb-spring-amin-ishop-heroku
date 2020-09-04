@@ -1,14 +1,14 @@
 # For REST Resources testing
 
 #******* Event **************
-
-GET http://localhost:8080/api/v1/event/99/id
+# locally
+GET http://localhost:8080/api/v1/event/99/eventId
 # Testing "Getting a product with id is out of range" - Works correctly.
 #
 
 ###
 
-GET http://localhost:8080/api/v1/event/wrong_argument/id
+GET http://localhost:8080/api/v1/event/wrong_argument/eventId
 # testing a request with an illegal argument - Work correctly
 #{
 #  "status": 400,
@@ -17,83 +17,87 @@ GET http://localhost:8080/api/v1/event/wrong_argument/id
 #}
 
 ###
-
-GET http://localhost:8080/api/v1/event/server_unaccepted/first
-#
-
-###
-
-GET http://localhost:8080/api/v1/event/2/id
-# getting a user by id - Works correctly!
+# returns ResponseEntity<OutEntity>
+GET http://localhost:8080/api/v1/event/serverUnaccepted/first
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
 #  "entityClassSimpleName": "Event",
 #  "body": {
-#    "createdAt": "2020-09-01T16:24:18.131",
-#    "description": "Customer has created a new order",
-#    "id": 1,
-#    "type": "order",
-#    "title": "OrderCreated",
-#    "delivered_at": null,
-#    "entity": {
+#    "createdAt": null,
+#    "entityType": null,
+#    "serverAcceptedAt": null,
+#    "description": null,
+#    "id": null,
+#    "title": null
+#  }
+#}
+
+###
+# returns ResponseEntity<OutEntity>
+GET http://localhost:8080/api/v1/event/1/eventId
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Event",
+#  "body": {
+#    "Order": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entityClassSimpleName": "Order$HibernateProxy$rpHtyq1P",
+#      "entityClassSimpleName": "Order",
 #      "body": {
 #        "delivery": {
 #          "store": "gb-spring-amin-ishop-heroku",
 #          "entityClassSimpleName": "Delivery",
 #          "body": {
-#            "phoneNumber": "8-999-9999999",
+#            "phoneNumber": "+79991234567",
 #            "deliveryAddress": {
 #              "store": "gb-spring-amin-ishop-heroku",
 #              "entityClassSimpleName": "Address",
 #              "body": {
-#                "country": "Russia",
-#                "address": "Секина 99, кв.99",
-#                "city": "Королев МО",
-#                "id": 3
+#                "country": "USA",
+#                "address": "18a Diagon Alley",
+#                "city": "New York",
+#                "id": 1
 #              }
 #            },
 #            "id": 1,
-#            "deliveryExpectedAt": "2020-08-26T13:00:00",
+#            "deliveryExpectedAt": "2020-09-01T13:00:00",
 #            "order": 1,
 #            "deliveryCost": 100.00,
 #            "deliveredAt": null
 #          }
 #        },
-#        "createdAt": "2020-08-26T12:08:17",
-#        "totalCosts": 2887.00,
+#        "createdAt": "2020-09-01T19:18:17",
+#        "totalCosts": 2962.00,
 #        "orderStatus": {
 #          "store": "gb-spring-amin-ishop-heroku",
 #          "entityClassSimpleName": "OrderStatus",
 #          "body": {
-#            "description": "Передан в доставку: Заказ скомплектован и ждет доставки",
-#            "id": 3,
-#            "title": "Transferred to delivery"
+#            "description": "Создан: Заказ сформирован пользователем и сохранен в списке заказов",
+#            "id": 1,
+#            "title": "Created"
 #          }
 #        },
-#        "totalItemsCosts": 2787.00,
+#        "totalItemsCosts": 2862.00,
 #        "id": 1,
 #        "user": {
 #          "store": "gb-spring-amin-ishop-heroku",
 #          "entityClassSimpleName": "User",
 #          "body": {
-#            "firstName": "Yury",
-#            "lastName": "Litvinenko",
-#            "phoneNumber": "8-999-9999999",
+#            "firstName": "superadmin first_name",
+#            "lastName": "superadmin last_name",
+#            "phoneNumber": "+79991234567",
 #            "deliveryAddress": {
 #              "store": "gb-spring-amin-ishop-heroku",
 #              "entityClassSimpleName": "Address",
 #              "body": {
-#                "country": "Russia",
-#                "address": "Секина 99, кв.99",
-#                "city": "Королев МО",
-#                "id": 3
+#                "country": "USA",
+#                "address": "18a Diagon Alley",
+#                "city": "New York",
+#                "id": 1
 #              }
 #            },
-#            "id": 2,
-#            "userName": "liyuse",
-#            "email": "liyuse@ yandex.ru"
+#            "id": 1,
+#            "userName": "superadmin",
+#            "email": "superadmin@ mail.com"
 #          }
 #        },
 #        "orderItems": [
@@ -101,7 +105,7 @@ GET http://localhost:8080/api/v1/event/2/id
 #            "store": "gb-spring-amin-ishop-heroku",
 #            "entityClassSimpleName": "OrderItem",
 #            "body": {
-#              "itemCosts": 1808.00,
+#              "itemCosts": 904.00,
 #              "product": {
 #                "store": "gb-spring-amin-ishop-heroku",
 #                "entityClassSimpleName": "Product",
@@ -121,7 +125,7 @@ GET http://localhost:8080/api/v1/event/2/id
 #                  "vendorCode": "00000010"
 #                }
 #              },
-#              "quantity": 2,
+#              "quantity": 1,
 #              "itemPrice": 904.00,
 #              "id": 1,
 #              "order": 1
@@ -131,7 +135,7 @@ GET http://localhost:8080/api/v1/event/2/id
 #            "store": "gb-spring-amin-ishop-heroku",
 #            "entityClassSimpleName": "OrderItem",
 #            "body": {
-#              "itemCosts": 979.00,
+#              "itemCosts": 1958.00,
 #              "product": {
 #                "store": "gb-spring-amin-ishop-heroku",
 #                "entityClassSimpleName": "Product",
@@ -151,41 +155,17 @@ GET http://localhost:8080/api/v1/event/2/id
 #                  "vendorCode": "00000009"
 #                }
 #              },
-#              "quantity": 1,
+#              "quantity": 2,
 #              "itemPrice": 979.00,
 #              "id": 2,
 #              "order": 1
 #            }
 #          }
 #        ],
-#        "updatedAt": "2020-08-27T13:43:00"
+#        "updatedAt": "2020-09-01T19:18:17"
 #      }
 #    },
-#    "deliveryStatus": null
-#  }
-#}
-
-#********* App for Developing Stage *********
-###
-
-GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/server_unaccepted/first
-#{
-#  "timestamp": "2020-09-03T07:21:24.069+00:00",
-#  "status": 404,
-#  "error": "Not Found",
-#  "message": "",
-#  "path": "/api/v1/server_unaccepted/first"
-#}
-
-###
-
-GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/id
-# getting a user by id - Works not correctly!There is no entity in the Event.
-#{
-#  "store": "gb-spring-amin-ishop-heroku",
-#  "entityClassSimpleName": "Event",
-#  "body": {
-#    "createdAt": "2020-09-03T08:07:37",
+#    "createdAt": "2020-09-03T11:07:37",
 #    "entityType": "Order",
 #    "serverAcceptedAt": null,
 #    "description": "Order has been Created",
@@ -193,32 +173,21 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/id
 #    "title": "Order Created"
 #  }
 #}
-#org.apache.http.ConnectionClosedException: Premature end of chunk coded message body: closing chunk expected
 
 ###
 
-GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/99/id
-## testing not existing user by out of range id - Works correctly!
-##
-#{
-#  "status": 404,
-#  "message": "Event with id=99 is not found!",
-#  "timestamp": 1599121018355
-#}
+PUT http://localhost:8080/api/v1/event/1/eventId/serverAcceptedAt
+Content-Type: application/json
 
+"2020-09-04T06:24:32.773"
 ###
-# for test only
-GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/create/Order/entity_type/Created/action_type/1/entity_id
-# testing of event creating - work correctly!
 #{
-#  "store": "gb-spring-amin-ishop-heroku",
-#  "entityClassSimpleName": "Event",
-#  "body": {
-#    "createdAt": "2020-09-03T08:07:36.871",
-#    "entityType": "Order",
-#    "serverAcceptedAt": null,
-#    "description": "Order has been Created",
-#    "id": 1,
-#    "title": "Order Created"
-#  }
+#  "id": null,
+#  "actionType": null,
+#  "title": null,
+#  "description": null,
+#  "entityType": null,
+#  "entityId": null,
+#  "createdAt": null,
+#  "serverAcceptedAt": "2020-09-04T06:24:32.773"
 #}

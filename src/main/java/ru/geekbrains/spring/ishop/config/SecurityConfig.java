@@ -1,5 +1,6 @@
 package ru.geekbrains.spring.ishop.config;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private IUserService userService;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -37,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //TODO не работает ограничение в admin
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //Added to fix the "status": 403, "error": "Forbidden" problem for PUT, POST etc. requests(REST). It helped!
+        http.cors().and().csrf().disable();
+
         http.authorizeRequests()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/admin/**").hasRole("EMPLOYEE")
@@ -70,4 +75,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
+
 }

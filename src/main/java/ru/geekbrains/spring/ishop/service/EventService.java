@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-//@RequiredArgsConstructor
+//@RequiredArgsConstructor //TODO Learn why it does not work
 public class EventService {
     private OutEntityService2 outEntityService;
 
@@ -46,24 +46,8 @@ public class EventService {
         this.addressService = addressService;
     }
 
-    //    @Autowired
-//    public void setEventRepository(EventRepository eventRepository) {
-//        this.eventRepository = eventRepository;
-//    }
-//
-//    //TODO for test only
-//    @Autowired
-//    public void setOrderService(OrderService orderService) {
-//        this.orderService = orderService;
-//    }
-//
-//    @Autowired
-//    public void setUserService(UserService userService) {
-//        this.userService = userService;
-//    }
-
 //    @Transactional
-//    @PostConstruct
+//    @PostConstruct //TODO Learn why it does not work
 //    public void initInitialEvent() {
 //        if(findByTitle("Initial event") !=null) {
 //            return;
@@ -75,7 +59,7 @@ public class EventService {
 //        eventRepository.save(event);
 //    }
 
-    //TODO for test only - for production use repository
+    //TODO Delete for test only - for production use repository
     public Event createEvent(String entityType, String actionType, Long entityId) {
         Event event = new Event();
         event.setEntityType(entityType);
@@ -105,57 +89,8 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-//    public void fillEntityField(String entityType, Long entityId, Map<String, Object> entityFields) {
-//        if(entityId == null) {
-//            return;
-//        }
-//        if(entityType.contains("Event")) {
-//            entityFields.put("Event", findById(entityId));
-//        } else if(entityType.contains("Order")) {
-//            if(entityType.contains("OrderStatus")) {
-//                entityFields.put("OrderStatus", orderService.findOrderStatusById(entityId));
-//            } else if(entityType.contains("OrderItem")) {
-//                entityFields.put("OrderItem", orderService.findOrderItemById(entityId));
-//            }
-//            entityFields.put("Order", orderService.findByIdOptional(entityId));
-//        } else if(entityType.contains("User")) {
-//            entityFields.put("User", userService.findByIdOptional(entityId));
-//        } else if(entityType.contains("Product")) {
-//            entityFields.put("Product", productService.findByIdOptional(entityId));
-//        } else if(entityType.contains("Category")) {
-//            entityFields.put("Category", categoryService.findById(Short.valueOf(String.valueOf(entityId))));
-//        } else if(entityType.contains("Delivery")) {
-//            entityFields.put("Delivery", deliveryService.findById(entityId));
-//        } else if(entityType.contains("Address")) {
-//            entityFields.put("Address", addressService.findById(entityId));
-//        }
-//    }
-//    public void fillEntityField(String entityType, Long entityId, Map<String, Object> entityFields) {
-//        if(entityId == null) {
-//            return;
-//        }
-//        if(entityType.contains("Event")) {
-//            entityFields.put("Event", outEntityService.createOutEntity(findById(entityId)));
-//        } else if(entityType.contains("Order")) {
-//            if(entityType.contains("OrderStatus")) {
-//                entityFields.put("OrderStatus", outEntityService.createOutEntity(orderService.findOrderStatusById(entityId)));
-//            } else if(entityType.contains("OrderItem")) {
-//                entityFields.put("OrderItem", outEntityService.createOutEntity(orderService.findOrderItemById(entityId)));
-//            }
-//            entityFields.put("Order", outEntityService.createOutEntity(orderService.findByIdOptional(entityId)));
-//        } else if(entityType.contains("User")) {
-//            entityFields.put("User", outEntityService.createOutEntity(userService.findByIdOptional(entityId)));
-//        } else if(entityType.contains("Product")) {
-//            entityFields.put("Product", outEntityService.createOutEntity(productService.findByIdOptional(entityId)));
-//        } else if(entityType.contains("Category")) {
-//            entityFields.put("Category", outEntityService.createOutEntity(categoryService.findById(Short.valueOf(String.valueOf(entityId)))));
-//        } else if(entityType.contains("Delivery")) {
-//            entityFields.put("Delivery", outEntityService.createOutEntity(deliveryService.findById(entityId)));
-//        } else if(entityType.contains("Address")) {
-//            entityFields.put("Address", outEntityService.createOutEntity(addressService.findById(entityId)));
-//        }
-//    }
     public void fillEntityFieldInEventOutEntity(String entityType, Long entityId, Map<String, Object> entityFields) {
+        //TODO Refactoring DB: make entityType Nullable
         if(entityId == null) {
             return;
         }
@@ -179,4 +114,7 @@ public class EventService {
         }
     }
 
+    public Event save(Event event) {
+        return eventRepository.save(event);
+    }
 }

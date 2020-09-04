@@ -44,6 +44,7 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
+    // TODO Delete
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new ProductToOutProductConverter());
