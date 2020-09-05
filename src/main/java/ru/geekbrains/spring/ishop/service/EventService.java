@@ -57,7 +57,7 @@ public class EventService {
 //        eventRepository.save(event);
 //    }
 
-    //TODO Delete for test only - for production use repository
+    //TODO Delete for test only - for production, use repository
     public Event createEvent(String entityType, String actionType, Long entityId) {
         Event event = new Event();
         event.setEntityType(entityType);
@@ -79,8 +79,11 @@ public class EventService {
         return eventRepository.findByTitle(title);
     }
 
+//    public Event findFirstByServerAcceptedAtIsNull() {
+//        return eventRepository.findFirstByServerAcceptedAtIsNull().orElse(new Event());
+//    }
     public Event findFirstByServerAcceptedAtIsNull() {
-        return eventRepository.findFirstByServerAcceptedAtIsNull().orElse(new Event());
+        return eventRepository.findFirstByServerAcceptedAtIsNull().orElse(Event.nullObject);
     }
 
     private List<Event> findAll() {
