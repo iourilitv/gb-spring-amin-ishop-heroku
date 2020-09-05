@@ -79,9 +79,6 @@ public class EventService {
         return eventRepository.findByTitle(title);
     }
 
-//    public Event findFirstByServerAcceptedAtIsNull() {
-//        return eventRepository.findFirstByServerAcceptedAtIsNull().orElse(new Event());
-//    }
     public Event findFirstByServerAcceptedAtIsNull() {
         return eventRepository.findFirstByServerAcceptedAtIsNull().orElse(Event.nullObject);
     }
