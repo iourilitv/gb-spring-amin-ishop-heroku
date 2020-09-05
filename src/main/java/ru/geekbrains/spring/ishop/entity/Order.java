@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
+@EqualsAndHashCode(exclude="delivery") //it is required to fix "StackOverFlow" issue during a new order creating
 public class Order {
 
     @Id
@@ -57,6 +59,7 @@ public class Order {
 
     @Override
     public String toString() {
+        long deliveryId = delivery == null ? 0 : delivery.getId();
         return "Order{" +
                 "id=" + id +
                 ", orderStatus=" + orderStatus +
@@ -64,7 +67,7 @@ public class Order {
                 ", orderItems=" + orderItems +
                 ", totalItemsCosts=" + totalItemsCosts +
                 ", totalCosts=" + totalCosts +
-                ", delivery=" + delivery +
+                ", deliveryId=" + deliveryId +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

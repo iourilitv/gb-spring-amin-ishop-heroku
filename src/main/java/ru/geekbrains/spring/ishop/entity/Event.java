@@ -59,9 +59,21 @@ public class Event {
         nullObject.setDescription("");
         nullObject.setEntityId(0L);
         nullObject.setCreatedAt(LocalDateTime.now());
-        nullObject.setServerAcceptedAt(LocalDateTime.MIN);
         log.info("****** nullEvent: " + nullObject);
         return nullObject;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", actionType='" + actionType + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", entityType='" + entityType + '\'' +
+                ", entityId=" + entityId +
+                ", createdAt=" + createdAt +
+                ", serverAcceptedAt=" + serverAcceptedAt +
+                '}';
+    }
 }

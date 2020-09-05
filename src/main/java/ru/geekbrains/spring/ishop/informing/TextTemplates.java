@@ -1,8 +1,8 @@
 package ru.geekbrains.spring.ishop.informing;
 
 public enum TextTemplates {
-    SUBJECT_NEW_ORDER_CREATED("Your order id: %d%n has been created successfully"),
-    SUBJECT_ORDER_STATUS_CHANGED("New Status of order id: %d%n. %s"),
+    NEW_ORDER_CREATED("Your order id: %d%n has been created successfully"),
+    ORDER_STATUS_CHANGED("New Status of order id: %d%n. %s"),
 
     NOTICE_NEW_ORDER_CREATED("Your order id: %d%n has been created successfully"),
     NOTICE_ORDER_STATUS_CHANGED("Status of the order id: %d%n has been changed to %s."),

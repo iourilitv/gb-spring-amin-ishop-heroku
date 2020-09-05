@@ -61,9 +61,9 @@ public class MailService implements INotifier {
         AbstractMailMessage emailMessage = new OrderEmailMessage();
         emailMessage.setSendTo(order.getUser().getEmail());
 
-        if(subject.equals(TextTemplates.SUBJECT_NEW_ORDER_CREATED)) {
+        if(subject.equals(TextTemplates.NEW_ORDER_CREATED)) {
             emailMessage.setSubject(String.format(subject.getText(), order.getId()));
-        } else if (subject.equals(TextTemplates.SUBJECT_ORDER_STATUS_CHANGED)) {
+        } else if (subject.equals(TextTemplates.ORDER_STATUS_CHANGED)) {
             emailMessage.setSubject(String.format(subject.getText(), order.getId(), order.getOrderStatus().getTitle()));
         }
         emailMessage.setBody(messageBuilder.buildOrderEmail(order));

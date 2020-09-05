@@ -188,7 +188,7 @@ GET http://localhost:8080/api/v1/event/1/eventId
 
 ###
 
-PUT http://localhost:8080/api/v1/event/1/eventId/serverAcceptedAt
+PUT http://localhost:8080/api/v1/event/16/eventId/serverAcceptedAt
 Content-Type: application/json
 
 "2020-09-04T06:24:32.773"
@@ -202,4 +202,142 @@ Content-Type: application/json
 #  "entityId": null,
 #  "createdAt": null,
 #  "serverAcceptedAt": "2020-09-04T06:24:32.773"
+#}
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityClassSimpleName": "Event",
+#  "body": {
+#    "Order": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "Order",
+#      "body": {
+#        "delivery": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "Delivery",
+#          "body": {
+#            "phoneNumber": "+79991234567",
+#            "deliveryAddress": {
+#              "store": "gb-spring-amin-ishop-heroku",
+#              "entityClassSimpleName": "Address",
+#              "body": {
+#                "country": "Russia",
+#                "address": "Секина 99, кв.99",
+#                "city": "Королев МО",
+#                "id": 3
+#              }
+#            },
+#            "id": 1,
+#            "deliveryExpectedAt": "2020-09-05T10:00:00",
+#            "order": 2,
+#            "deliveryCost": 100.00,
+#            "deliveredAt": null
+#          }
+#        },
+#        "createdAt": "2020-09-05T11:24:47",
+#        "totalCosts": 3057.00,
+#        "orderStatus": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "OrderStatus",
+#          "body": {
+#            "description": "Доставлен: Заказ получен пользователем",
+#            "id": 5,
+#            "title": "Delivered"
+#          }
+#        },
+#        "totalItemsCosts": 2957.00,
+#        "id": 2,
+#        "user": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityClassSimpleName": "User",
+#          "body": {
+#            "firstName": "f n liyuse",
+#            "lastName": "l n liyuse",
+#            "phoneNumber": "+79991234567",
+#            "deliveryAddress": {
+#              "store": "gb-spring-amin-ishop-heroku",
+#              "entityClassSimpleName": "Address",
+#              "body": {
+#                "country": "Russia",
+#                "address": "Секина 99, кв.99",
+#                "city": "Королев МО",
+#                "id": 3
+#              }
+#            },
+#            "id": 2,
+#            "userName": "liyuse",
+#            "email": "liyuse@ yandex.ru"
+#          }
+#        },
+#        "orderItems": [
+#          {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityClassSimpleName": "OrderItem",
+#            "body": {
+#              "itemCosts": 1958.00,
+#              "product": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityClassSimpleName": "Product",
+#                "body": {
+#                  "price": 979.00,
+#                  "id": 9,
+#                  "shortDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#                  "category": {
+#                    "store": "gb-spring-amin-ishop-heroku",
+#                    "entityClassSimpleName": "Category",
+#                    "body": {
+#                      "id": 6,
+#                      "title": "Книги"
+#                    }
+#                  },
+#                  "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#                  "vendorCode": "00000009"
+#                }
+#              },
+#              "quantity": 2,
+#              "itemPrice": 979.00,
+#              "id": 3,
+#              "order": 2
+#            }
+#          },
+#          {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityClassSimpleName": "OrderItem",
+#            "body": {
+#              "itemCosts": 999.00,
+#              "product": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityClassSimpleName": "Product",
+#                "body": {
+#                  "price": 999.00,
+#                  "id": 11,
+#                  "shortDescription": "Размер на модели: S. *Параметры в описании указаны для размера: S.",
+#                  "category": {
+#                    "store": "gb-spring-amin-ishop-heroku",
+#                    "entityClassSimpleName": "Category",
+#                    "body": {
+#                      "id": 5,
+#                      "title": "Одежда"
+#                    }
+#                  },
+#                  "title": "ТВОЕ / Платье",
+#                  "vendorCode": "00000011"
+#                }
+#              },
+#              "quantity": 1,
+#              "itemPrice": 999.00,
+#              "id": 4,
+#              "order": 2
+#            }
+#          }
+#        ],
+#        "updatedAt": "2020-09-05T12:47:10"
+#      }
+#    },
+#    "createdAt": "2020-09-05T12:47:10",
+#    "entityType": "Order",
+#    "serverAcceptedAt": "2020-09-04T06:24:32.773",
+#    "description": "Order has been ORDER_STATUS_CHANGED",
+#    "id": 6,
+#    "title": "Order ORDER_STATUS_CHANGED"
+#  }
 #}

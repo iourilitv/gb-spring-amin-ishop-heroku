@@ -90,7 +90,7 @@ public class OrderController {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
             //send email to the user
-            orderSubject.requestToSendMessage(order, TextTemplates.SUBJECT_NEW_ORDER_CREATED);
+            orderSubject.requestToSendMessage(order, TextTemplates.NEW_ORDER_CREATED);
             return new RedirectView("/profile/order/all");
         }
         return new RedirectView("/profile/order/rollBack");

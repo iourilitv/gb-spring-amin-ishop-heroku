@@ -57,7 +57,6 @@ public class EventService {
 //        eventRepository.save(event);
 //    }
 
-    //TODO Delete for test only - for production, use repository
     public Event createEvent(String entityType, String actionType, Long entityId) {
         Event event = new Event();
         event.setEntityType(entityType);
@@ -66,8 +65,7 @@ public class EventService {
         event.setDescription(entityType + " has been " + actionType);
         event.setEntityId(entityId);
         event.setCreatedAt(LocalDateTime.now());
-        eventRepository.save(event);
-        return event;
+        return save(event);
     }
 
     @Transactional(readOnly = true)
