@@ -53,10 +53,10 @@ public class Event {
     private static Event initNullObject() {
         nullObject = new Event();
         nullObject.setId(0L);
-        nullObject.setEntityType("NullObject");
-        nullObject.setActionType("Created");
+        nullObject.setEntityType("NO ENTITY TYPE");
+        nullObject.setActionType("NO ACTION TYPE");
         nullObject.setTitle(nullObject.getEntityType() + " " + nullObject.getActionType());
-        nullObject.setDescription("");
+        nullObject.setDescription("NO DESCRIPTION");
         nullObject.setEntityId(0L);
         nullObject.setCreatedAt(LocalDateTime.now());
         log.info("****** nullEvent: " + nullObject);

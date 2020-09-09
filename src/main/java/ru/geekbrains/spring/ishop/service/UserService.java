@@ -207,6 +207,13 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public boolean isUserDeliveryAddressCorrect(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("The User with id=" + userId + " is not found!"))
+                .getDeliveryAddress() != null;
+    }
+
+    @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findOneByUserName(userName);

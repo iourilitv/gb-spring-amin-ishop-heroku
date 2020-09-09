@@ -41,4 +41,6 @@ public interface IUserService extends UserDetailsService {
 
     List<Role> getRemainingAvailableRoles(Long user_id);
 
+    boolean isUserDeliveryAddressCorrect(Long userId);
+
 }

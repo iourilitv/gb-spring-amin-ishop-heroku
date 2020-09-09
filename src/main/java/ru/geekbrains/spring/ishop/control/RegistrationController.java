@@ -1,10 +1,9 @@
 package ru.geekbrains.spring.ishop.control;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/register")
+@Slf4j
 public class RegistrationController {
     private IUserService userService;
 
@@ -24,8 +24,6 @@ public class RegistrationController {
     public void setUserService(IUserService userService) {
         this.userService = userService;
     }
-
-    private final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -46,7 +44,7 @@ public class RegistrationController {
             BindingResult theBindingResult, Model theModel) {
 
         String userName = theSystemUser.getUserName();
-        logger.debug("Processing registration form for: " + userName);
+        log.debug("Processing registration form for: " + userName);
         if (theBindingResult.hasErrors()) {
             return "registration-form";
         }
@@ -55,11 +53,11 @@ public class RegistrationController {
             // theSystemUser.setUserName(null);
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "User with current username already exists");
-            logger.debug("User name already exists.");
+            log.debug("User name already exists.");
             return "registration-form";
         }
         userService.save(theSystemUser);
-        logger.debug("Successfully created user: " + userName);
+        log.debug("Successfully created user: " + userName);
         theModel.addAttribute("confirmationTitle", "Amin | Registration Confirmation Page");
         theModel.addAttribute("confirmationMessage", "You have been registered successfully!");
         theModel.addAttribute("confirmationAHref", "/login");

@@ -100,6 +100,11 @@ public class OrderController {
     public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
                                    HttpSession session){
         SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
+
+        if(systemOrder.getUser().getDeliveryAddress() == null) {
+            new RedirectView("/profile/form/show");
+        }
+
         model.addAttribute("order", systemOrder);
         model.addAttribute("delivery", systemOrder.getSystemDelivery());
 

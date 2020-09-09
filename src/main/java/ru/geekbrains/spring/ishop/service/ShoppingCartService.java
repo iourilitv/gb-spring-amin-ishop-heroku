@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.OrderItem;
 import ru.geekbrains.spring.ishop.entity.Product;
+import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 
@@ -20,10 +21,16 @@ import java.util.function.Supplier;
 public class ShoppingCartService {
     private ShoppingCart cart;
     private ProductService productService;
+    private UserService userService;
 
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Transactional
@@ -73,8 +80,14 @@ public class ShoppingCartService {
         recalculate(cart);
     }
 
+//    public ShoppingCart getClearedCartForSession(HttpSession session) {
+//        cart = new ShoppingCart();
+//        session.setAttribute("cart", cart);
+//        return cart;
+//    }
     public ShoppingCart getClearedCartForSession(HttpSession session) {
-        cart = new ShoppingCart();
+        User user = (User) session.getAttribute("user");
+        cart = new ShoppingCart(user);
         session.setAttribute("cart", cart);
         return cart;
     }

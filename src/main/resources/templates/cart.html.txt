@@ -123,13 +123,8 @@
                 </table>
 
                 <div th:unless="${cart.cartItems.isEmpty()}">
-                </div>
-                <div th:if="${deliveryAddressIsCorrect}">
                     <!-- button Proceed to checkout(.. items) -->
                     <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/proceedToCheckout'}">Proceed to checkout</a>
-                </div>
-                <div th:unless="${deliveryAddressIsCorrect}">
-                    <h4><a th:href="@{'/profile/form/show'}" th:text="'Please link it to add Your Delivery Address in Your profile'"></a></h4>
                 </div>
             </div>
             <!-- Table of CartItems list End -->

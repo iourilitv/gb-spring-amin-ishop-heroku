@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
+import ru.geekbrains.spring.ishop.service.UserService;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,19 +18,35 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/profile/cart")
 public class ShoppingCartController {
     private ShoppingCartService cartService;
+    private CategoryService categoryService;
+    private UserService userService;
 
     @Autowired
     public void setShoppingCartService(ShoppingCartService cartService) {
         this.cartService = cartService;
     }
 
-    private CategoryService categoryService;
-
     @Autowired
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+//    @GetMapping
+//    public String cartPage(Model model, HttpSession session) {
+//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
+//        model.addAttribute("cart", cart);
+//        categoryService.addToModelAttributeCategories(model);
+//        model.addAttribute("activePage", "Cart");
+//        //добавляем общее количество товаров в корзине
+//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
+//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+//        return "cart";
+//    }
     @GetMapping
     public String cartPage(Model model, HttpSession session) {
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
@@ -39,6 +56,10 @@ public class ShoppingCartController {
         //добавляем общее количество товаров в корзине
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
+
+        boolean deliveryAddressIsCorrect = userService.isUserDeliveryAddressCorrect(cart.getUser().getId());
+        model.addAttribute("deliveryAddressIsCorrect", deliveryAddressIsCorrect);
+
         return "cart";
     }
 

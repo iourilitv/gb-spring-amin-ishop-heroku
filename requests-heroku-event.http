@@ -44,7 +44,7 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/serverUnaccepted/fi
 
 ###
 # returns ResponseEntity<OutEntity>
-GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/1/eventId
+GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/event/3/eventId
 # getting a event by id - Works correctly!.
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
