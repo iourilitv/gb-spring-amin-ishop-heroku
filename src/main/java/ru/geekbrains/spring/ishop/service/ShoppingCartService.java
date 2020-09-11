@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.OrderItem;
 import ru.geekbrains.spring.ishop.entity.Product;
-import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 
@@ -80,17 +79,17 @@ public class ShoppingCartService {
         recalculate(cart);
     }
 
-//    public ShoppingCart getClearedCartForSession(HttpSession session) {
-//        cart = new ShoppingCart();
-//        session.setAttribute("cart", cart);
-//        return cart;
-//    }
     public ShoppingCart getClearedCartForSession(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        cart = new ShoppingCart(user);
+        cart = new ShoppingCart();
         session.setAttribute("cart", cart);
         return cart;
     }
+//    public ShoppingCart getClearedCartForSession(HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        cart = new ShoppingCart(user);
+//        session.setAttribute("cart", cart);
+//        return cart;
+//    }
 
     public ShoppingCart getShoppingCartForSession(HttpSession session) {
         if (session.getAttribute("cart") == null) {

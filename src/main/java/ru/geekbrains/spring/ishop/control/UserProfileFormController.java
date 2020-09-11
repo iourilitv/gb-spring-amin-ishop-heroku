@@ -1,5 +1,7 @@
 package ru.geekbrains.spring.ishop.control;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.User;
+import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
@@ -22,17 +25,20 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/profile/form")
+@RequiredArgsConstructor
+@Slf4j
 public class UserProfileFormController {
     private final IUserService userService;
     private final ShoppingCartService cartService;
+    private final CategoryService categoryService;
 
-    @Autowired
-    public UserProfileFormController(IUserService userService, ShoppingCartService cartService) {
-        this.userService = userService;
-        this.cartService = cartService;
-    }
+//    @Autowired
+//    public UserProfileFormController(IUserService userService, ShoppingCartService cartService) {
+//        this.userService = userService;
+//        this.cartService = cartService;
+//    }
 
-    private final Logger logger = LoggerFactory.getLogger(UserProfileFormController.class);
+//    private final Logger logger = LoggerFactory.getLogger(UserProfileFormController.class);
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -44,7 +50,7 @@ public class UserProfileFormController {
     public String showProfileFormPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-
+        categoryService.addToModelAttributeCategories(model);
         ShoppingCart cart = cartService.getShoppingCartForSession(session);
         //добавляем общее количество товаров в корзине
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
@@ -66,7 +72,7 @@ public class UserProfileFormController {
             BindingResult theBindingResult, Model theModel) {
 
         String userName = theSystemUser.getUserName();
-        logger.debug("Processing password changing form for: " + userName);
+        log.debug("Processing password changing form for: " + userName);
         if (theBindingResult.hasErrors()) {
             return "password-changing-form";
         }
@@ -74,11 +80,11 @@ public class UserProfileFormController {
         if (existing == null) {
             theModel.addAttribute("systemUser", theSystemUser);
             theModel.addAttribute("registrationError", "There is no user with current username!");
-            logger.debug("There is no user with current username.");
+            log.debug("There is no user with current username.");
             return "password-changing-form";
         }
         userService.updatePassword(userName, theSystemUser.getPassword());
-        logger.debug("Successfully updated user password: " + userName);
+        log.debug("Successfully updated user password: " + userName);
         theModel.addAttribute("confirmationTitle", "Amin | Password Changing Confirmation Page");
         theModel.addAttribute("confirmationMessage", "The password has been changed successfully!");
         theModel.addAttribute("confirmationAHref", "/");
@@ -91,8 +97,8 @@ public class UserProfileFormController {
             @Valid @ModelAttribute("deliveryAddress") Address deliveryAddress,
             BindingResult theBindingResult, HttpSession session) {
 
-        logger.debug("Processing user profile deliveryAddress updating: ");
-        logger.info(deliveryAddress.toString());
+        log.debug("Processing user profile deliveryAddress updating: ");
+        log.info(deliveryAddress.toString());
 
         if (!theBindingResult.hasErrors()) {
             User user = (User)session.getAttribute("user");
@@ -107,8 +113,8 @@ public class UserProfileFormController {
             @RequestParam("firstName") String first_name,
             HttpSession session) {
 
-        logger.debug("Processing user profile first_name updating: ");
-        logger.info(first_name);
+        log.debug("Processing user profile first_name updating: ");
+        log.info(first_name);
 
         User user = (User)session.getAttribute("user");
         userService.updateFirstName(user, first_name);
@@ -121,8 +127,8 @@ public class UserProfileFormController {
             @RequestParam("lastName") String last_name,
             HttpSession session) {
 
-        logger.debug("Processing user profile last_name updating: ");
-        logger.info(last_name);
+        log.debug("Processing user profile last_name updating: ");
+        log.info(last_name);
 
         User user = (User)session.getAttribute("user");
         userService.updateLastName(user, last_name);

@@ -37,6 +37,7 @@
 <!--/*@thymesVar id="cartItemsQuantity" type=""*/-->
 <!--/*@thymesVar id="cart" type="ru.geekbrains.spring.ishop.utils.ShoppingCart"*/-->
 <!--/*@thymesVar id="cartItem" type="ru.geekbrains.spring.ishop.entity.OrderItem"*/-->
+<!--/*@thymesVar id="deliveryAddressIsCorrect" type="java.lang.Boolean"*/-->
 
     <!-- Page Preloder, Humberger Menu, Header Section Begin -->
     <superheader th:replace="~{fragments/header.html :: header(
@@ -123,13 +124,13 @@
                 </table>
 
                 <div th:unless="${cart.cartItems.isEmpty()}">
-                </div>
-                <div th:if="${deliveryAddressIsCorrect}">
-                    <!-- button Proceed to checkout(.. items) -->
-                    <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/proceedToCheckout'}">Proceed to checkout</a>
-                </div>
-                <div th:unless="${deliveryAddressIsCorrect}">
-                    <h4><a th:href="@{'/profile/form/show'}" th:text="'Please link it to add Your Delivery Address in Your profile'"></a></h4>
+                    <div th:if="${deliveryAddressIsCorrect}">
+                        <!-- button Proceed to checkout(.. items) -->
+                        <a class="catalog__product-card__price btn-subscribe" th:href="@{'/profile/order/proceedToCheckout'}">Proceed to checkout</a>
+                    </div>
+                    <div th:unless="${deliveryAddressIsCorrect}">
+                        <h4><a th:href="@{'/profile/form/show'}" th:text="'Please follow this link to add your Delivery Address to your profile'"></a></h4>
+                    </div>
                 </div>
             </div>
             <!-- Table of CartItems list End -->

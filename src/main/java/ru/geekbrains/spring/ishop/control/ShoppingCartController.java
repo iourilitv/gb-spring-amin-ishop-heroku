@@ -1,11 +1,13 @@
 package ru.geekbrains.spring.ishop.control;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
 import ru.geekbrains.spring.ishop.service.UserService;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @Component
 @RequestMapping("/profile/cart")
+@Slf4j
 public class ShoppingCartController {
     private ShoppingCartService cartService;
     private CategoryService categoryService;
@@ -57,7 +60,8 @@ public class ShoppingCartController {
         int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
         model.addAttribute("cartItemsQuantity", cartItemsQuantity);
 
-        boolean deliveryAddressIsCorrect = userService.isUserDeliveryAddressCorrect(cart.getUser().getId());
+        User user = (User) session.getAttribute("user");
+        boolean deliveryAddressIsCorrect = userService.isUserDeliveryAddressCorrect(user.getId());
         model.addAttribute("deliveryAddressIsCorrect", deliveryAddressIsCorrect);
 
         return "cart";
