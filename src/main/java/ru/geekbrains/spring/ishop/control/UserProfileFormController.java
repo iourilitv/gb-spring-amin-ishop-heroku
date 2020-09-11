@@ -2,9 +2,6 @@ package ru.geekbrains.spring.ishop.control;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +28,6 @@ public class UserProfileFormController {
     private final IUserService userService;
     private final ShoppingCartService cartService;
     private final CategoryService categoryService;
-
-//    @Autowired
-//    public UserProfileFormController(IUserService userService, ShoppingCartService cartService) {
-//        this.userService = userService;
-//        this.cartService = cartService;
-//    }
-
-//    private final Logger logger = LoggerFactory.getLogger(UserProfileFormController.class);
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {

@@ -84,12 +84,6 @@ public class ShoppingCartService {
         session.setAttribute("cart", cart);
         return cart;
     }
-//    public ShoppingCart getClearedCartForSession(HttpSession session) {
-//        User user = (User) session.getAttribute("user");
-//        cart = new ShoppingCart(user);
-//        session.setAttribute("cart", cart);
-//        return cart;
-//    }
 
     public ShoppingCart getShoppingCartForSession(HttpSession session) {
         if (session.getAttribute("cart") == null) {

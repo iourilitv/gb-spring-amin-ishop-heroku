@@ -39,17 +39,6 @@ public class ShoppingCartController {
         this.userService = userService;
     }
 
-//    @GetMapping
-//    public String cartPage(Model model, HttpSession session) {
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        model.addAttribute("cart", cart);
-//        categoryService.addToModelAttributeCategories(model);
-//        model.addAttribute("activePage", "Cart");
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//        return "cart";
-//    }
     @GetMapping
     public String cartPage(Model model, HttpSession session) {
         ShoppingCart cart = cartService.getShoppingCartForSession(session);

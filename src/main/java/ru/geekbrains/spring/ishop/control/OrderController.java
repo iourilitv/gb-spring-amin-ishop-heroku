@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
@@ -96,25 +95,6 @@ public class OrderController {
         return new RedirectView("/profile/order/rollBack");
     }
 
-//    @GetMapping("/show/{order_id}/order_id")
-//    public String showOrderDetails(@PathVariable Long order_id, ModelMap model,
-//                                   HttpSession session){
-//        SystemOrder systemOrder = orderService.getSystemOrderForSession(session, order_id);
-//
-//        if(systemOrder.getUser().getDeliveryAddress() == null) {
-//            new RedirectView("/profile/form/show");
-//        }
-//
-//        model.addAttribute("order", systemOrder);
-//        model.addAttribute("delivery", systemOrder.getSystemDelivery());
-//
-//        ShoppingCart cart = cartService.getShoppingCartForSession(session);
-//        //добавляем общее количество товаров в корзине
-//        int cartItemsQuantity = cartService.getCartItemsQuantity(cart);
-//        model.addAttribute("cartItemsQuantity", cartItemsQuantity);
-//
-//        return "order-details";
-//    }
     @GetMapping("/show/{order_id}/order_id")
     public String showOrderDetails(@PathVariable Long order_id, Model model,
                                    HttpSession session){

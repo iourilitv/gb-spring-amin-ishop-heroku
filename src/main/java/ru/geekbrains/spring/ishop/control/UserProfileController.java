@@ -1,7 +1,6 @@
 package ru.geekbrains.spring.ishop.control;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +16,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/profile")
 @RequiredArgsConstructor
 public class UserProfileController {
-//    private IUserService userService;
-//    private ShoppingCartService cartService;
-//    private CategoryService categoryService;
     private final IUserService userService;
     private final ShoppingCartService cartService;
     private final CategoryService categoryService;
-
-//    @Autowired
-//    public UserProfileController(IUserService userService, ShoppingCartService cartService) {
-//        this.userService = userService;
-//        this.cartService = cartService;
-//    }
 
     @GetMapping
     public String indexPage(HttpSession session, Model model) {
