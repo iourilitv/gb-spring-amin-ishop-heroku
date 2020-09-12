@@ -7,6 +7,7 @@ import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
 import ru.geekbrains.spring.ishop.service.EventService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,9 +54,11 @@ public class OutEntityService {
         log.info("*********** fillStoreEventEntityFields ***********");
 
         entityFields.put("id", event.getId());
+        entityFields.put("actionType", event.getActionType());
         entityFields.put("title", event.getTitle());
         entityFields.put("description", event.getDescription());
         entityFields.put("entityType", event.getEntityType());
+        entityFields.put("entityId", event.getEntityId());
 
         log.info("EntityType: " + event.getEntityType() + ". EntityId: " + event.getEntityId());
 
@@ -148,5 +151,30 @@ public class OutEntityService {
         entityFields.put("city", address.getCity());
         entityFields.put("address", address.getAddress());
     }
+
+    public Event recognizeAndSaveEventFromOutEntity(OutEntity outEntity) {
+        Event event = new Event();
+        Map<String, Object> fields = outEntity.getBody();
+
+        double doubleId = Double.parseDouble(String.valueOf(fields.get("id")));
+        event.setId((new Double(doubleId)).longValue());
+
+        event.setActionType("Incoming");
+        event.setTitle((String) fields.get("title"));
+        event.setDescription((String) fields.get("description"));
+        event.setEntityType((String) fields.get("entityType"));
+
+        double doubleEntityId = Double.parseDouble(String.valueOf(fields.get("entityId")));
+        event.setEntityId((new Double(doubleEntityId)).longValue());
+
+        event.setCreatedAt(LocalDateTime.parse(String.valueOf(fields.get("createdAt"))));
+        event.setServerAcceptedAt(LocalDateTime.now());
+
+        Event copyEvent = eventService.createEvent("Event", "Incoming", event.getId());
+
+//        return event;
+        return eventService.save(copyEvent);
+    }
+
 
 }

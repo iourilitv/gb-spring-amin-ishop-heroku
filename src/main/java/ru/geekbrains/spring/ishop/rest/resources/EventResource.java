@@ -1,7 +1,8 @@
 package ru.geekbrains.spring.ishop.rest.resources;
 
+import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +17,11 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/v1/event")
 @Slf4j
+@RequiredArgsConstructor
 public class EventResource extends AbstractResource {
-
-    private OutEntityService outEntityService;
-
-    private EventService eventService;
-
-    @Autowired
-    public void setOutEntityService(OutEntityService outEntityService) {
-        this.outEntityService = outEntityService;
-    }
-
-    @Autowired
-    public void setEventService(EventService eventService) {
-        this.eventService = eventService;
-    }
+    private final Gson gson = new Gson();
+    private final OutEntityService outEntityService;
+    private final EventService eventService;
 
     @GetMapping(value = "/{eventId}/eventId")
     public ResponseEntity<OutEntity> getEventOutEntity(@PathVariable("eventId") Long eventId) {
@@ -52,6 +43,22 @@ public class EventResource extends AbstractResource {
         oldEvent.setServerAcceptedAt(serverAcceptedAt);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
+    }
+
+//    @PostMapping(value = "/save/incoming")
+//    public ResponseEntity<OutEntity> saveIncomingEventOutEntity(@RequestBody @Valid OutEntity outEntity) {
+//        Event event = outEntityService.recognizeAndSaveEventFromOutEntity(outEntity);
+//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+//                .body(outEntityService.createOutEntity(event));
+//    }
+
+    @PostMapping(value = "/save/incoming/string")
+    public ResponseEntity<OutEntity> saveIncomingStringEventOutEntity(@RequestBody @Valid String json) {
+        OutEntity outEntity = gson.fromJson(json, OutEntity.class);
+        Event event = outEntityService.recognizeAndSaveEventFromOutEntity(outEntity);
+
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+                .body(outEntityService.createOutEntity(event));
     }
 
 }
