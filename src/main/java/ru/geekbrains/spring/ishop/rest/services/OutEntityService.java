@@ -153,27 +153,27 @@ public class OutEntityService {
     }
 
     public Event recognizeAndSaveEventFromOutEntity(OutEntity outEntity) {
-        Event event = new Event();
         Map<String, Object> fields = outEntity.getBody();
 
         double doubleId = Double.parseDouble(String.valueOf(fields.get("id")));
-        event.setId((new Double(doubleId)).longValue());
-
-        event.setActionType("Incoming");
-        event.setTitle((String) fields.get("title"));
-        event.setDescription((String) fields.get("description"));
-        event.setEntityType((String) fields.get("entityType"));
-
         double doubleEntityId = Double.parseDouble(String.valueOf(fields.get("entityId")));
-        event.setEntityId((new Double(doubleEntityId)).longValue());
 
-        event.setCreatedAt(LocalDateTime.parse(String.valueOf(fields.get("createdAt"))));
-        event.setServerAcceptedAt(LocalDateTime.now());
+        Event event = Event.builder()
+            .id((new Double(doubleId)).longValue())
+            .actionType("Incoming")
+            .title((String) fields.get("title"))
+            .description((String) fields.get("description"))
+            .entityType((String) fields.get("entityType"))
+            .entityId((new Double(doubleEntityId)).longValue())
+            .createdAt(LocalDateTime.parse(String.valueOf(fields.get("createdAt"))))
+            .serverAcceptedAt(LocalDateTime.now())
+            .build();
+        log.info("****** recognizeAndSaveEventFromOutEntity() event: " + event);
 
         Event copyEvent = eventService.createEvent("Event", "Incoming", event.getId());
 
-//        return event;
-        return eventService.save(copyEvent);
+        return event;
+//        return eventService.save(copyEvent);
     }
 
 

@@ -23,12 +23,14 @@ GET http://localhost:8080/api/v1/event/serverUnaccepted/first
 #  "store": "gb-spring-amin-ishop-heroku",
 #  "entityClassSimpleName": "Event",
 #  "body": {
-#    "createdAt": null,
-#    "entityType": null,
+#    "actionType": "NO ACTION TYPE",
+#    "createdAt": "2020-09-12T12:22:03.891",
+#    "entityType": "NO ENTITY TYPE",
 #    "serverAcceptedAt": null,
-#    "description": null,
-#    "id": null,
-#    "title": null
+#    "description": "NO DESCRIPTION",
+#    "entityId": 0,
+#    "id": 0,
+#    "title": "NO ENTITY TYPE. NO ACTION TYPE"
 #  }
 #}
 #{

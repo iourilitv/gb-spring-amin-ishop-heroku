@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.Tolerate;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -8,9 +9,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Table(name = "events")
-@Data
+@Getter
+@Setter
 @Slf4j
 public class Event {
     public static Event nullObject = initNullObject();
@@ -49,17 +52,20 @@ public class Event {
     @Column(name = "server_accepted_at")
     private LocalDateTime serverAcceptedAt;
 
-//    @PostConstruct //TODO Why it does not work?!
+    @Tolerate
+    public Event() {
+    }
+
     private static Event initNullObject() {
-        nullObject = new Event();
-        nullObject.setId(0L);
-        nullObject.setEntityType("NO ENTITY TYPE");
-        nullObject.setActionType("NO ACTION TYPE");
-        nullObject.setTitle(nullObject.getEntityType() + " " + nullObject.getActionType());
-        nullObject.setDescription("NO DESCRIPTION");
-        nullObject.setEntityId(0L);
-        nullObject.setCreatedAt(LocalDateTime.now());
-        log.info("****** nullEvent: " + nullObject);
+        nullObject = Event.builder()
+            .id(0L)
+            .actionType("NO ACTION TYPE")
+            .title("NO ENTITY TYPE. NO ACTION TYPE")
+            .description("NO DESCRIPTION")
+            .entityType("NO ENTITY TYPE")
+            .entityId(0L)
+            .createdAt(LocalDateTime.now())
+            .build();
         return nullObject;
     }
 

@@ -1,5 +1,6 @@
 package ru.geekbrains.spring.ishop.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,17 @@ import java.util.Map;
 
 @Service
 @Slf4j
-//@RequiredArgsConstructor //TODO Learn why it does not work
+@RequiredArgsConstructor
 public class EventService {
     private OutEntityService outEntityService;
 
+    //TODO does not work with @ RequiredArgsConstructor
     @Autowired
     public void setOutEntityService(OutEntityService outEntityService) {
         this.outEntityService = outEntityService;
     }
 
     private final EventRepository eventRepository;
-
     private final OrderService orderService;
     private final UserService userService;
     private final ProductService productService;
@@ -33,38 +34,15 @@ public class EventService {
     private final DeliveryService deliveryService;
     private final AddressService addressService;
 
-    @Autowired
-    public EventService(EventRepository eventRepository, OrderService orderService, UserService userService, ProductService productService, CategoryService categoryService, DeliveryService deliveryService, AddressService addressService) {
-        this.eventRepository = eventRepository;
-        this.orderService = orderService;
-        this.userService = userService;
-        this.productService = productService;
-        this.categoryService = categoryService;
-        this.deliveryService = deliveryService;
-        this.addressService = addressService;
-    }
-
-//    @Transactional
-//    @PostConstruct //TODO Learn why it does not work
-//    public void initInitialEvent() {
-//        if(findByTitle("Initial event") !=null) {
-//            return;
-//        }
-//        Event event = new Event();
-//        event.setActionType("Initialized");
-//        event.setTitle("Initial event");
-//        event.setDescription("This store app has been initialized");
-//        eventRepository.save(event);
-//    }
-
     public Event createEvent(String entityType, String actionType, Long entityId) {
-        Event event = new Event();
-        event.setEntityType(entityType);
-        event.setActionType(actionType);
-        event.setTitle(event.getEntityType() + " " + event.getActionType());
-        event.setDescription(entityType + " has been " + actionType);
-        event.setEntityId(entityId);
-        event.setCreatedAt(LocalDateTime.now());
+        Event event = Event.builder()
+            .actionType(actionType)
+            .title(entityType + " " + actionType)
+            .description(entityType + " has been " + actionType)
+            .entityType(entityType)
+            .entityId(entityId)
+            .createdAt(LocalDateTime.now())
+            .build();
         return save(event);
     }
 

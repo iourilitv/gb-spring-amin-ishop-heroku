@@ -126,7 +126,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <!--            <version>1.18.12</version>--> <!-- Не нужно при spring-boot-starter-actuator -->
+<!--                        <version>1.18.12</version>-->  <!--Не нужно при spring-boot-starter-actuator-->
             <scope>provided</scope>
         </dependency>
 
