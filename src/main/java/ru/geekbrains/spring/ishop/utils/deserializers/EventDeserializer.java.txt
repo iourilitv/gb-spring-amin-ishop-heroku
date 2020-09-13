@@ -1,0 +1,45 @@
+package ru.geekbrains.spring.ishop.utils.deserializers;
+
+import com.google.gson.*;
+import org.springframework.stereotype.Component;
+import ru.geekbrains.spring.ishop.entity.Event;
+import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
+
+import java.lang.reflect.Type;
+//https://howtodoinjava.com/gson/custom-serialization-deserialization/
+@Component
+public class EventDeserializer implements JsonDeserializer<Event> {
+    @Override
+    public Event deserialize(JsonElement json, Type typeOfT,
+                                JsonDeserializationContext context) throws JsonParseException
+    {
+        JsonObject jsonObject = json.getAsJsonObject();
+
+
+        return new Event(
+                jsonObject.get("id").getAsInt(),
+                jsonObject.get("firstName").getAsString(),
+                jsonObject.get("lastName").getAsString(),
+                jsonObject.get("email").getAsString(),
+                localDate);
+    }
+}
+
+
+
+//другой пример
+// public class CityListDeserializer implements JsonDeserializer<CityList> {
+//
+//  @Override
+//  public CityList deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
+//    JsonObject jsonObject = element.getAsJsonObject();
+//    List<City> cities = new ArrayList<City>();
+//    for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+//      // For individual City objects, we can use default deserialisation:
+//      City city = context.deserialize(entry.getValue(), City.class);
+//      cities.add(city);
+//    }
+//    return new CityList(cities);
+//  }
+//
+//}

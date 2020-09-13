@@ -1,22 +1,18 @@
 package ru.geekbrains.spring.ishop.rest.outentities;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.Map;
 
+@Builder
 @Data
 public class OutEntity {
 
-    private String store = "gb-spring-amin-ishop-heroku";
+    private final String store = "gb-spring-amin-ishop-heroku";
 
-    private String entityClassSimpleName;
+    private String entityType;
 
-    private Map<String, Object> body;
-
-    public OutEntity(String entityClassSimpleName) {
-        this.entityClassSimpleName = entityClassSimpleName;
-        body = new HashMap<>();
-    }
+    private Map<String, Object> entityFields;
 
 }

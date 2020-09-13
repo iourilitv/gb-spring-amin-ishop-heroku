@@ -48,38 +48,21 @@ GET http://localhost:8080/api/v1/event/serverUnaccepted/first
 GET http://localhost:8080/api/v1/event/1/eventId
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
-#  "entityType": "Event",
-#  "entityFields": {
-#    "actionType": {
+#  "entityClassSimpleName": "Event",
+#  "body": {
+#    "Order": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entityType": "ActionType",
-#      "entityFields": {
-#        "entityType": "Order",
-#        "description": "Заказ сформирован пользователем и сохранен в списке заказов",
-#        "id": 1,
-#        "title": "CREATED"
-#      }
-#    },
-#    "recipientAcceptedAt": "2020-09-04T06:24:33",
-#    "issuerEventId": 0,
-#    "entityType": "Order",
-#    "entityId": 19,
-#    "issuerCreatedAt": "2020-09-12T19:21:11",
-#    "id": 1,
-#    "issuer": "STORE",
-#    "entity": {
-#      "store": "gb-spring-amin-ishop-heroku",
-#      "entityType": "Order",
-#      "entityFields": {
+#      "entityClassSimpleName": "Order",
+#      "body": {
 #        "delivery": {
 #          "store": "gb-spring-amin-ishop-heroku",
-#          "entityType": "Delivery",
-#          "entityFields": {
+#          "entityClassSimpleName": "Delivery",
+#          "body": {
 #            "phoneNumber": "+79991234567",
 #            "deliveryAddress": {
 #              "store": "gb-spring-amin-ishop-heroku",
-#              "entityType": "Address",
-#              "entityFields": {
+#              "entityClassSimpleName": "Address",
+#              "body": {
 #                "country": "Russia",
 #                "address": "Секина 99, кв.99",
 #                "city": "Королев МО",
@@ -97,8 +80,8 @@ GET http://localhost:8080/api/v1/event/1/eventId
 #        "totalCosts": 1004.00,
 #        "orderStatus": {
 #          "store": "gb-spring-amin-ishop-heroku",
-#          "entityType": "OrderStatus",
-#          "entityFields": {
+#          "entityClassSimpleName": "OrderStatus",
+#          "body": {
 #            "description": "Создан: Заказ сформирован пользователем и сохранен в списке заказов",
 #            "id": 1,
 #            "title": "Created"
@@ -108,15 +91,15 @@ GET http://localhost:8080/api/v1/event/1/eventId
 #        "id": 19,
 #        "user": {
 #          "store": "gb-spring-amin-ishop-heroku",
-#          "entityType": "User",
-#          "entityFields": {
+#          "entityClassSimpleName": "User",
+#          "body": {
 #            "firstName": "f n liyuse",
 #            "lastName": "l n liyuse",
 #            "phoneNumber": "+79991234567",
 #            "deliveryAddress": {
 #              "store": "gb-spring-amin-ishop-heroku",
-#              "entityType": "Address",
-#              "entityFields": {
+#              "entityClassSimpleName": "Address",
+#              "body": {
 #                "country": "Russia",
 #                "address": "Секина 99, кв.99",
 #                "city": "Королев МО",
@@ -131,20 +114,20 @@ GET http://localhost:8080/api/v1/event/1/eventId
 #        "orderItems": [
 #          {
 #            "store": "gb-spring-amin-ishop-heroku",
-#            "entityType": "OrderItem",
-#            "entityFields": {
+#            "entityClassSimpleName": "OrderItem",
+#            "body": {
 #              "itemCosts": 904.00,
 #              "product": {
 #                "store": "gb-spring-amin-ishop-heroku",
-#                "entityType": "Product",
-#                "entityFields": {
+#                "entityClassSimpleName": "Product",
+#                "body": {
 #                  "price": 904.00,
 #                  "id": 10,
 #                  "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
 #                  "category": {
 #                    "store": "gb-spring-amin-ishop-heroku",
-#                    "entityType": "Category",
-#                    "entityFields": {
+#                    "entityClassSimpleName": "Category",
+#                    "body": {
 #                      "id": 7,
 #                      "title": "Pets"
 #                    }
@@ -162,7 +145,24 @@ GET http://localhost:8080/api/v1/event/1/eventId
 #        ],
 #        "updatedAt": "2020-09-12T19:21:11"
 #      }
-#    }
+#    },
+#    "actionType": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityClassSimpleName": "ActionType",
+#      "body": {
+#        "entityType": "Order",
+#        "description": "Заказ сформирован пользователем и сохранен в списке заказов",
+#        "id": 1,
+#        "title": "CREATED"
+#      }
+#    },
+#    "recipientAcceptedAt": "2020-09-04T06:24:33",
+#    "issuerEventId": 0,
+#    "entityType": "Order",
+#    "entityId": 19,
+#    "issuerCreatedAt": "2020-09-12T19:21:11",
+#    "id": 1,
+#    "issuer": "STORE"
 #  }
 #}
 
@@ -297,131 +297,6 @@ Content-Type: application/json
     "issuerCreatedAt": "2020-09-12T19:21:11",
     "id": 1,
     "issuer": "STORE"
-  }
-}
-
-###
-
-POST http://localhost:8080/api/v1/event/save/incoming/string
-Content-Type: application/json
-
-{
-  "store": "gb-spring-amin-ishop-heroku",
-  "entityType": "Event",
-  "entityFields": {
-    "actionType": {
-      "store": "gb-spring-amin-ishop-heroku",
-      "entityType": "ActionType",
-      "entityFields": {
-        "entityType": "Order",
-        "description": "Заказ сформирован пользователем и сохранен в списке заказов",
-        "id": 1,
-        "title": "CREATED"
-      }
-    },
-    "recipientAcceptedAt": "2020-09-04T06:24:33",
-    "issuerEventId": 0,
-    "entityType": "Order",
-    "entityId": 19,
-    "issuerCreatedAt": "2020-09-12T19:21:11",
-    "id": 1,
-    "issuer": "STORE",
-    "entity": {
-      "store": "gb-spring-amin-ishop-heroku",
-      "entityType": "Order",
-      "entityFields": {
-        "delivery": {
-          "store": "gb-spring-amin-ishop-heroku",
-          "entityType": "Delivery",
-          "entityFields": {
-            "phoneNumber": "+79991234567",
-            "deliveryAddress": {
-              "store": "gb-spring-amin-ishop-heroku",
-              "entityType": "Address",
-              "entityFields": {
-                "country": "Russia",
-                "address": "Секина 99, кв.99",
-                "city": "Королев МО",
-                "id": 3
-              }
-            },
-            "id": 17,
-            "deliveryExpectedAt": "2020-09-12T10:00:00",
-            "order": 19,
-            "deliveryCost": 100.00,
-            "deliveredAt": null
-          }
-        },
-        "createdAt": "2020-09-12T19:21:10",
-        "totalCosts": 1004.00,
-        "orderStatus": {
-          "store": "gb-spring-amin-ishop-heroku",
-          "entityType": "OrderStatus",
-          "entityFields": {
-            "description": "Создан: Заказ сформирован пользователем и сохранен в списке заказов",
-            "id": 1,
-            "title": "Created"
-          }
-        },
-        "totalItemsCosts": 904.00,
-        "id": 19,
-        "user": {
-          "store": "gb-spring-amin-ishop-heroku",
-          "entityType": "User",
-          "entityFields": {
-            "firstName": "f n liyuse",
-            "lastName": "l n liyuse",
-            "phoneNumber": "+79991234567",
-            "deliveryAddress": {
-              "store": "gb-spring-amin-ishop-heroku",
-              "entityType": "Address",
-              "entityFields": {
-                "country": "Russia",
-                "address": "Секина 99, кв.99",
-                "city": "Королев МО",
-                "id": 3
-              }
-            },
-            "id": 2,
-            "userName": "liyuse",
-            "email": "liyuse@yandex.ru"
-          }
-        },
-        "orderItems": [
-          {
-            "store": "gb-spring-amin-ishop-heroku",
-            "entityType": "OrderItem",
-            "entityFields": {
-              "itemCosts": 904.00,
-              "product": {
-                "store": "gb-spring-amin-ishop-heroku",
-                "entityType": "Product",
-                "entityFields": {
-                  "price": 904.00,
-                  "id": 10,
-                  "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
-                  "category": {
-                    "store": "gb-spring-amin-ishop-heroku",
-                    "entityType": "Category",
-                    "entityFields": {
-                      "id": 7,
-                      "title": "Pets"
-                    }
-                  },
-                  "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
-                  "vendorCode": "00000010"
-                }
-              },
-              "quantity": 1,
-              "itemPrice": 904.00,
-              "id": 27,
-              "order": 19
-            }
-          }
-        ],
-        "updatedAt": "2020-09-12T19:21:11"
-      }
-    }
   }
 }
 

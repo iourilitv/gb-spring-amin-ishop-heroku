@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Slf4j
 @RequiredArgsConstructor
 public class EventResource extends AbstractResource {
-    private final Gson gson = new Gson();
     private final OutEntityService outEntityService;
     private final EventService eventService;
 
@@ -35,12 +34,21 @@ public class EventResource extends AbstractResource {
                 .body(outEntityService.createOutEntity(eventService.findFirstByServerAcceptedAtIsNull()));
     }
 
+//    @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt")
+//    public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEventOutEntity(
+//            @RequestBody @Valid LocalDateTime serverAcceptedAt,
+//            @PathVariable("eventId") Long eventId) {
+//        Event oldEvent = eventService.findById(eventId);
+//        oldEvent.setServerAcceptedAt(serverAcceptedAt);
+//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+//                .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
+//    }
     @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt")
     public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEventOutEntity(
             @RequestBody @Valid LocalDateTime serverAcceptedAt,
             @PathVariable("eventId") Long eventId) {
         Event oldEvent = eventService.findById(eventId);
-        oldEvent.setServerAcceptedAt(serverAcceptedAt);
+        oldEvent.setRecipientAcceptedAt(serverAcceptedAt);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
     }
@@ -52,10 +60,18 @@ public class EventResource extends AbstractResource {
 //                .body(outEntityService.createOutEntity(event));
 //    }
 
+//    @PostMapping(value = "/save/incoming/string")
+//    public ResponseEntity<OutEntity> saveIncomingStringEventOutEntity(@RequestBody @Valid String json) {
+//        OutEntity outEntity = gson.fromJson(json, OutEntity.class);
+//        Event event = outEntityService.recognizeAndSaveEventFromOutEntity(outEntity);
+//
+//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+//                .body(outEntityService.createOutEntity(event));
+//    }
     @PostMapping(value = "/save/incoming/string")
     public ResponseEntity<OutEntity> saveIncomingStringEventOutEntity(@RequestBody @Valid String json) {
-        OutEntity outEntity = gson.fromJson(json, OutEntity.class);
-        Event event = outEntityService.recognizeAndSaveEventFromOutEntity(outEntity);
+
+        Event event = outEntityService.recognizeAndSaveEventFromOutEntity(json);
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(outEntityService.createOutEntity(event));
