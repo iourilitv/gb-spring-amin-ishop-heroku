@@ -18,7 +18,6 @@ import java.util.Map;
 @Service
 @Slf4j
 public class OutEntityService {
-//    private final Gson gson = new Gson();
     private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(OutEntity.class, new OutEntityDeserializer())
             .create();
@@ -29,34 +28,6 @@ public class OutEntityService {
         this.eventService = eventService;
     }
 
-//    public OutEntity createOutEntity(Object entity) {
-//    OutEntity out = new OutEntity(entity.getClass().getSimpleName());
-//    Map<String, Object> entityFields = out.getBody();
-//
-//        if(entity instanceof Event) {
-//            fillEventEntityFields((Event)entity, entityFields);
-//        } else if(entity instanceof ActionType) {
-//            fillActionTypeEntityFields((ActionType)entity, entityFields);
-//        } else if(entity instanceof Order) {
-//            fillOrderEntityFields((Order)entity, entityFields);
-//        } else if(entity instanceof OrderStatus) {
-//            fillOrderStatusEntityFields((OrderStatus)entity, entityFields);
-//        } else if(entity instanceof User) {
-//            fillUserEntityFields((User)entity, entityFields);
-//        } else if(entity instanceof OrderItem) {
-//            fillOrderItemEntityFields((OrderItem)entity, entityFields);
-//        } else if(entity instanceof Product) {
-//            fillProductEntityFields((Product)entity, entityFields);
-//        } else if(entity instanceof Category) {
-//            fillCategoryEntityFields((Category)entity, entityFields);
-//        } else if(entity instanceof Delivery) {
-//            fillDeliveryEntityFields((Delivery)entity, entityFields);
-//        } else if(entity instanceof Address) {
-//            fillAddressEntityFields((Address)entity, entityFields);
-//        }
-//
-//        return out;
-//    }
     public OutEntity createOutEntity(Object entity) {
         Map<String, Object> entityFields = new HashMap<>();
         OutEntity out = OutEntity.builder()
@@ -89,38 +60,14 @@ public class OutEntityService {
         return out;
     }
 
-    //    private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
-//
-//        log.info("*********** fillStoreEventEntityFields ***********");
-//
-//        entityFields.put("id", event.getId());
-//        entityFields.put("actionType", event.getActionType());
-//        entityFields.put("title", event.getTitle());
-//        entityFields.put("description", event.getDescription());
-//        entityFields.put("entityType", event.getEntityType());
-//        entityFields.put("entityId", event.getEntityId());
-//
-//        log.info("EntityType: " + event.getEntityType() + ". EntityId: " + event.getEntityId());
-//
-//        eventService.fillEntityFieldInEventOutEntity(event.getEntityType(), event.getEntityId(), entityFields);
-//        entityFields.put("createdAt", event.getCreatedAt());
-//        entityFields.put("serverAcceptedAt", event.getServerAcceptedAt());
-//
-//        log.info("entityFields: " + entityFields);
-//
-//    }
     private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
         entityFields.put("id", event.getId());
-//        entityFields.put("actionType", event.getActionType().getTitle()); createOutEntity(order.getOrderStatus())
         entityFields.put("actionType", createOutEntity(event.getActionType()));
         entityFields.put("issuer", event.getIssuer());
         entityFields.put("issuerEventId", event.getIssuerEventId());
         entityFields.put("entityType", event.getEntityType());
         entityFields.put("entityId", event.getEntityId());
-
-//        eventService.fillEntityFieldInEventOutEntity(event.getEntityType(), event.getEntityId(), entityFields);
         entityFields.put("entity", eventService.fillEntityFieldInEventOutEntity(event.getEntityType(), event.getEntityId()));
-
         entityFields.put("issuerCreatedAt", event.getIssuerCreatedAt());
         entityFields.put("recipientAcceptedAt", event.getRecipientAcceptedAt());
     }

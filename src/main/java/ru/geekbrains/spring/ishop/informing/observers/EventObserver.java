@@ -22,16 +22,6 @@ public class EventObserver implements IObserver {
         this.eventService = eventService;
     }
 
-//    @Override
-//    public void update(AbstractSubject subject, Object arg) {
-//        if(subject instanceof OrderSubject) {
-//            //TODO здесь можно добавить разделение на разные подтипы OrderMessage
-//            OrderMessage orderMessage = (OrderMessage) arg;
-//            Event event = eventService.createAndSaveEvent("Order",
-//                    orderMessage.getTextTemplate().name(), orderMessage.getOrder().getId());
-//        }
-//        //if(subject instanceof AnotherSubject)
-//    }
     @Override
     public void update(AbstractSubject subject, Object arg) {
         String actionTypeTitle = "";
