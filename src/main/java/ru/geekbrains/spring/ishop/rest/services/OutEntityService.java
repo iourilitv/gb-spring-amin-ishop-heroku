@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
 import ru.geekbrains.spring.ishop.service.EventService;
-import ru.geekbrains.spring.ishop.utils.deserializers.OutEntityDeserializer;
+import ru.geekbrains.spring.ishop.rest.deserializers.OutEntityDeserializer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

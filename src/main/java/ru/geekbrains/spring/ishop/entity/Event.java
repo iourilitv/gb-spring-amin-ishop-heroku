@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 public class Event {
     public static Event nullObject = initNullObject();
     public enum Issuers {STORE, SYSTEM}
+    public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,
+        issuerCreatedAt, recipientAcceptedAt, entity}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +33,7 @@ public class Event {
 
     @Column(name = "issuer")
     @NotNull(message = "не может быть пустым")
-    private String issuer; //TODO заменить на сущность. Значения: "STORE"(default); "SYSTEM"?.
+    private String issuer;
 
     @Column(name = "issuer_event_id")
     private Long issuerEventId;
@@ -58,9 +60,9 @@ public class Event {
         nullObject = Event.builder()
                 .id(0L)
                 .actionType(ActionType.nullObject)
-                .issuer("NO ISSUER")
+                .issuer("")
                 .issuerEventId(0L)
-                .entityType("NO ENTITY TYPE")
+                .entityType("")
                 .entityId(0L)
                 .issuerCreatedAt(LocalDateTime.now())
                 .recipientAcceptedAt(LocalDateTime.now())
