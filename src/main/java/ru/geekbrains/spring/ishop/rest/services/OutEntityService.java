@@ -1,13 +1,11 @@
 package ru.geekbrains.spring.ishop.rest.services;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
+import ru.geekbrains.spring.ishop.rest.deserializers.interfaces.IEventBuilder;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
-import ru.geekbrains.spring.ishop.service.EventService;
 import ru.geekbrains.spring.ishop.rest.deserializers.OutEntityDeserializer;
 
 import java.util.ArrayList;
@@ -16,17 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class OutEntityService {
-    private final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(OutEntity.class, new OutEntityDeserializer())
-            .create();
-    private EventService eventService;
-
-    @Autowired
-    public void setEventService(EventService eventService) {
-        this.eventService = eventService;
-    }
+    private final OutEntityDeserializer outEntityDeserializer;
+    private final IEventBuilder eventBuilder;
 
     public OutEntity createOutEntity(Object entity) {
         Map<String, Object> entityFields = new HashMap<>();
@@ -56,33 +48,28 @@ public class OutEntityService {
         } else if(entity instanceof Address) {
             fillAddressEntityFields((Address)entity, entityFields);
         }
-
         return out;
     }
 
     private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
-        entityFields.put("id", event.getId());
-        entityFields.put("actionType", createOutEntity(event.getActionType()));
-        entityFields.put("issuer", event.getIssuer());
-        entityFields.put("issuerEventId", event.getIssuerEventId());
-        entityFields.put("entityType", event.getEntityType());
-        entityFields.put("entityId", event.getEntityId());
-        entityFields.put("entity", eventService.fillEntityFieldInEventOutEntity(event.getEntityType(), event.getEntityId()));
-        entityFields.put("issuerCreatedAt", event.getIssuerCreatedAt());
-        entityFields.put("recipientAcceptedAt", event.getRecipientAcceptedAt());
+        entityFields.put(Event.Fields.id.name(), event.getId());
+        entityFields.put(Event.Fields.actionType.name(), createOutEntity(event.getActionType()));
+        entityFields.put(Event.Fields.issuer.name(), event.getIssuer());
+        entityFields.put(Event.Fields.issuerEventId.name(), event.getIssuerEventId());
+        entityFields.put(Event.Fields.entityType.name(), event.getEntityType());
+        entityFields.put(Event.Fields.entityId.name(), event.getEntityId());
+        entityFields.put(Event.Fields.issuerCreatedAt.name(), event.getIssuerCreatedAt());
+        entityFields.put(Event.Fields.recipientAcceptedAt.name(), event.getRecipientAcceptedAt());
     }
 
     private void fillActionTypeEntityFields(ActionType actionType, Map<String, Object> entityFields) {
-        entityFields.put("id", actionType.getId());
-        entityFields.put("title", actionType.getTitle());
-        entityFields.put("description", actionType.getDescription());
-        entityFields.put("entityType", actionType.getEntityType());
+        entityFields.put(ActionType.Fields.id.name(), actionType.getId());
+        entityFields.put(ActionType.Fields.title.name(), actionType.getTitle());
+        entityFields.put(ActionType.Fields.description.name(), actionType.getDescription());
+        entityFields.put(ActionType.Fields.entityType.name(), actionType.getEntityType());
     }
 
     private void fillOrderEntityFields(Order order, Map<String, Object> entityFields) {
-
-        log.info("*********** fillOrderEntityFields ***********");
-
         entityFields.put("id", order.getId());
         entityFields.put("orderStatus", createOutEntity(order.getOrderStatus()));
         entityFields.put("user", createOutEntity(order.getUser()));
@@ -91,17 +78,11 @@ public class OutEntityService {
         order.getOrderItems().forEach(entity -> orderItems.add(createOutEntity(entity)));
         entityFields.put("orderItems", orderItems);
 
-        log.info("orderItems: " + orderItems);
-
         entityFields.put("totalItemsCosts", order.getTotalItemsCosts());
         entityFields.put("totalCosts", order.getTotalCosts());
         entityFields.put("delivery", createOutEntity(order.getDelivery()));
-
         entityFields.put("createdAt", order.getCreatedAt());
         entityFields.put("updatedAt", order.getUpdatedAt());
-
-        log.info("entityFields: " + entityFields);
-
     }
 
     private void fillOrderStatusEntityFields(OrderStatus orderStatus, Map<String, Object> entityFields) {
@@ -117,8 +98,9 @@ public class OutEntityService {
         entityFields.put("lastName", user.getLastName());
         entityFields.put("phoneNumber", user.getPhoneNumber());
         entityFields.put("email", user.getEmail());
-        assert user.getDeliveryAddress() != null;
-        entityFields.put("deliveryAddress", createOutEntity(user.getDeliveryAddress()));
+        if(user.getDeliveryAddress() != null) {
+            entityFields.put("deliveryAddress", createOutEntity(user.getDeliveryAddress()));
+        }
     }
 
     private void fillOrderItemEntityFields(OrderItem orderItem, Map<String, Object> entityFields) {
@@ -161,69 +143,12 @@ public class OutEntityService {
         entityFields.put("address", address.getAddress());
     }
 
-    public Event recognizeAndSaveEventFromOutEntity(String outEntityJson) {
-        OutEntity eventOutEntity = gson.fromJson(outEntityJson, OutEntity.class);
-        Map<String, Object> eventFields = eventOutEntity.getEntityFields();
-//        Event event = eventService.assembleEventFromFields(eventOutEntity.getEntityClassSimpleName(), eventFields);
-        Event event = new Event();
-//        double doubleIssuerEventId = Double.parseDouble(String.valueOf(fields.get("issuerEventId")));
-//        double doubleId = Double.parseDouble(String.valueOf(fields.get("id")));
-//        double doubleEntityId = Double.parseDouble(String.valueOf(fields.get("entityId")));
-//        OutEntity actionTypeOutEntity = (OutEntity)fields.get("actionType");
-//
-//        log.info("actionTypeOutEntity= " + actionTypeOutEntity);
-//
-//        String actionTypeTitle = String.valueOf(actionTypeOutEntity.getBody().get("title"));
-//
-//        log.info("actionTypeTitle= " + actionTypeTitle);
-//
-//        Event event = Event.builder()
-//            .id((new Double(doubleId)).longValue())
-////            .actionType(eventService.findActionTypeByTitle((String) fields.get("actionType")))
-//            .actionType(eventService.findActionTypeByTitle(actionTypeTitle))
-//            .issuer((String) fields.get("issuer"))
-//            .issuerEventId((new Double(doubleIssuerEventId)).longValue())
-//            .entityType((String) fields.get("entityType"))
-//            .entityId((new Double(doubleEntityId)).longValue())
-//            .issuerCreatedAt(LocalDateTime.parse(String.valueOf(fields.get("issuerCreatedAt"))))
-//            .recipientAcceptedAt(LocalDateTime.now())
-//            .build();
-//        log.info("****** recognizeAndSaveEventFromOutEntity() event: " + event);
-
-//        Event copyEvent = eventService.createAndSaveIncomingEvent(ActionTypes.STATUS_CHANGED.name(),
-//                        Event.Issuers.SYSTEM.name(), event.getId());
-
-        return event;
-//        return eventService.save(copyEvent);
+    //TODO ONLY for Testing
+    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
+        OutEntity outEntity = outEntityDeserializer.recognizeOutEntity(outEntityJson);
+        return eventBuilder.create(outEntity);
 //        return eventService.save(event);
     }
 
-//    public Event recognizeEventFromOutEntity(String outEntityJson) {
-//        Map<String, Object> eventFields = gson.fromJson(outEntityJson, OutEntity.class).getBody();
-//        double doubleIssuerEventId = Double.parseDouble(String.valueOf(eventFields.get("issuerEventId")));
-//        double doubleId = Double.parseDouble(String.valueOf(eventFields.get("id")));
-//        double doubleEntityId = Double.parseDouble(String.valueOf(eventFields.get("entityId")));
-//
-//        OutEntity actionTypeOutEntity = gson.fromJson((JsonElement) eventFields.get("actionType"), OutEntity.class);;
-//
-//        log.info("actionTypeOutEntity= " + actionTypeOutEntity);
-//
-//        String actionTypeTitle = String.valueOf(actionTypeOutEntity.getBody().get("title"));
-//
-//        log.info("actionTypeTitle= " + actionTypeTitle);
-//
-//        Event event = Event.builder()
-//                .id((new Double(doubleId)).longValue())
-//                .actionType(eventService.findActionTypeByTitle(actionTypeTitle))
-//                .issuer((String) eventFields.get("issuer"))
-//                .issuerEventId((new Double(doubleIssuerEventId)).longValue())
-//                .entityType((String) eventFields.get("entityType"))
-//                .entityId((new Double(doubleEntityId)).longValue())
-//                .issuerCreatedAt(LocalDateTime.parse(String.valueOf(eventFields.get("issuerCreatedAt"))))
-//                .recipientAcceptedAt(LocalDateTime.now())
-//                .build();
-//        log.info("****** recognizeAndSaveEventFromOutEntity() event: " + event);
-//        return eventService.save(event);
-//    }
 
 }
