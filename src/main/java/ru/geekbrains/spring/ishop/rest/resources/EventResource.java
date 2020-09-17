@@ -43,7 +43,7 @@ public class EventResource extends AbstractResource {
                 .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
     }
 
-    //TODO ONLY for Testing
+    //TODO For Studding and Testing only
     @PostMapping(value = "/save/incoming/string")
     public ResponseEntity<OutEntity> saveIncomingStringEventOutEntity(@RequestBody @Valid String json) {
         Event event = outEntityService.recognizeAndSaveEventFromOutEntityJsonString(json);

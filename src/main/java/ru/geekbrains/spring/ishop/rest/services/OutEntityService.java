@@ -144,25 +144,9 @@ public class OutEntityService {
         entityFields.put("address", address.getAddress());
     }
 
-    //TODO ONLY for Testing
-//    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
-//        OutEntity outEntity = outEntityDeserializer.recognizeOutEntity(outEntityJson);
-//        return eventBuilder.create(outEntity);
-////        return eventService.save(event);
-//    }
-//    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
-//        log.info("*** incoming outEntityJson: " + outEntityJson);
-//
-//        Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(Event.class, OutEntityDeserializer.class)
-//                .create();
-//        Event event = (Event) gson.fromJson(outEntityJson, Event.class);
-////        Event event = (Event) outEntityDeserializer.recognizeEntity(outEntityJson);
-//        return event;
-////        return eventService.save(event);
-//    }
+    //TODO For Studding and Testing only
     public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
-        Event event = (Event) outEntityDeserializer.recognizeEntity(outEntityJson);
+        Event event = (Event) outEntityDeserializer.recognizeEntityFromOutEntityJsonString(outEntityJson);
         event.setRecipientAcceptedAt(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
         return event;
 //        return eventService.save(event);

@@ -22,7 +22,7 @@ public class DeserializerFabric {
     public DeserializerFabric(EventDeserializer eventDeserializer, ActionTypeDeserializer actionTypeDeserializer) {
         this.eventDeserializer = eventDeserializer;
         this.actionTypeDeserializer = actionTypeDeserializer;
-        //TODO наполнить мапу автоматически из пакета deserializers/interfaces
+        //TODO наполнить мапу автоматически из пакета rest.converters.deserializers??
         deserializerMap = new HashMap<>();
         deserializerMap.put(EntityTypes.Event.name(), this.eventDeserializer);
         deserializerMap.put(EntityTypes.ActionType.name(), this.actionTypeDeserializer);
