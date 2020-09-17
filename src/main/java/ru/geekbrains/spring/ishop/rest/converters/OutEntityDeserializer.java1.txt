@@ -2,7 +2,7 @@ package ru.geekbrains.spring.ishop.rest.deserializers;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-@Component
+@Service
 @Slf4j
 public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
     @Override
@@ -21,7 +21,7 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
         OutEntity outEntity = null;
         JsonObject jsonObject = json.getAsJsonObject();
         if(jsonObject.get(OutEntity.Fields.entityFields.name()) != null) {
-            Set<Map.Entry<String, JsonElement>> fieldsSet = json.getAsJsonObject().get(OutEntity.Fields.entityFields.name()).getAsJsonObject().entrySet();
+            Set<Map.Entry<String, JsonElement>> fieldsSet = jsonObject.get(OutEntity.Fields.entityFields.name()).getAsJsonObject().entrySet();
             Map<String, Object> entityFields = new HashMap<>();
             for (Map.Entry<String, JsonElement> jE: fieldsSet) {
                 Object objectInternal;
@@ -34,10 +34,12 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
                 entityFields.put(jE.getKey(), objectInternal);
             }
             outEntity = OutEntity.builder()
-                    .entityType(json.getAsJsonObject().get(OutEntity.Fields.entityType.name()).getAsString())
+                    .entityType(jsonObject.get(OutEntity.Fields.entityType.name()).getAsString())
                     .entityFields(entityFields)
                     .build();
         }
+        //TODO Replace RuntimeException with OutEntityDeserializeException(create)
+        // to catch com.google.gson.JsonSyntaxException
         return Optional.ofNullable(outEntity).orElseThrow(RuntimeException::new);
     }
 

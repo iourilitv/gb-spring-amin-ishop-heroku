@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Slf4j
-public class Event {
+public class Event extends AbstractEntity {
     public static Event nullObject = initNullObject();
     public enum Issuers {STORE, SYSTEM}
     public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,

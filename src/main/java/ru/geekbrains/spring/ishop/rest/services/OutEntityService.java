@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
-import ru.geekbrains.spring.ishop.rest.deserializers.interfaces.IEventBuilder;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
-import ru.geekbrains.spring.ishop.rest.deserializers.OutEntityDeserializer;
+import ru.geekbrains.spring.ishop.rest.converters.deserializers.OutEntityDeserializer;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,6 @@ import java.util.Map;
 @Slf4j
 public class OutEntityService {
     private final OutEntityDeserializer outEntityDeserializer;
-    private final IEventBuilder eventBuilder;
 
     public OutEntity createOutEntity(Object entity) {
         Map<String, Object> entityFields = new HashMap<>();
@@ -144,9 +145,26 @@ public class OutEntityService {
     }
 
     //TODO ONLY for Testing
+//    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
+//        OutEntity outEntity = outEntityDeserializer.recognizeOutEntity(outEntityJson);
+//        return eventBuilder.create(outEntity);
+////        return eventService.save(event);
+//    }
+//    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
+//        log.info("*** incoming outEntityJson: " + outEntityJson);
+//
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(Event.class, OutEntityDeserializer.class)
+//                .create();
+//        Event event = (Event) gson.fromJson(outEntityJson, Event.class);
+////        Event event = (Event) outEntityDeserializer.recognizeEntity(outEntityJson);
+//        return event;
+////        return eventService.save(event);
+//    }
     public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
-        OutEntity outEntity = outEntityDeserializer.recognizeOutEntity(outEntityJson);
-        return eventBuilder.create(outEntity);
+        Event event = (Event) outEntityDeserializer.recognizeEntity(outEntityJson);
+        event.setRecipientAcceptedAt(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
+        return event;
 //        return eventService.save(event);
     }
 
