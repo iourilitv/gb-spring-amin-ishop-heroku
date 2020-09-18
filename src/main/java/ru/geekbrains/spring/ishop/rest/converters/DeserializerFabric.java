@@ -14,23 +14,32 @@ import java.util.Map;
 @Service
 @Getter
 public class DeserializerFabric {
-    private final Map<String, IEntityDeserializer> deserializerMap;
-    private final EventDeserializer eventDeserializer;
-    private final ActionTypeDeserializer actionTypeDeserializer;
+    private Map<String, IEntityDeserializer> deserializers;
+//    private final EventDeserializer eventDeserializer;
+//    private final ActionTypeDeserializer actionTypeDeserializer;
 
-    @Autowired
-    public DeserializerFabric(EventDeserializer eventDeserializer, ActionTypeDeserializer actionTypeDeserializer) {
-        this.eventDeserializer = eventDeserializer;
-        this.actionTypeDeserializer = actionTypeDeserializer;
-        //TODO наполнить мапу автоматически из пакета rest.converters.deserializers??
-        deserializerMap = new HashMap<>();
-        deserializerMap.put(EntityTypes.Event.name(), this.eventDeserializer);
-        deserializerMap.put(EntityTypes.ActionType.name(), this.actionTypeDeserializer);
+//    @Autowired
+//    public DeserializerFabric(Map<String, IEntityDeserializer> deserializers) {
+//        this.deserializers = deserializers;
+//
+//    }
+//    @Autowired
+//    public DeserializerFabric(EventDeserializer eventDeserializer, ActionTypeDeserializer actionTypeDeserializer) {
+//        this.eventDeserializer = eventDeserializer;
+//        this.actionTypeDeserializer = actionTypeDeserializer;
+//        //TODO наполнить мапу автоматически из пакета rest.converters.deserializers??
+//        deserializerMap = new HashMap<>();
+//        deserializerMap.put(EntityTypes.Event.name(), this.eventDeserializer);
+//        deserializerMap.put(EntityTypes.ActionType.name(), this.actionTypeDeserializer);
+//
+//    }
 
+    public void initDeserializerFabric(Map<String, IEntityDeserializer> deserializers) {
+        this.deserializers = deserializers;
     }
 
     public IEntityDeserializer getDeserializer(String entityType) {
-        return deserializerMap.get(entityType);
+        return deserializers.get(entityType);
     }
 
 }

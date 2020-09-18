@@ -18,19 +18,19 @@ import java.time.LocalDateTime;
 @Slf4j
 @RequiredArgsConstructor
 public class EventResource extends AbstractResource {
-    private final OutEntityService outEntityService;
+//    private final OutEntityService outEntityService;
     private final EventService eventService;
 
     @GetMapping(value = "/{eventId}/eventId")
     public ResponseEntity<OutEntity> getEventOutEntity(@PathVariable("eventId") Long eventId) {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(eventService.findById(eventId)));
+                .body(eventService.convertEventToOutEntity(eventService.findById(eventId)));
     }
 
     @GetMapping(value = "/serverUnaccepted/first")
     public ResponseEntity<OutEntity> getFirstServerUnacceptedEventOutEntity() {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(eventService.findFirstByServerAcceptedAtIsNull()));
+                .body(eventService.convertEventToOutEntity(eventService.findFirstByServerAcceptedAtIsNull()));
     }
 
     @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt")
@@ -38,17 +38,32 @@ public class EventResource extends AbstractResource {
             @RequestBody @Valid LocalDateTime serverAcceptedAt,
             @PathVariable("eventId") Long eventId) {
         Event oldEvent = eventService.findById(eventId);
-        oldEvent.setRecipientAcceptedAt(serverAcceptedAt);
+        oldEvent.setServerAcceptedAt(serverAcceptedAt);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
+                .body(eventService.convertEventToOutEntity(eventService.save(oldEvent)));
     }
+//    @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt")
+//    public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEventOutEntity(
+//            @RequestBody @Valid LocalDateTime serverAcceptedAt,
+//            @PathVariable("eventId") Long eventId) {
+//        Event oldEvent = eventService.findById(eventId);
+//        oldEvent.setRecipientAcceptedAt(serverAcceptedAt);
+//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+//                .body(outEntityService.createOutEntity(eventService.save(oldEvent)));
+//    }
 
     //TODO For Studding and Testing only
     @PostMapping(value = "/save/incoming/string")
     public ResponseEntity<OutEntity> saveIncomingStringEventOutEntity(@RequestBody @Valid String json) {
-        Event event = outEntityService.recognizeAndSaveEventFromOutEntityJsonString(json);
+        Event event = eventService.recognizeAndSaveEventFromOutEntityJsonString(json);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(event));
+                .body(eventService.convertEventToOutEntity(event));
     }
+//    @PostMapping(value = "/save/incoming/string")
+//    public ResponseEntity<OutEntity> saveIncomingStringEventOutEntity(@RequestBody @Valid String json) {
+//        Event event = outEntityService.recognizeAndSaveEventFromOutEntityJsonString(json);
+//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+//                .body(outEntityService.createOutEntity(event));
+//    }
 
 }

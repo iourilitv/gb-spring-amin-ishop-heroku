@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Slf4j
 public class Event extends AbstractEntity {
     public static Event nullObject = initNullObject();
-    public enum Issuers {STORE, SYSTEM}
+//    public enum Issuers {STORE, SYSTEM}
     public enum Fields {id, actionType, entityType, entityId, createdAt, serverAcceptedAt}
 //    public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,
 //        issuerCreatedAt, recipientAcceptedAt}
@@ -46,11 +46,11 @@ public class Event extends AbstractEntity {
     @Column(name = "entity_id")
     private Long entityId;
 
-    @Column(name = "issuer_created_at")
+    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "recipient_accepted_at")
+    @Column(name = "server_accepted_at")
     private LocalDateTime serverAcceptedAt;
 
     @Tolerate

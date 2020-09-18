@@ -301,7 +301,7 @@ Content-Type: application/json
 }
 
 ###
-# ORDER STATUS_CHANGED - WRONG OutEntity Json
+# ORDER STATUS_CHANGED - WRONG OutEntity Json - OLD FORMATE
 POST http://localhost:8080/api/v1/event/save/incoming/string
 Content-Type: application/json
 
@@ -345,20 +345,43 @@ Content-Type: application/json
       "entityType": "ActionType",
       "entityFields": {
         "entityType": "Order",
-        "description": "Изменился статус Заказа. Заказ переведен на следующий этап обработки",
+        "description": "Заказ сформирован пользователем и сохранен в списке заказов",
         "id": 1,
-        "title": "STATUS_CHANGED"
+        "title": "CREATED"
       }
     },
-    "recipientAcceptedAt": null,
-    "issuerEventId": 13,
+    "createdAt": "2020-09-18T13:13:54",
     "entityType": "Order",
-    "entityId": 19,
-    "issuerCreatedAt": "2020-09-15T19:21:11",
-    "id": 1,
-    "issuer": "SYSTEM"
+    "serverAcceptedAt": "2020-09-04T06:24:32.773",
+    "entityId": 20,
+    "id": 1
   }
 }
+
+###
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityType": "Event",
+#  "entityFields": {
+#    "actionType": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "ActionType",
+#      "entityFields": {
+#        "entityType": "Order",
+#        "description": "Изменился статус Заказа. Заказ переведен на следующий этап обработки",
+#        "id": 1,
+#        "title": "STATUS_CHANGED"
+#      }
+#    },
+#    "recipientAcceptedAt": null,
+#    "issuerEventId": 13,
+#    "entityType": "Order",
+#    "entityId": 19,
+#    "issuerCreatedAt": "2020-09-15T19:21:11",
+#    "id": 1,
+#    "issuer": "SYSTEM"
+#  }
+#}
 
 ###
 #{

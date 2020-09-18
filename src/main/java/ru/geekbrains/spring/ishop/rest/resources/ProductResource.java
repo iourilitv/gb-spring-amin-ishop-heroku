@@ -28,7 +28,7 @@ public class ProductResource extends AbstractResource {
     @GetMapping(value = "/{productId}/productId")
     public ResponseEntity<OutEntity> getProductOutEntity(@PathVariable("productId") Long productId) {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(productService.findByIdOptional(productId)));
+                .body(outEntityService.convertEntityToOutEntity(productService.findByIdOptional(productId)));
     }
 
 }

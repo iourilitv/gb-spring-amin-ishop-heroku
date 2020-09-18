@@ -3,6 +3,7 @@ package ru.geekbrains.spring.ishop.rest.converters.deserializers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import ru.geekbrains.spring.ishop.entity.ActionType;
 import ru.geekbrains.spring.ishop.entity.Event;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
 import java.time.LocalDateTime;
@@ -18,7 +20,9 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class EventDeserializer implements IEntityDeserializer {
+//    private final OutEntityService outEntityService;
     private OutEntityDeserializer outEntityDeserializer;
 
     //To fixed "The dependencies of some of the beans in the application context form a cycle" problem
@@ -62,6 +66,11 @@ public class EventDeserializer implements IEntityDeserializer {
 //
 //    }
 
+//    private ActionType recognizeActionType(JsonObject jsonObject) {
+//        JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
+//        return (ActionType) outEntityService.getOutEntityDeserializer()
+//                .deserializeEntityFromOutEntityJson(Event.Fields.actionType.name(), jsonElement, outEntityService.getDeserializerFabric());
+//    }
     private ActionType recognizeActionType(JsonObject jsonObject) {
         JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
         return (ActionType) outEntityDeserializer.deserializeEntityFromOutEntityJson(Event.Fields.actionType.name(), jsonElement);

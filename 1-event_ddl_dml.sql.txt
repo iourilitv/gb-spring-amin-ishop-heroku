@@ -14,10 +14,12 @@ CREATE TABLE action_types (
 CREATE TABLE events (
                           id bigint NOT NULL AUTO_INCREMENT,
                           action_type_id  smallint NOT NULL,
+                          issuer VARCHAR(255) NOT NULL,
+                          issuer_event_id bigint NOT NULL DEFAULT 0,
                           entity_type VARCHAR(255) NOT NULL DEFAULT 'NO ENTITY',
                           entity_id bigint NOT NULL DEFAULT 0,
-                          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                          server_accepted_at TIMESTAMP,
+                          issuer_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                          recipient_accepted_at TIMESTAMP,
                           PRIMARY KEY (id),
                           KEY fk_action_type_id_idx (action_type_id),
                           CONSTRAINT fk_action_type_id FOREIGN KEY (action_type_id) REFERENCES action_types (id)

@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface EventRepository extends
         JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
 
-    Optional<Event> findFirstByRecipientAcceptedAtIsNullAndIssuerEquals(String issuer);
+    Optional<Event> findFirstByServerAcceptedAtIsNull();
+//    Optional<Event> findFirstByRecipientAcceptedAtIsNullAndIssuerEquals(String issuer);
 
 }

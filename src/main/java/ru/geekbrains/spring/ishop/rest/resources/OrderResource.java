@@ -31,7 +31,7 @@ public class OrderResource extends AbstractResource {
     @GetMapping(value = "/{orderId}/orderId")
     public ResponseEntity<OutEntity> getOrderOutEntity(@PathVariable("orderId") Long orderId) {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(orderService.findByIdOptional(orderId)));
+                .body(outEntityService.convertEntityToOutEntity(orderService.findByIdOptional(orderId)));
     }
 
 }

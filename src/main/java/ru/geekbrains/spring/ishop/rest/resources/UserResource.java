@@ -31,7 +31,7 @@ public class UserResource extends AbstractResource {
     @GetMapping(value = "/{userId}/userId")
     public ResponseEntity<OutEntity> getUserOutEntity(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.createOutEntity(userService.findByIdOptional(userId)));
+                .body(outEntityService.convertEntityToOutEntity(userService.findByIdOptional(userId)));
     }
 
 }
