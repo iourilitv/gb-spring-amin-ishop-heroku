@@ -12,7 +12,6 @@ import ru.geekbrains.spring.ishop.entity.ActionType;
 import ru.geekbrains.spring.ishop.entity.Event;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
-import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,6 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class EventDeserializer implements IEntityDeserializer {
-//    private final OutEntityService outEntityService;
     private OutEntityDeserializer outEntityDeserializer;
 
     //To fixed "The dependencies of some of the beans in the application context form a cycle" problem
@@ -47,30 +45,7 @@ public class EventDeserializer implements IEntityDeserializer {
                 new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!"));
 
     }
-//    @Override
-//    public AbstractEntity recognize(JsonElement json) {
-//        JsonObject jsonObject = json.getAsJsonObject();
-//        isJsonEntityCorrect(jsonObject);
-//        Event event = Event.builder()
-//                .id(jsonObject.get(Event.Fields.id.name()).getAsLong())
-//                .actionType(recognizeActionType(jsonObject))
-//                .issuer(jsonObject.get(Event.Fields.issuer.name()).getAsString())
-//                .issuerEventId(jsonObject.get(Event.Fields.issuerEventId.name()).getAsLong())
-//                .entityType(jsonObject.get(Event.Fields.entityType.name()).getAsString())
-//                .entityId(jsonObject.get(Event.Fields.entityId.name()).getAsLong())
-//                .issuerCreatedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.issuerCreatedAt.name())))
-//                .recipientAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.recipientAcceptedAt.name())))
-//                .build();
-//        return Optional.ofNullable(event).orElseThrow(() ->
-//                new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!"));
-//
-//    }
 
-//    private ActionType recognizeActionType(JsonObject jsonObject) {
-//        JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
-//        return (ActionType) outEntityService.getOutEntityDeserializer()
-//                .deserializeEntityFromOutEntityJson(Event.Fields.actionType.name(), jsonElement, outEntityService.getDeserializerFabric());
-//    }
     private ActionType recognizeActionType(JsonObject jsonObject) {
         JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
         return (ActionType) outEntityDeserializer.deserializeEntityFromOutEntityJson(Event.Fields.actionType.name(), jsonElement);

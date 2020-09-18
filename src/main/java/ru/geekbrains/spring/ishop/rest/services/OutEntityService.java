@@ -69,16 +69,6 @@ public class OutEntityService {
         entityFields.put(Event.Fields.createdAt.name(), event.getCreatedAt());
         entityFields.put(Event.Fields.serverAcceptedAt.name(), event.getServerAcceptedAt());
     }
-//    private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
-//        entityFields.put(Event.Fields.id.name(), event.getId());
-//        entityFields.put(Event.Fields.actionType.name(), createOutEntity(event.getActionType()));
-//        entityFields.put(Event.Fields.issuer.name(), event.getIssuer());
-//        entityFields.put(Event.Fields.issuerEventId.name(), event.getIssuerEventId());
-//        entityFields.put(Event.Fields.entityType.name(), event.getEntityType());
-//        entityFields.put(Event.Fields.entityId.name(), event.getEntityId());
-//        entityFields.put(Event.Fields.issuerCreatedAt.name(), event.getIssuerCreatedAt());
-//        entityFields.put(Event.Fields.recipientAcceptedAt.name(), event.getRecipientAcceptedAt());
-//    }
 
     private void fillActionTypeEntityFields(ActionType actionType, Map<String, Object> entityFields) {
         entityFields.put(ActionType.Fields.id.name(), actionType.getId());
@@ -161,25 +151,9 @@ public class OutEntityService {
         entityFields.put("address", address.getAddress());
     }
 
-//    //TODO For Studding and Testing only
-//    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
-//        Event event = (Event) outEntityDeserializer.recognizeEntityFromOutEntityJsonString(outEntityJson);
-//        event.setServerAcceptedAt(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
-//        return event;
-////        return eventService.save(event);
-//    }
-//    public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
-//        Event event = (Event) outEntityDeserializer.recognizeEntityFromOutEntityJsonString(outEntityJson);
-//        event.setRecipientAcceptedAt(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
-//        return event;
-////        return eventService.save(event);
-//    }
+    //TODO For Studding and Testing only
     public AbstractEntity recognizeEntityFromOutEntityJsonString(String jsonString) {
-//        deserializerFabric.initDeserializerFabric(deserializers());
-//        outEntityDeserializer.setDeserializerFabric(deserializerFabric);
-
         Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(OutEntity.class, new OutEntityDeserializer())
                 .registerTypeAdapter(OutEntity.class, outEntityDeserializer)
                 .create();
         OutEntity outEntity = gson.fromJson(jsonString, OutEntity.class);

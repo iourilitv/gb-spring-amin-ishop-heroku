@@ -12,6 +12,5 @@ public interface EventRepository extends
         JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
 
     Optional<Event> findFirstByServerAcceptedAtIsNull();
-//    Optional<Event> findFirstByRecipientAcceptedAtIsNullAndIssuerEquals(String issuer);
 
 }

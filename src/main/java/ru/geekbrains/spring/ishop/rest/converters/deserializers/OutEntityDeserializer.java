@@ -1,15 +1,12 @@
 package ru.geekbrains.spring.ishop.rest.converters.deserializers;
 
 import com.google.gson.*;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.AbstractEntity;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.DeserializerFabric;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
-import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
 import java.lang.reflect.Type;
@@ -19,33 +16,8 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-//@RequiredArgsConstructor
 public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
-//    private final DeserializerFabric deserializerFabric;
     private DeserializerFabric deserializerFabric;
-    //This is to fixed "The dependencies of some of the beans in the application context form a cycle" problem
-//    @Autowired
-//    public void setDeserializerFabric(DeserializerFabric deserializerFabric) {
-//        this.deserializerFabric = deserializerFabric;
-//    }
-
-//    public AbstractEntity recognizeEntityFromOutEntityJsonString(String jsonString) {
-//        Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(OutEntity.class, this)
-//                .create();
-//        OutEntity outEntity = gson.fromJson(jsonString, OutEntity.class);
-//        JsonElement jsonElement = (JsonElement) outEntity.getEntityFields().get(OutEntity.Fields.entityFields.name());
-//        AbstractEntity entity = deserializeEntityFromOutEntityJson(outEntity.getEntityType(), jsonElement);
-//        return Optional.ofNullable(entity).orElseThrow(() ->
-//                new OutEntityDeserializeException("Something wrong happened during incoming json-object deserialize process!"));
-//    }
-//    private final OutEntityService outEntityService;
-//    private OutEntityService outEntityService;
-
-//    @Autowired
-//    public void setOutEntityService(OutEntityService outEntityService) {
-//        this.outEntityService = outEntityService;
-//    }
 
     public void setDeserializerFabric(DeserializerFabric deserializerFabric) {
         this.deserializerFabric = deserializerFabric;
@@ -84,22 +56,6 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
         return Optional.ofNullable(entity).orElseThrow(() ->
                 new OutEntityDeserializeException("Wrong json-object with entityType: " + finalEntityType + ". Can't complete deserialize process!"));
     }
-//    public AbstractEntity deserializeEntityFromOutEntityJson(String entityType, JsonElement jsonElement) {
-//        AbstractEntity entity = null;
-//        if(isOutEntity(jsonElement)) {
-//            entityType = getEntityType(jsonElement).getAsString();
-//            jsonElement = getEntityFields(jsonElement);
-//        }
-//        EntityTypes[] entityTypes = EntityTypes.values();
-//        for (EntityTypes type : entityTypes) {
-//            if (entityType.equals(type.name())) {
-//                entity = deserializerFabric.getDeserializer(entityType).recognize(jsonElement);
-//            }
-//        }
-//        String finalEntityType = entityType;
-//        return Optional.ofNullable(entity).orElseThrow(() ->
-//                new OutEntityDeserializeException("Wrong json-object with entityType: " + finalEntityType + ". Can't complete deserialize process!"));
-//    }
 
     private boolean isOutEntity(JsonElement json) {
         return getEntityFields(json) != null && getEntityType(json) != null;
