@@ -13,6 +13,9 @@ import ru.geekbrains.spring.ishop.rest.converters.DeserializerFabric;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.ActionTypeDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.EventDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
+import ru.geekbrains.spring.ishop.rest.converters.serializers.ActionTypeSerializer;
+import ru.geekbrains.spring.ishop.rest.converters.serializers.EventSerializer;
+import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.OutEntityDeserializer;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
@@ -30,6 +33,9 @@ public class OutEntityService {
     private final ActionTypeDeserializer actionTypeDeserializer;
     private final DeserializerFabric deserializerFabric;
 
+    private final EventSerializer eventSerializer;
+    private final ActionTypeSerializer actionTypeSerializer;
+
     public OutEntity convertEntityToOutEntity(Object entity) {
         Map<String, Object> entityFields = new HashMap<>();
         OutEntity out = OutEntity.builder()
@@ -38,9 +44,9 @@ public class OutEntityService {
                 .build();
 
         if(entity instanceof Event) {
-            fillEventEntityFields((Event)entity, entityFields);
+            eventSerializer.fillEntityFields((Event)entity, entityFields);
         } else if(entity instanceof ActionType) {
-            fillActionTypeEntityFields((ActionType)entity, entityFields);
+            actionTypeSerializer.fillEntityFields((ActionType)entity, entityFields);
         } else if(entity instanceof Order) {
             fillOrderEntityFields((Order)entity, entityFields);
         } else if(entity instanceof OrderStatus) {
@@ -59,22 +65,6 @@ public class OutEntityService {
             fillAddressEntityFields((Address)entity, entityFields);
         }
         return out;
-    }
-
-    private void fillEventEntityFields(Event event, Map<String, Object> entityFields) {
-        entityFields.put(Event.Fields.id.name(), event.getId());
-        entityFields.put(Event.Fields.actionType.name(), convertEntityToOutEntity(event.getActionType()));
-        entityFields.put(Event.Fields.entityType.name(), event.getEntityType());
-        entityFields.put(Event.Fields.entityId.name(), event.getEntityId());
-        entityFields.put(Event.Fields.createdAt.name(), event.getCreatedAt());
-        entityFields.put(Event.Fields.serverAcceptedAt.name(), event.getServerAcceptedAt());
-    }
-
-    private void fillActionTypeEntityFields(ActionType actionType, Map<String, Object> entityFields) {
-        entityFields.put(ActionType.Fields.id.name(), actionType.getId());
-        entityFields.put(ActionType.Fields.title.name(), actionType.getTitle());
-        entityFields.put(ActionType.Fields.description.name(), actionType.getDescription());
-        entityFields.put(ActionType.Fields.entityType.name(), actionType.getEntityType());
     }
 
     private void fillOrderEntityFields(Order order, Map<String, Object> entityFields) {
@@ -171,6 +161,15 @@ public class OutEntityService {
         deserializers.put(EntityTypes.ActionType.name(), this.actionTypeDeserializer);
         deserializerFabric.initDeserializerFabric(deserializers);
         outEntityDeserializer.setDeserializerFabric(deserializerFabric);
+    }
+
+    @PostConstruct
+    private void initSerializers() {
+        Map<String, IEntitySerializer> serializers = new HashMap<>();
+        serializers.put(EntityTypes.Event.name(), this.eventSerializer);
+        serializers.put(EntityTypes.ActionType.name(), this.actionTypeSerializer);
+//        serializerFabric.initSerializerFabric(serializers);
+        eventSerializer.setOutEntityService(this);
     }
 
 }
