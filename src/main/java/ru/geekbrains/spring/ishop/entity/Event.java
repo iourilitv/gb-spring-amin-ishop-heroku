@@ -19,7 +19,9 @@ public class Event extends AbstractEntity {
     public static Event nullObject = initNullObject();
     public enum Issuers {STORE, SYSTEM}
     public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,
-        issuerCreatedAt, recipientAcceptedAt, entity}
+        issuerCreatedAt, recipientAcceptedAt}
+//    public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,
+//        issuerCreatedAt, recipientAcceptedAt, entity}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

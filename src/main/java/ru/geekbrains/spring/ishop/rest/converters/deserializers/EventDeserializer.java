@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.AbstractEntity;
 import ru.geekbrains.spring.ishop.entity.ActionType;
 import ru.geekbrains.spring.ishop.entity.Event;
+import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
+import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,7 +30,8 @@ public class EventDeserializer implements IEntityDeserializer {
     @Override
     public AbstractEntity recognize(JsonElement json) {
         JsonObject jsonObject = json.getAsJsonObject();
-        return Event.builder()
+        isJsonEntityCorrect(jsonObject);
+        Event event = Event.builder()
                 .id(jsonObject.get(Event.Fields.id.name()).getAsLong())
                 .actionType(recognizeActionType(jsonObject))
                 .issuer(jsonObject.get(Event.Fields.issuer.name()).getAsString())
@@ -37,11 +41,35 @@ public class EventDeserializer implements IEntityDeserializer {
                 .issuerCreatedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.issuerCreatedAt.name())))
                 .recipientAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.recipientAcceptedAt.name())))
                 .build();
-    }
+        return Optional.ofNullable(event).orElseThrow(() ->
+                new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!"));
 
+    }
+//    @Override
+//    public AbstractEntity recognize(JsonElement json) {
+//
+//        log.info("*** recognize.INCOMING json: " + json);
+//
+//        JsonObject jsonObject = json.getAsJsonObject();
+//        return Event.builder()
+//                .id(jsonObject.get(Event.Fields.id.name()).getAsLong())
+//                .actionType(recognizeActionType(jsonObject))
+//                .issuer(jsonObject.get(Event.Fields.issuer.name()).getAsString())
+//                .issuerEventId(jsonObject.get(Event.Fields.issuerEventId.name()).getAsLong())
+//                .entityType(jsonObject.get(Event.Fields.entityType.name()).getAsString())
+//                .entityId(jsonObject.get(Event.Fields.entityId.name()).getAsLong())
+//                .issuerCreatedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.issuerCreatedAt.name())))
+//                .recipientAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.recipientAcceptedAt.name())))
+//                .build();
+//    }
+
+//    private ActionType recognizeActionType(JsonObject jsonObject) {
+//        JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
+//        return (ActionType) outEntityDeserializer.deserializeEntity(Event.Fields.actionType.name(), jsonElement);
+//    }
     private ActionType recognizeActionType(JsonObject jsonObject) {
         JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
-        return (ActionType) outEntityDeserializer.deserializeEntity(Event.Fields.actionType.name(), jsonElement);
+        return (ActionType) outEntityDeserializer.deserializeEntityFromOutEntityJson(Event.Fields.actionType.name(), jsonElement);
     }
 
     private LocalDateTime getLocalDateTimeOrNullIfAbsent(JsonElement jsonElement) {
@@ -50,6 +78,15 @@ public class EventDeserializer implements IEntityDeserializer {
             localDateTime = LocalDateTime.parse(jsonElement.getAsString());
         }
         return localDateTime;
+    }
+
+    private void isJsonEntityCorrect(JsonObject jsonObject) {
+        Event.Fields[] fields = Event.Fields.values();
+        for (Event.Fields field : fields) {
+            if (jsonObject.get(field.name()) == null) {
+                throw new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!");
+            }
+        }
     }
 
 }

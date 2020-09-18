@@ -301,6 +301,37 @@ Content-Type: application/json
 }
 
 ###
+# ORDER STATUS_CHANGED - WRONG OutEntity Json
+POST http://localhost:8080/api/v1/event/save/incoming/string
+Content-Type: application/json
+
+{
+  "store": "gb-spring-amin-ishop-heroku",
+  "entityType": "Event",
+  "entityFields": {
+    "actionType": {
+      "store": "gb-spring-amin-ishop-heroku",
+      "entityType": "ActionType",
+      "entityFields": {
+        "entityType": "Order",
+        "description": "Изменился статус Заказа. Заказ переведен на следующий этап обработки",
+        "id": 1,
+        "title": "STATUS_CHANGED"
+      }
+    },
+    "recipientAcceptedAt": null,
+    "issuerEventId": 13,
+    "entityType": "Order",
+    "entityId": 19,
+    "issuerCreatedAt": "2020-09-15T19:21:11",
+    "id": 1,
+    "issuer": "SYSTEM"
+  }
+}
+
+###
+
+###
 # ORDER STATUS_CHANGED
 POST http://localhost:8080/api/v1/event/save/incoming/string
 Content-Type: application/json
