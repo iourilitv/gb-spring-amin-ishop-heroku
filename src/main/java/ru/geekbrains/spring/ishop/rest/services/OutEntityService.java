@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.DeserializerFabric;
+import ru.geekbrains.spring.ishop.rest.converters.SerializerFabric;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.ActionTypeDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.EventDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.ActionTypeSerializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.EventSerializer;
+import ru.geekbrains.spring.ishop.rest.converters.serializers.OutEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.OutEntityDeserializer;
@@ -33,112 +35,13 @@ public class OutEntityService {
     private final ActionTypeDeserializer actionTypeDeserializer;
     private final DeserializerFabric deserializerFabric;
 
+    private final OutEntitySerializer outEntitySerializer;
     private final EventSerializer eventSerializer;
     private final ActionTypeSerializer actionTypeSerializer;
+    private final SerializerFabric serializerFabric;
 
-    public OutEntity convertEntityToOutEntity(Object entity) {
-        Map<String, Object> entityFields = new HashMap<>();
-        OutEntity out = OutEntity.builder()
-                .entityType(entity.getClass().getSimpleName())
-                .entityFields(entityFields)
-                .build();
-
-        if(entity instanceof Event) {
-            eventSerializer.fillEntityFields((Event)entity, entityFields);
-        } else if(entity instanceof ActionType) {
-            actionTypeSerializer.fillEntityFields((ActionType)entity, entityFields);
-        } else if(entity instanceof Order) {
-            fillOrderEntityFields((Order)entity, entityFields);
-        } else if(entity instanceof OrderStatus) {
-            fillOrderStatusEntityFields((OrderStatus)entity, entityFields);
-        } else if(entity instanceof User) {
-            fillUserEntityFields((User)entity, entityFields);
-        } else if(entity instanceof OrderItem) {
-            fillOrderItemEntityFields((OrderItem)entity, entityFields);
-        } else if(entity instanceof Product) {
-            fillProductEntityFields((Product)entity, entityFields);
-        } else if(entity instanceof Category) {
-            fillCategoryEntityFields((Category)entity, entityFields);
-        } else if(entity instanceof Delivery) {
-            fillDeliveryEntityFields((Delivery)entity, entityFields);
-        } else if(entity instanceof Address) {
-            fillAddressEntityFields((Address)entity, entityFields);
-        }
-        return out;
-    }
-
-    private void fillOrderEntityFields(Order order, Map<String, Object> entityFields) {
-        entityFields.put("id", order.getId());
-        entityFields.put("orderStatus", convertEntityToOutEntity(order.getOrderStatus()));
-        entityFields.put("user", convertEntityToOutEntity(order.getUser()));
-
-        List<OutEntity> orderItems = new ArrayList<>();
-        order.getOrderItems().forEach(entity -> orderItems.add(convertEntityToOutEntity(entity)));
-        entityFields.put("orderItems", orderItems);
-
-        entityFields.put("totalItemsCosts", order.getTotalItemsCosts());
-        entityFields.put("totalCosts", order.getTotalCosts());
-        entityFields.put("delivery", convertEntityToOutEntity(order.getDelivery()));
-        entityFields.put("createdAt", order.getCreatedAt());
-        entityFields.put("updatedAt", order.getUpdatedAt());
-    }
-
-    private void fillOrderStatusEntityFields(OrderStatus orderStatus, Map<String, Object> entityFields) {
-        entityFields.put("id", orderStatus.getId());
-        entityFields.put("title", orderStatus.getTitle());
-        entityFields.put("description", orderStatus.getDescription());
-    }
-
-    private void fillUserEntityFields(User user, Map<String, Object> entityFields) {
-        entityFields.put("id", user.getId());
-        entityFields.put("userName", user.getUserName());
-        entityFields.put("firstName", user.getFirstName());
-        entityFields.put("lastName", user.getLastName());
-        entityFields.put("phoneNumber", user.getPhoneNumber());
-        entityFields.put("email", user.getEmail());
-        if(user.getDeliveryAddress() != null) {
-            entityFields.put("deliveryAddress", convertEntityToOutEntity(user.getDeliveryAddress()));
-        }
-    }
-
-    private void fillOrderItemEntityFields(OrderItem orderItem, Map<String, Object> entityFields) {
-        entityFields.put("id", orderItem.getId());
-        entityFields.put("product", convertEntityToOutEntity(orderItem.getProduct()));
-        entityFields.put("itemPrice", orderItem.getItemPrice());
-        entityFields.put("quantity", orderItem.getQuantity());
-        entityFields.put("itemCosts", orderItem.getItemCosts());
-        entityFields.put("order", orderItem.getOrder().getId());
-    }
-
-    private void fillProductEntityFields(Product product, Map<String, Object> entityFields) {
-        entityFields.put("id", product.getId());
-        entityFields.put("category", convertEntityToOutEntity(product.getCategory()));
-        entityFields.put("vendorCode", product.getVendorCode());
-        entityFields.put("title", product.getTitle());
-        entityFields.put("price", product.getPrice());
-        entityFields.put("shortDescription", product.getShortDescription());
-    }
-
-    private void fillCategoryEntityFields(Category category, Map<String, Object> entityFields) {
-        entityFields.put("id", category.getId());
-        entityFields.put("title", category.getTitle());
-    }
-
-    private void fillDeliveryEntityFields(Delivery delivery, Map<String, Object> entityFields) {
-        entityFields.put("id", delivery.getId());
-        entityFields.put("order", delivery.getOrder().getId());
-        entityFields.put("phoneNumber", delivery.getPhoneNumber());
-        entityFields.put("deliveryAddress", convertEntityToOutEntity(delivery.getDeliveryAddress()));
-        entityFields.put("deliveryCost", delivery.getDeliveryCost());
-        entityFields.put("deliveryExpectedAt", delivery.getDeliveryExpectedAt());
-        entityFields.put("deliveredAt", delivery.getDeliveredAt());
-    }
-
-    private void fillAddressEntityFields(Address address, Map<String, Object> entityFields) {
-        entityFields.put("id", address.getId());
-        entityFields.put("country", address.getCountry());
-        entityFields.put("city", address.getCity());
-        entityFields.put("address", address.getAddress());
+    public OutEntity convertEntityToOutEntity(AbstractEntity entity) {
+        return outEntitySerializer.convertEntityToOutEntity(entity);
     }
 
     //TODO For Studding and Testing only
@@ -154,6 +57,7 @@ public class OutEntityService {
                 new OutEntityDeserializeException("Something wrong happened during incoming json-object deserialize process!"));
     }
 
+    //TODO сделать автоматическое наполнение множества из пакета deserializers
     @PostConstruct
     private void initDeserializers() {
         Map<String, IEntityDeserializer> deserializers = new HashMap<>();
@@ -163,13 +67,14 @@ public class OutEntityService {
         outEntityDeserializer.setDeserializerFabric(deserializerFabric);
     }
 
+    //TODO сделать автоматическое наполнение множества из пакета serializers
     @PostConstruct
     private void initSerializers() {
         Map<String, IEntitySerializer> serializers = new HashMap<>();
         serializers.put(EntityTypes.Event.name(), this.eventSerializer);
         serializers.put(EntityTypes.ActionType.name(), this.actionTypeSerializer);
-//        serializerFabric.initSerializerFabric(serializers);
-        eventSerializer.setOutEntityService(this);
+        serializerFabric.initSerializerFabric(serializers);
+        outEntitySerializer.setSerializerFabric(serializerFabric);
     }
 
 }

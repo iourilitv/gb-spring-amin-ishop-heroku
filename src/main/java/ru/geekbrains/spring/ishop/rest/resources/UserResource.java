@@ -28,10 +28,10 @@ public class UserResource extends AbstractResource {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/{userId}/userId")
-    public ResponseEntity<OutEntity> getUserOutEntity(@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.convertEntityToOutEntity(userService.findByIdOptional(userId)));
-    }
+//    @GetMapping(value = "/{userId}/userId")
+//    public ResponseEntity<OutEntity> getUserOutEntity(@PathVariable("userId") Long userId) {
+//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+//                .body(outEntityService.convertEntityToOutEntity(userService.findByIdOptional(userId)));
+//    }
 
 }

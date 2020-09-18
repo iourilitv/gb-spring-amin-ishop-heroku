@@ -5,7 +5,6 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.AbstractEntity;
 import ru.geekbrains.spring.ishop.entity.ActionType;
@@ -21,13 +20,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class EventDeserializer implements IEntityDeserializer {
-    private OutEntityDeserializer outEntityDeserializer;
-
-    //To fixed "The dependencies of some of the beans in the application context form a cycle" problem
-    @Autowired
-    public void setOutEntityDeserializer(OutEntityDeserializer outEntityDeserializer) {
-        this.outEntityDeserializer = outEntityDeserializer;
-    }
+    private final OutEntityDeserializer outEntityDeserializer;
 
     @Override
     public AbstractEntity recognize(JsonElement json) {

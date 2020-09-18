@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +10,8 @@ import ru.geekbrains.spring.ishop.repository.AddressRepository;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;
 import ru.geekbrains.spring.ishop.repository.OrderRepository;
 import ru.geekbrains.spring.ishop.repository.OrderStatusRepository;
+import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.SystemDelivery;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
@@ -23,6 +25,7 @@ import java.time.*;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
     private final ShoppingCartService cartService;
     private final DeliveryService deliveryService;
@@ -32,18 +35,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
     private final UtilFilter utilFilter;
-
-    @Autowired
-    public OrderService(ShoppingCartService cartService, DeliveryService deliveryService, IUserService userService, AddressRepository addressRepository, OrderStatusRepository orderStatusRepository, OrderItemRepository orderItemRepository, OrderRepository orderRepository, UtilFilter utilFilter) {
-        this.cartService = cartService;
-        this.deliveryService = deliveryService;
-        this.userService = userService;
-        this.addressRepository = addressRepository;
-        this.orderStatusRepository = orderStatusRepository;
-        this.orderItemRepository = orderItemRepository;
-        this.orderRepository = orderRepository;
-        this.utilFilter = utilFilter;
-    }
+    private final OutEntityService outEntityService;
 
     @Transactional
     public Page<Order> findAll(OrderFilter filter, String property) {
@@ -256,6 +248,7 @@ public class OrderService {
         return orderItem;
     }
 
+    public OutEntity convertEventToOutEntity(Order order) {
+        return outEntityService.convertEntityToOutEntity(order);
+    }
 }
-
-//Integer.valueOf(Year.now().toString()), Month.JUNE, MonthDay.of(Month.JUNE, 3))));

@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
-@EqualsAndHashCode(exclude="delivery") //it is required to fix "StackOverFlow" issue during a new order creating
-public class Order {
+@EqualsAndHashCode(exclude="delivery", callSuper = false) //it is required to fix "StackOverFlow" issue during a new order creating
+public class Order extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

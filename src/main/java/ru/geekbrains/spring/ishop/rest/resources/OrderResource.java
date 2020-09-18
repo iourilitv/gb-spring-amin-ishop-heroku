@@ -8,20 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
-import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 
 @RestController
 @RequestMapping("/api/v1/order")
 public class OrderResource extends AbstractResource {
-    private OutEntityService outEntityService;
-
     private OrderService orderService;
-
-    @Autowired
-    public void setOutEntityService(OutEntityService outEntityService) {
-        this.outEntityService = outEntityService;
-    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -31,7 +23,7 @@ public class OrderResource extends AbstractResource {
     @GetMapping(value = "/{orderId}/orderId")
     public ResponseEntity<OutEntity> getOrderOutEntity(@PathVariable("orderId") Long orderId) {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(outEntityService.convertEntityToOutEntity(orderService.findByIdOptional(orderId)));
+                .body(orderService.convertEventToOutEntity(orderService.findByIdOptional(orderId)));
     }
 
 }
