@@ -18,8 +18,9 @@ import java.time.LocalDateTime;
 public class Event extends AbstractEntity {
     public static Event nullObject = initNullObject();
     public enum Issuers {STORE, SYSTEM}
-    public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,
-        issuerCreatedAt, recipientAcceptedAt}
+    public enum Fields {id, actionType, entityType, entityId, createdAt, serverAcceptedAt}
+//    public enum Fields {id, actionType, issuer, issuerEventId, entityType, entityId,
+//        issuerCreatedAt, recipientAcceptedAt}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +32,12 @@ public class Event extends AbstractEntity {
     @NotNull(message = "не может быть пустым")
     private ActionType actionType;
 
-    @Column(name = "issuer")
-    @NotNull(message = "не может быть пустым")
-    private String issuer;
-
-    @Column(name = "issuer_event_id")
-    private Long issuerEventId;
+//    @Column(name = "issuer")
+//    @NotNull(message = "не может быть пустым")
+//    private String issuer;
+//
+//    @Column(name = "issuer_event_id")
+//    private Long issuerEventId;
 
     @Column(name = "entity_type")
     @NotNull(message = "не может быть пустым")
@@ -47,10 +48,10 @@ public class Event extends AbstractEntity {
 
     @Column(name = "issuer_created_at")
     @CreationTimestamp
-    private LocalDateTime issuerCreatedAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "recipient_accepted_at")
-    private LocalDateTime recipientAcceptedAt;
+    private LocalDateTime serverAcceptedAt;
 
     @Tolerate
     public Event() {
@@ -60,27 +61,50 @@ public class Event extends AbstractEntity {
         nullObject = Event.builder()
                 .id(0L)
                 .actionType(ActionType.nullObject)
-                .issuer("")
-                .issuerEventId(0L)
                 .entityType("")
                 .entityId(0L)
-                .issuerCreatedAt(LocalDateTime.now())
-                .recipientAcceptedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
+                .serverAcceptedAt(LocalDateTime.now())
                 .build();
         return nullObject;
     }
+//    private static Event initNullObject() {
+//        nullObject = Event.builder()
+//                .id(0L)
+//                .actionType(ActionType.nullObject)
+//                .issuer("")
+//                .issuerEventId(0L)
+//                .entityType("")
+//                .entityId(0L)
+//                .issuerCreatedAt(LocalDateTime.now())
+//                .recipientAcceptedAt(LocalDateTime.now())
+//                .build();
+//        return nullObject;
+//    }
 
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
                 ", actionType=" + actionType +
-                ", issuer='" + issuer + '\'' +
-                ", issuerEventId=" + issuerEventId +
                 ", entityType='" + entityType + '\'' +
                 ", entityId=" + entityId +
-                ", issuerCreatedAt=" + issuerCreatedAt +
-                ", recipientAcceptedAt=" + recipientAcceptedAt +
+                ", createdAt=" + createdAt +
+                ", serverAcceptedAt=" + serverAcceptedAt +
                 '}';
     }
+//    @Override
+//    public String toString() {
+//        return "Event{" +
+//                "id=" + id +
+//                ", actionType=" + actionType +
+//                ", issuer='" + issuer + '\'' +
+//                ", issuerEventId=" + issuerEventId +
+//                ", entityType='" + entityType + '\'' +
+//                ", entityId=" + entityId +
+//                ", issuerCreatedAt=" + createdAt +
+//                ", recipientAcceptedAt=" + serverAcceptedAt +
+//                '}';
+//    }
+
 }

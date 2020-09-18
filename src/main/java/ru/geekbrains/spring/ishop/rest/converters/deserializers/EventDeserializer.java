@@ -34,17 +34,33 @@ public class EventDeserializer implements IEntityDeserializer {
         Event event = Event.builder()
                 .id(jsonObject.get(Event.Fields.id.name()).getAsLong())
                 .actionType(recognizeActionType(jsonObject))
-                .issuer(jsonObject.get(Event.Fields.issuer.name()).getAsString())
-                .issuerEventId(jsonObject.get(Event.Fields.issuerEventId.name()).getAsLong())
                 .entityType(jsonObject.get(Event.Fields.entityType.name()).getAsString())
                 .entityId(jsonObject.get(Event.Fields.entityId.name()).getAsLong())
-                .issuerCreatedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.issuerCreatedAt.name())))
-                .recipientAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.recipientAcceptedAt.name())))
+                .createdAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.createdAt.name())))
+                .serverAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.serverAcceptedAt.name())))
                 .build();
         return Optional.ofNullable(event).orElseThrow(() ->
                 new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!"));
 
     }
+//    @Override
+//    public AbstractEntity recognize(JsonElement json) {
+//        JsonObject jsonObject = json.getAsJsonObject();
+//        isJsonEntityCorrect(jsonObject);
+//        Event event = Event.builder()
+//                .id(jsonObject.get(Event.Fields.id.name()).getAsLong())
+//                .actionType(recognizeActionType(jsonObject))
+//                .issuer(jsonObject.get(Event.Fields.issuer.name()).getAsString())
+//                .issuerEventId(jsonObject.get(Event.Fields.issuerEventId.name()).getAsLong())
+//                .entityType(jsonObject.get(Event.Fields.entityType.name()).getAsString())
+//                .entityId(jsonObject.get(Event.Fields.entityId.name()).getAsLong())
+//                .issuerCreatedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.issuerCreatedAt.name())))
+//                .recipientAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.recipientAcceptedAt.name())))
+//                .build();
+//        return Optional.ofNullable(event).orElseThrow(() ->
+//                new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!"));
+//
+//    }
 
     private ActionType recognizeActionType(JsonObject jsonObject) {
         JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
