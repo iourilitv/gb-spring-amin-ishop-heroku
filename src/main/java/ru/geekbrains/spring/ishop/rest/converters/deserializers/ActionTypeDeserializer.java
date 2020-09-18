@@ -28,16 +28,6 @@ public class ActionTypeDeserializer implements IEntityDeserializer {
         return Optional.ofNullable(actionType).orElseThrow(() ->
                 new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.ActionType.name() + ". Can't complete deserialize process!"));
     }
-//    @Override
-//    public AbstractEntity recognize(JsonElement json) {
-//        JsonObject jsonObject = json.getAsJsonObject();
-//        return ActionType.builder()
-//                .id(jsonObject.get(ActionType.Fields.id.name()).getAsShort())
-//                .title(jsonObject.get(ActionType.Fields.title.name()).getAsString())
-//                .description(jsonObject.get(ActionType.Fields.description.name()).getAsString())
-//                .entityType(jsonObject.get(ActionType.Fields.entityType.name()).getAsString())
-//                .build();
-//    }
 
     private void isJsonEntityCorrect(JsonObject jsonObject) {
         ActionType.Fields[] fields = ActionType.Fields.values();

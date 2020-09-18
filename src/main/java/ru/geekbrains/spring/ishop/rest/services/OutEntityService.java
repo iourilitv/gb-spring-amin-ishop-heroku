@@ -24,8 +24,7 @@ public class OutEntityService {
     public OutEntity createOutEntity(Object entity) {
         Map<String, Object> entityFields = new HashMap<>();
         OutEntity out = OutEntity.builder()
-                .entityType(entity.getClass().getSimpleName()) //TODO java.lang.NullPointerException: null
-                // OutEntityDeserializer      : *** deserializeEntityFromOutEntityJson.jsonElement: {"store":"gb-spring-amin-ishop-heroku","1entityType":"ActionType","1entityFields":{"entityType":"Order","description":"Изменился статус Заказа. Заказ переведен на следующий этап обработки","id":1,"title":"STATUS_CHANGED"}}
+                .entityType(entity.getClass().getSimpleName())
                 .entityFields(entityFields)
                 .build();
 

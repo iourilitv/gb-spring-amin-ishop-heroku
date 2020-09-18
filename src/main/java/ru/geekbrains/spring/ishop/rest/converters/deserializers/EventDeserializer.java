@@ -45,28 +45,7 @@ public class EventDeserializer implements IEntityDeserializer {
                 new OutEntityDeserializeException("Wrong json-object with entityType: " + EntityTypes.Event.name() + ". Can't complete deserialize process!"));
 
     }
-//    @Override
-//    public AbstractEntity recognize(JsonElement json) {
-//
-//        log.info("*** recognize.INCOMING json: " + json);
-//
-//        JsonObject jsonObject = json.getAsJsonObject();
-//        return Event.builder()
-//                .id(jsonObject.get(Event.Fields.id.name()).getAsLong())
-//                .actionType(recognizeActionType(jsonObject))
-//                .issuer(jsonObject.get(Event.Fields.issuer.name()).getAsString())
-//                .issuerEventId(jsonObject.get(Event.Fields.issuerEventId.name()).getAsLong())
-//                .entityType(jsonObject.get(Event.Fields.entityType.name()).getAsString())
-//                .entityId(jsonObject.get(Event.Fields.entityId.name()).getAsLong())
-//                .issuerCreatedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.issuerCreatedAt.name())))
-//                .recipientAcceptedAt(getLocalDateTimeOrNullIfAbsent(jsonObject.get(Event.Fields.recipientAcceptedAt.name())))
-//                .build();
-//    }
 
-//    private ActionType recognizeActionType(JsonObject jsonObject) {
-//        JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
-//        return (ActionType) outEntityDeserializer.deserializeEntity(Event.Fields.actionType.name(), jsonElement);
-//    }
     private ActionType recognizeActionType(JsonObject jsonObject) {
         JsonElement jsonElement = jsonObject.get(Event.Fields.actionType.name());
         return (ActionType) outEntityDeserializer.deserializeEntityFromOutEntityJson(Event.Fields.actionType.name(), jsonElement);
