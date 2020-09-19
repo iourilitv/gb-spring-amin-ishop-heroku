@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -9,8 +10,12 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-@Data
-public class User {
+@Getter
+@Setter
+public class User extends AbstractEntity {
+    //TODO добавить в таблицу и AbstractEntity поля createdAt, updatedAt
+    public enum Fields {id, userName, password, firstName, lastName, phoneNumber, email, deliveryAddress, roles}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

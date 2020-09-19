@@ -1,14 +1,19 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_item")
-@Data
-public class OrderItem {
+@Getter
+@Setter
+public class OrderItem extends AbstractEntity {
+    //TODO добавить в таблицу и AbstractEntity поля createdAt, updatedAt
+    public enum Fields {id, product, itemPrice, quantity, itemCosts, order}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

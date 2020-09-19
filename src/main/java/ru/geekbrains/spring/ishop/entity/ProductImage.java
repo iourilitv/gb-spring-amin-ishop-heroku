@@ -1,12 +1,15 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "products_images")
-@Data
-public class ProductImage {
+@Getter
+@Setter
+public class ProductImage extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

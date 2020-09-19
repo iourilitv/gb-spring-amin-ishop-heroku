@@ -22,83 +22,131 @@ GET http://localhost:8080/api/v1/order/wrong_argument/orderId
 
 ###
 # returns ResponseEntity<OutEntity>
-GET http://localhost:8080/api/v1/order/1/orderId
+GET http://localhost:8080/api/v1/order/2/orderId
 # getting a order by id - Works correctly!
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
-#  "entity": "OutOrder",
-#  "id": 1,
-#  "orderStatusTitle": "Transferred to delivery",
-#  "outUser": {
-#    "store": "gb-spring-amin-ishop-heroku",
-#    "entity": "OutUser",
-#    "id": 2,
-#    "userName": "liyuse",
-#    "firstName": "Yury",
-#    "lastName": "Litvinenko",
-#    "phoneNumber": "8-999-9999999",
-#    "email": "liyuse@ yandex.ru",
-#    "outDeliveryAddress": "Address: {id=3, Country=Russia, City=Королев МО, Address=Секина 99, кв.99}"
-#  },
-#  "outOrderItems": [
-#    {
+#  "entityType": "Order",
+#  "entityFields": {
+#    "delivery": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entity": "OutOrderItem",
-#      "id": 1,
-#      "outProduct": {
-#        "store": "gb-spring-amin-ishop-heroku",
-#        "entity": "OutProduct",
-#        "id": 10,
-#        "categoryTitle": "Pets",
-#        "vendorCode": "00000010",
-#        "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
-#        "price": 904.00,
-#        "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
-#        "fullDescription": "add full_description",
-#        "createdAt": "2020-08-19T08:06:15",
-#        "updatedAt": "2020-08-19T08:06:15"
-#      },
-#      "itemPrice": 904.00,
-#      "quantity": 2,
-#      "itemCosts": 1808.00,
-#      "orderId": 1
+#      "entityType": "Delivery",
+#      "entityFields": {
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityType": "Address",
+#          "entityFields": {
+#            "country": "Russia",
+#            "address": "Секина 99, кв.99",
+#            "city": "Королев МО",
+#            "id": 3
+#          }
+#        },
+#        "id": 1,
+#        "deliveryExpectedAt": "2020-09-05T10:00:00",
+#        "order": 2,
+#        "deliveryCost": 100.00,
+#        "deliveredAt": null
+#      }
 #    },
-#    {
+#    "createdAt": "2020-09-05T11:24:47",
+#    "totalCosts": 3057.00,
+#    "orderStatus": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entity": "OutOrderItem",
-#      "id": 2,
-#      "outProduct": {
+#      "entityType": "OrderStatus",
+#      "entityFields": {
+#        "description": "Доставлен: Заказ получен пользователем",
+#        "id": 5,
+#        "title": "Delivered"
+#      }
+#    },
+#    "totalItemsCosts": 2957.00,
+#    "id": 2,
+#    "user": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "User",
+#      "entityFields": {
+#        "firstName": "f n liyuse",
+#        "lastName": "l n liyuse",
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityType": "Address",
+#          "entityFields": {
+#            "country": "Russia",
+#            "address": "Секина 99, кв.99",
+#            "city": "Королев МО",
+#            "id": 3
+#          }
+#        },
+#        "id": 2,
+#        "userName": "liyuse",
+#        "email": "liyuse@ yandex.ru"
+#      }
+#    },
+#    "orderItems": [
+#      {
 #        "store": "gb-spring-amin-ishop-heroku",
-#        "entity": "OutProduct",
-#        "id": 9,
-#        "categoryTitle": "Книги",
-#        "vendorCode": "00000009",
-#        "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
-#        "price": 979.00,
-#        "shortDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
-#        "fullDescription": "add full_description",
-#        "createdAt": "2020-08-19T08:06:15",
-#        "updatedAt": "2020-08-19T08:06:15"
+#        "entityType": "OrderItem",
+#        "entityFields": {
+#          "itemCosts": 1958.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityType": "Product",
+#            "entityFields": {
+#              "id": 9,
+#              "shortDescription": 979.00,
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityType": "Category",
+#                "entityFields": {
+#                  "id": 6,
+#                  "title": "Книги"
+#                }
+#              },
+#              "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#              "fullDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#              "vendorCode": "00000009"
+#            }
+#          },
+#          "quantity": 2,
+#          "itemPrice": 979.00,
+#          "id": 3,
+#          "order": 2
+#        }
 #      },
-#      "itemPrice": 979.00,
-#      "quantity": 1,
-#      "itemCosts": 979.00,
-#      "orderId": 1
-#    }
-#  ],
-#  "totalItemsCosts": 2787.00,
-#  "totalCosts": 2887.00,
-#  "outDelivery": {
-#    "store": "gb-spring-amin-ishop-heroku",
-#    "entity": "OutDelivery",
-#    "id": 1,
-#    "orderId": 1,
-#    "phoneNumber": "8-999-9999999",
-#    "outDeliveryAddress": "Address: {id=3, Country=Russia, City=Королев МО, Address=Секина 99, кв.99}",
-#    "deliveryCost": 100.00,
-#    "deliveryExpectedAt": "2020-08-26T13:00:00",
-#    "deliveredAt": null
-#  },
-#  "createdAt": "2020-08-26T12:08:17",
-#  "updatedAt": "2020-08-27T13:43:00"
+#      {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entityType": "OrderItem",
+#        "entityFields": {
+#          "itemCosts": 999.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityType": "Product",
+#            "entityFields": {
+#              "id": 11,
+#              "shortDescription": 999.00,
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityType": "Category",
+#                "entityFields": {
+#                  "id": 5,
+#                  "title": "Одежда"
+#                }
+#              },
+#              "title": "ТВОЕ / Платье",
+#              "fullDescription": "Размер на модели: S. *Параметры в описании указаны для размера: S.",
+#              "vendorCode": "00000011"
+#            }
+#          },
+#          "quantity": 1,
+#          "itemPrice": 999.00,
+#          "id": 4,
+#          "order": 2
+#        }
+#      }
+#    ],
+#    "updatedAt": "2020-09-05T12:47:10"
+#  }
 #}

@@ -1,7 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,9 +12,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Data
-@EqualsAndHashCode(exclude="delivery", callSuper = false) //it is required to fix "StackOverFlow" issue during a new order creating
+@Getter
+@Setter
 public class Order extends AbstractEntity {
+    public enum Fields {id, orderStatus, user, orderItems, totalItemsCosts, totalCosts, delivery, createdAt, updatedAt}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

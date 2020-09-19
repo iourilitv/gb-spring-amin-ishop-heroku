@@ -1,14 +1,18 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "categories")
-@Data
-public class Category {
+@Getter
+@Setter
+public class Category extends AbstractEntity {
+    //TODO добавить в таблицу и AbstractEntity поля createdAt, updatedAt
+    public enum Fields {id, title, products}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

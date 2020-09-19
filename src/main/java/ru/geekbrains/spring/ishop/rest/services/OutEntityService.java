@@ -6,16 +6,13 @@ import com.google.gson.JsonElement;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.DeserializerFabric;
 import ru.geekbrains.spring.ishop.rest.converters.SerializerFabric;
-import ru.geekbrains.spring.ishop.rest.converters.deserializers.ActionTypeDeserializer;
-import ru.geekbrains.spring.ishop.rest.converters.deserializers.EventDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
-import ru.geekbrains.spring.ishop.rest.converters.serializers.ActionTypeSerializer;
-import ru.geekbrains.spring.ishop.rest.converters.serializers.EventSerializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.OutEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.outentities.*;
@@ -31,14 +28,10 @@ import java.util.*;
 @Getter
 public class OutEntityService {
     private final OutEntityDeserializer outEntityDeserializer;
-    private final EventDeserializer eventDeserializer;
-    private final ActionTypeDeserializer actionTypeDeserializer;
     private final DeserializerFabric deserializerFabric;
-
     private final OutEntitySerializer outEntitySerializer;
-    private final EventSerializer eventSerializer;
-    private final ActionTypeSerializer actionTypeSerializer;
     private final SerializerFabric serializerFabric;
+    private final ApplicationContext context;
 
     public OutEntity convertEntityToOutEntity(AbstractEntity entity) {
         return outEntitySerializer.convertEntityToOutEntity(entity);
@@ -57,22 +50,42 @@ public class OutEntityService {
                 new OutEntityDeserializeException("Something wrong happened during incoming json-object deserialize process!"));
     }
 
-    //TODO сделать автоматическое наполнение множества из пакета deserializers
     @PostConstruct
     private void initDeserializers() {
+        Map<String, IEntityDeserializer> deserializersBeans = context.getBeansOfType(IEntityDeserializer.class);
         Map<String, IEntityDeserializer> deserializers = new HashMap<>();
-        deserializers.put(EntityTypes.Event.name(), this.eventDeserializer);
-        deserializers.put(EntityTypes.ActionType.name(), this.actionTypeDeserializer);
+
+        //TODO переписать без дублирования
+        Set<String> keys = deserializersBeans.keySet();
+        for (String key :keys) {
+            for (EntityTypes type : EntityTypes.values()) {
+                String modifiedKey = key.toLowerCase().replace("deserializer", "");
+                if(modifiedKey.equals(type.name().toLowerCase())) {
+                    deserializers.put(type.name(), deserializersBeans.get(key));
+                    break;
+                }
+            }
+        }
         deserializerFabric.initDeserializerFabric(deserializers);
         outEntityDeserializer.setDeserializerFabric(deserializerFabric);
     }
 
-    //TODO сделать автоматическое наполнение множества из пакета serializers
     @PostConstruct
     private void initSerializers() {
+        Map<String, IEntitySerializer> serializersBeans = context.getBeansOfType(IEntitySerializer.class);
         Map<String, IEntitySerializer> serializers = new HashMap<>();
-        serializers.put(EntityTypes.Event.name(), this.eventSerializer);
-        serializers.put(EntityTypes.ActionType.name(), this.actionTypeSerializer);
+
+        //TODO переписать без дублирования
+        Set<String> keys = serializersBeans.keySet();
+        for (String key :keys) {
+            for (EntityTypes type : EntityTypes.values()) {
+                String modifiedKey = key.toLowerCase().replace("serializer", "");
+                if(modifiedKey.equals(type.name().toLowerCase())) {
+                    serializers.put(type.name(), serializersBeans.get(key));
+                    break;
+                }
+            }
+        }
         serializerFabric.initSerializerFabric(serializers);
         outEntitySerializer.setSerializerFabric(serializerFabric);
     }

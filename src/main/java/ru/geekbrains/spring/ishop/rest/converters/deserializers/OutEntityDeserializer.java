@@ -41,6 +41,9 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
     }
 
     public AbstractEntity deserializeEntityFromOutEntityJson(String entityType, JsonElement jsonElement) {
+
+        log.info("*** deserializeEntityFromOutEntityJson().deserializerFabric.getDeserializer(entityType): " + deserializerFabric.getDeserializer(entityType));
+
         AbstractEntity entity = null;
         if(isOutEntity(jsonElement)) {
             entityType = getEntityType(jsonElement).getAsString();

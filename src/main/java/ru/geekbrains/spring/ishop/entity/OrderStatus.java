@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,8 +9,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "order_statuses")
-@Data
-public class OrderStatus {
+@Getter
+@Setter
+public class OrderStatus extends AbstractEntity {
+    public enum Fields {id, title, description}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

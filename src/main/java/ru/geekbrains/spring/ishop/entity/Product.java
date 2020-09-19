@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,8 +13,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
-@Data
-public class Product {
+@Getter
+@Setter
+public class Product extends AbstractEntity {
+    //TODO перенести в AbstractEntity поля createdAt, updatedAt
+    public enum Fields {id, category, vendorCode, images, title, price, shortDescription, fullDescription, createAt, updateAt}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
