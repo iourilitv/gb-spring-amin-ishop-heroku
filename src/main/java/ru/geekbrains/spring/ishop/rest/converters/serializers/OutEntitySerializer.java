@@ -2,7 +2,9 @@ package ru.geekbrains.spring.ishop.rest.converters.serializers;
 
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
+import ru.geekbrains.spring.ishop.exception.OutEntitySerializeException;
 import ru.geekbrains.spring.ishop.rest.converters.SerializerFabric;
+import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
@@ -27,7 +29,12 @@ public class OutEntitySerializer {
         EntityTypes[] entityTypes = EntityTypes.values();
         for (EntityTypes type : entityTypes) {
             if (entityType.equals(type.name())) {
-                serializerFabric.getSerializer(entityType).fillEntityFields(entity, entityFields);
+                IEntitySerializer serializer = serializerFabric.getSerializer(entityType);
+                if(serializer != null) {
+                    serializer.fillEntityFields(entity, entityFields);
+                } else {
+                    throw new OutEntitySerializeException("No serializer for " + entityType + ". Can't completed serialization!");
+                }
             }
         }
         return out;

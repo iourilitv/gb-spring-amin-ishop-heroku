@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.spring.ishop.exception.ErrorResponse;
 import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
+import ru.geekbrains.spring.ishop.exception.OutEntitySerializeException;
 
 @RestController
 public abstract class AbstractResource {
@@ -41,6 +42,15 @@ public abstract class AbstractResource {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> outEntityDeserializeExceptionHandler(OutEntityDeserializeException exception) {
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setMessage(exception.getMessage());
+        response.setTimestamp(System.currentTimeMillis());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> outEntitySerializeExceptionHandler(OutEntitySerializeException exception) {
         ErrorResponse response = new ErrorResponse();
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setMessage(exception.getMessage());

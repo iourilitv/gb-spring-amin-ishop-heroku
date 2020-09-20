@@ -1,10 +1,8 @@
 package ru.geekbrains.spring.ishop.exception;
 
-import com.google.gson.JsonParseException;
-//TODO доделать по аналогии с OutEntityDeserializeException
-public class OutEntitySerializeException {
+public class OutEntitySerializeException extends RuntimeException {
 
     public OutEntitySerializeException(String msg) {
-//        super(msg);
+        super(msg);
     }
 }
