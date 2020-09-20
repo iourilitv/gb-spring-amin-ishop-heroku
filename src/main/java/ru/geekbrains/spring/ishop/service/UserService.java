@@ -1,17 +1,19 @@
 package ru.geekbrains.spring.ishop.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.exception.NotFoundException;
+import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.repository.RoleRepository;
 import ru.geekbrains.spring.ishop.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,40 +30,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService {
-    private AddressService addressService;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final OutEntityService outEntityService;
+    private final AddressService addressService;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UtilFilter utilFilter;
     private BCryptPasswordEncoder passwordEncoder;
-    private UtilFilter utilFilter;
 
-    @Autowired
-    public void setAddressService(AddressService addressService) {
-        this.addressService = addressService;
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
-    @Autowired
+    @Override
     public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Autowired
-    public void setUtilFilter(UtilFilter utilFilter) {
-        this.utilFilter = utilFilter;
-    }
-
     //TODO переделать: вводить первого юзера
-    @Override
     @Transactional
     @PostConstruct
     public void initSuperAdmin() {
@@ -226,6 +209,10 @@ public class UserService implements IUserService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public OutEntity convertUserToOutEntity(User user) {
+        return outEntityService.convertEntityToOutEntity(user);
     }
 }
 

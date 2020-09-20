@@ -3,7 +3,6 @@ package ru.geekbrains.spring.ishop.config;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private IUserService userService;
 
-    @Autowired
     public void setUserService(IUserService userService) {
         this.userService = userService;
     }

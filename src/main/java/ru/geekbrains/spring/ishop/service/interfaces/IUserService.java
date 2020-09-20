@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.service.interfaces;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.entity.Role;
 import ru.geekbrains.spring.ishop.utils.SystemUser;
@@ -8,12 +9,11 @@ import ru.geekbrains.spring.ishop.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.geekbrains.spring.ishop.utils.filters.UserFilter;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 public interface IUserService extends UserDetailsService {
-    @PostConstruct
-    void initSuperAdmin();
+
+    void setPasswordEncoder(BCryptPasswordEncoder encoder);
 
     Page<User> findAll(UserFilter userFilter, String id);
 

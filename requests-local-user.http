@@ -26,16 +26,25 @@ GET http://localhost:8080/api/v1/user/1/userId
 # getting a user by id - Works correctly!
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
-#  "entity": "OutUser",
-#  "id": 1,
-#  "userName": "superadmin",
-#  "firstName": "superadmin first_name",
-#  "lastName": "superadmin last_name",
-#  "phoneNumber": "+79991234567",
-#  "email": "superadmin@ mail.com",
-#  "outDeliveryAddress": "Address: {id=1, Country=USA, City=New York, Address=18a Diagon Alley}"
+#  "entityType": "User",
+#  "entityFields": {
+#    "firstName": "superadmin first_name",
+#    "lastName": "superadmin last_name",
+#    "phoneNumber": "+79991234567",
+#    "deliveryAddress": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "Address",
+#      "entityFields": {
+#        "country": "USA",
+#        "address": "18a Diagon Alley",
+#        "city": "New York",
+#        "id": 1
+#      }
+#    },
+#    "id": 1,
+#    "userName": "superadmin",
+#    "email": "superadmin@ mail.com"
+#  }
 #}
-#
-#Response code: 200; Time: 478ms; Content length: 367 bytes
 
 ###

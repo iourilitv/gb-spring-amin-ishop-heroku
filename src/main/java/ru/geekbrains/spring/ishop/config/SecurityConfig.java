@@ -1,8 +1,7 @@
 package ru.geekbrains.spring.ishop.config;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,22 +12,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@Slf4j
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private IUserService userService;
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final IUserService userService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private BCryptPasswordEncoder encoder;
 
-    @Autowired
-    public void setUserService(IUserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setCustomAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
-        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+    @PostConstruct
+    public void init() {
+        customAuthenticationSuccessHandler.setUserService(userService);
+        userService.setPasswordEncoder(encoder);
     }
 
     @Override
@@ -65,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        encoder = new BCryptPasswordEncoder();
+        return encoder;
     }
 
     @Bean
