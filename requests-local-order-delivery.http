@@ -1,0 +1,79 @@
+# For REST Resources testing
+
+#******* Order **************
+
+GET http://localhost:8080/api/v1/order/delivery/99/deliveryId
+# Testing "Getting a Delivery with id is out of range" - Works correctly.
+#{
+#  "status": 404,
+#  "message": "The Delivery with id=99 is not found!",
+#  "timestamp": 1600607438384
+#}
+
+###
+
+GET http://localhost:8080/api/v1/order/delivery/wrong_argument/deliveryId
+# testing a request with an illegal argument - Work correctly
+#{
+#  "status": 400,
+#  "message": "Illegal Argument. Look that you write! For input string: \"wrong_argument\"",
+#  "timestamp": 1598793884529
+#}
+
+###
+# returns ResponseEntity<OutEntity>
+GET http://localhost:8080/api/v1/order/delivery/1/deliveryId
+# getting a delivery by id - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityType": "Delivery",
+#  "entityFields": {
+#    "phoneNumber": "+79991234567",
+#    "deliveryAddress": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "Address",
+#      "entityFields": {
+#        "country": "Russia",
+#        "address": "Секина 99, кв.99",
+#        "city": "Королев МО",
+#        "id": 3
+#      }
+#    },
+#    "id": 1,
+#    "deliveryExpectedAt": "2020-09-05T10:00:00",
+#    "order": 2,
+#    "deliveryCost": 100.00,
+#    "deliveredAt": null
+#  }
+#}
+
+###
+# returns ResponseEntity<OutEntity>
+PUT http://localhost:8080/api/v1/order/delivery/1/deliveryId/deliveredAt/string
+
+2020-09-20T01:01:32.773
+
+###
+# updating deliveredAt - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityType": "Delivery",
+#  "entityFields": {
+#    "phoneNumber": "+79991234567",
+#    "deliveryAddress": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "Address",
+#      "entityFields": {
+#        "country": "Russia",
+#        "address": "Секина 99, кв.99",
+#        "city": "Королев МО",
+#        "id": 3
+#      }
+#    },
+#    "id": 1,
+#    "deliveryExpectedAt": "2020-09-05T10:00:00",
+#    "order": 2,
+#    "deliveryCost": 100.00,
+#    "deliveredAt": "2020-09-20T01:01:32.773"
+#  }
+#}

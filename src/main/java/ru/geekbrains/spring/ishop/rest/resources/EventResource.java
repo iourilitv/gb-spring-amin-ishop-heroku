@@ -31,7 +31,7 @@ public class EventResource extends AbstractResource {
     }
 
     @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt/string")
-    public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEventOutEntity(
+    public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEvent(
             @RequestBody @Valid String serverAcceptedAt,
             @PathVariable("eventId") Long eventId) {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)

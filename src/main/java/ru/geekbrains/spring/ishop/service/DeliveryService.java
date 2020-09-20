@@ -1,34 +1,31 @@
 package ru.geekbrains.spring.ishop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.Delivery;
 import ru.geekbrains.spring.ishop.entity.Order;
+import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.DeliveryRepository;
+import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.utils.filters.DeliveryFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DeliveryService {
-    private DeliveryRepository deliveryRepository;
-    private UtilFilter utilFilter;
-
-    @Autowired
-    public void setRepository(DeliveryRepository deliveryRepository) {
-        this.deliveryRepository = deliveryRepository;
-    }
-
-    @Autowired
-    public void setUtilFilter(UtilFilter utilFilter) {
-        this.utilFilter = utilFilter;
-    }
+    private final DeliveryRepository deliveryRepository;
+    private final UtilFilter utilFilter;
+    private final OutEntityService outEntityService;
 
     public List<Delivery> findAll() {
         return deliveryRepository.findAll();
@@ -45,6 +42,12 @@ public class DeliveryService {
         return deliveryRepository.findAll(filter.getSpec(), pageRequest);
     }
 
+    //TODO for REST only temporarily
+    @Transactional(readOnly = true)
+    public Delivery findByIdOptional(Long id) {
+        return deliveryRepository.findById(id).orElseThrow(() -> new NotFoundException("The Delivery with id=" + id + " is not found!"));
+    }
+    //TODO replace with findByIdOptional without renaming
     public Delivery findById(Long id) {
         return deliveryRepository.getOne(id);
     }
@@ -74,5 +77,16 @@ public class DeliveryService {
 
     public void deleteByOrderId(Long orderId) {
         deliveryRepository.deleteByOrderId(orderId);
+    }
+
+    public Delivery updateServerAcceptedAt(Long deliveryId, String newValue) {
+        Delivery delivery = findByIdOptional(deliveryId);
+        LocalDateTime localDateTime = LocalDateTime.parse(newValue);
+        delivery.setDeliveredAt(localDateTime);
+        return delivery;
+    }
+
+    public OutEntity convertDeliveryToOutEntity(Delivery delivery) {
+        return outEntityService.convertEntityToOutEntity(delivery);
     }
 }

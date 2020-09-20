@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.rest.resources;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +11,9 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/order")
+@RequiredArgsConstructor
 public class OrderResource extends AbstractResource {
-    private OrderService orderService;
-
-    @Autowired
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
-    }
+    private final OrderService orderService;
 
     @GetMapping(value = "/{orderId}/orderId")
     public ResponseEntity<OutEntity> getOrderOutEntity(@PathVariable("orderId") Long orderId) {
@@ -33,4 +29,5 @@ public class OrderResource extends AbstractResource {
                 .body(orderService.convertOrderToOutEntity(
                         orderService.changeOrderStatus(orderId, newValue)));
     }
+
 }
