@@ -1,5 +1,6 @@
 package ru.geekbrains.spring.ishop.control.admin;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -24,19 +25,20 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/order")
+@RequiredArgsConstructor
 public class AdminOrderController {
     private final CategoryService categoryService;
     private final OrderService orderService;
     private final OrderFilter orderFilter;
-    private final OrderSubject orderSubject;
+//    private final OrderSubject orderSubject;
 
-    @Autowired
-    public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter, OrderSubject orderSubject) {
-        this.categoryService = categoryService;
-        this.orderService = orderService;
-        this.orderFilter = orderFilter;
-        this.orderSubject = orderSubject;
-    }
+//    @Autowired
+//    public AdminOrderController(CategoryService categoryService, OrderService orderService, OrderFilter orderFilter, OrderSubject orderSubject) {
+//        this.categoryService = categoryService;
+//        this.orderService = orderService;
+//        this.orderFilter = orderFilter;
+//        this.orderSubject = orderSubject;
+//    }
 
     @GetMapping
     public String sectionRoot() {
@@ -96,11 +98,16 @@ public class AdminOrderController {
 
     @GetMapping("/cancel/{order_id}/order_id")
     public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
-        orderService.cancelOrder(orderId);
-        //send email to the user
-        orderSubject.requestToSendMessage(orderService.findById(orderId), TextTemplates.ORDER_STATUS_CHANGED);
+        orderService.updateOrderStatus(orderId, OrderStatus.Statuses.Canceled.name());
         return new RedirectView("/admin/order/all");
     }
+//    @GetMapping("/cancel/{order_id}/order_id")
+//    public RedirectView cancelOrder(@PathVariable("order_id") Long orderId) {
+//        orderService.cancelOrder(orderId);
+//        //send email to the user
+//        orderSubject.requestToSendMessage(orderService.findById(orderId), TextTemplates.ORDER_STATUS_CHANGED);
+//        return new RedirectView("/admin/order/all");
+//    }
 
     @PostMapping("/process/update/orderStatus")
     public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
@@ -108,14 +115,29 @@ public class AdminOrderController {
                                                  HttpSession session) {
         SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
         if (!theBindingResult.hasErrors()) {
-            Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
-            systemOrder.setOrderStatus(order.getOrderStatus());
-            //send email to the user
-            orderSubject.requestToSendMessage(order, TextTemplates.ORDER_STATUS_CHANGED);
+//            Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
+            Order order = orderService.updateOrderStatus(systemOrder.getId(), orderStatus.getTitle());
+            systemOrder.setOrderStatus(order.getOrderStatus());//TODO зачем?
+//            //send email to the user
+//            orderSubject.requestToSendMessage(order, TextTemplates.ORDER_STATUS_CHANGED);
         }
         return new RedirectView("/admin/order/edit/" +
                 systemOrder.getId() + "/order_id");
     }
+//    @PostMapping("/process/update/orderStatus")
+//    public RedirectView processUpdateOrderStatus(@Valid @ModelAttribute("orderStatus") OrderStatus orderStatus,
+//                                                 BindingResult theBindingResult,
+//                                                 HttpSession session) {
+//        SystemOrder systemOrder = (SystemOrder) session.getAttribute("order");
+//        if (!theBindingResult.hasErrors()) {
+//            Order order = orderService.updateOrderStatus(systemOrder, orderStatus);
+//            systemOrder.setOrderStatus(order.getOrderStatus());
+//            //send email to the user
+//            orderSubject.requestToSendMessage(order, TextTemplates.ORDER_STATUS_CHANGED);
+//        }
+//        return new RedirectView("/admin/order/edit/" +
+//                systemOrder.getId() + "/order_id");
+//    }
 
     @PostMapping("/process/update/delivery")
     public RedirectView processUpdateDelivery(@Valid @ModelAttribute("delivery") SystemDelivery systemDelivery,

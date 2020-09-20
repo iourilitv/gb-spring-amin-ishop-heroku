@@ -22,7 +22,7 @@ GET http://localhost:8080/api/v1/order/wrong_argument/orderId
 
 ###
 # returns ResponseEntity<OutEntity>
-GET http://localhost:8080/api/v1/order/2/orderId
+GET http://localhost:8080/api/v1/order/21/orderId
 # getting a order by id - Works correctly!
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
@@ -148,5 +148,110 @@ GET http://localhost:8080/api/v1/order/2/orderId
 #      }
 #    ],
 #    "updatedAt": "2020-09-05T12:47:10"
+#  }
+#}
+
+###
+# returns ResponseEntity<OutEntity>
+PUT http://localhost:8080/api/v1/order/21/orderId/changeOrderStatus/string
+
+Accepted to work
+
+###
+# getting a order by id - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityType": "Order",
+#  "entityFields": {
+#    "delivery": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "Delivery",
+#      "entityFields": {
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityType": "Address",
+#          "entityFields": {
+#            "country": "Russia",
+#            "address": "Секина 99, кв.99",
+#            "city": "Королев МО",
+#            "id": 3
+#          }
+#        },
+#        "id": 19,
+#        "deliveryExpectedAt": "2020-09-20T10:00:00",
+#        "order": 21,
+#        "deliveryCost": 100.00,
+#        "deliveredAt": null
+#      }
+#    },
+#    "createdAt": "2020-09-20T13:33:27",
+#    "totalCosts": 2962.00,
+#    "orderStatus": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "OrderStatus",
+#      "entityFields": {
+#        "description": "Принят в работу: Заказ обрабатывается",
+#        "id": 2,
+#        "title": "Accepted to work"
+#      }
+#    },
+#    "totalItemsCosts": 2862.00,
+#    "id": 21,
+#    "user": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "User",
+#      "entityFields": {
+#        "firstName": "f n liyuse",
+#        "lastName": "l n liyuse",
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityType": "Address",
+#          "entityFields": {
+#            "country": "Russia",
+#            "address": "Секина 99, кв.99",
+#            "city": "Королев МО",
+#            "id": 3
+#          }
+#        },
+#        "id": 2,
+#        "userName": "liyuse",
+#        "email": "liyuse@ yandex.ru"
+#      }
+#    },
+#    "orderItems": [
+#      {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entityType": "OrderItem",
+#        "entityFields": {
+#          "itemCosts": 2862.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityType": "Product",
+#            "entityFields": {
+#              "id": 5,
+#              "shortDescription": 1431.00,
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityType": "Category",
+#                "entityFields": {
+#                  "id": 3,
+#                  "title": "Бытовая техника"
+#                }
+#              },
+#              "title": "Bosch / Кофемолка MKM 6000/6003",
+#              "fullDescription": "Очень удобная в повседневной жизни кофемолка. Она предназначена для семей, которые любят выпить по утрам чашечку свежесваренного кофе. Производительность: до 75 гр. кофейных зерен. Степень помола зависит от его продолжительности: чем дольше, тем мельче. Мощность: 180 Вт. Лезвие из нержавеющей стали для точного и качественного помола. Помол осуществляется только при закрытой крышке.",
+#              "vendorCode": "00000005"
+#            }
+#          },
+#          "quantity": 2,
+#          "itemPrice": 1431.00,
+#          "id": 29,
+#          "order": 21
+#        }
+#      }
+#    ],
+#    "updatedAt": "2020-09-20T13:35:02"
 #  }
 #}

@@ -1,12 +1,14 @@
 package ru.geekbrains.spring.ishop.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.NotFoundException;
-import ru.geekbrains.spring.ishop.repository.AddressRepository;
+import ru.geekbrains.spring.ishop.informing.TextTemplates;
+import ru.geekbrains.spring.ishop.informing.subjects.OrderSubject;
 import ru.geekbrains.spring.ishop.repository.OrderItemRepository;
 import ru.geekbrains.spring.ishop.repository.OrderRepository;
 import ru.geekbrains.spring.ishop.repository.OrderStatusRepository;
@@ -26,16 +28,17 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
     private final ShoppingCartService cartService;
     private final DeliveryService deliveryService;
     private final IUserService userService;
-    private final AddressRepository addressRepository;
     private final OrderStatusRepository orderStatusRepository;
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
     private final UtilFilter utilFilter;
     private final OutEntityService outEntityService;
+    private final OrderSubject orderSubject;
 
     @Transactional
     public Page<Order> findAll(OrderFilter filter, String property) {
@@ -54,10 +57,6 @@ public class OrderService {
     @Transactional
     public Order findById(Long id) {
         return orderRepository.getOne(id);
-    }
-
-    public OrderStatus findOrderStatusById(Long id) {
-        return orderStatusRepository.findById(Short.valueOf(String.valueOf(id))).orElseThrow(() -> new NotFoundException("The OrderStatus with id=" + id + " is not found!"));
     }
 
     public OrderStatus findOrderStatusByTitle(String title) {
@@ -92,45 +91,24 @@ public class OrderService {
 
     @Transactional
     public Order saveNewOrder(SystemOrder systemOrder) {
-        //создаем черновик заказа
         Order order = createNewDraftOrUpdateOrder(systemOrder);
-        //сохраняем черновик заказа, чтобы получить orderId
         orderRepository.save(order);
-        //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
         order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
-        //создаем новый объект доставки
         Delivery delivery = createDelivery(systemOrder.getSystemDelivery(), order);
-        //сохраняем объект доставка в БД
         deliveryService.save(delivery);
-        //записываем в заказ обновленный объект доставки
         order.setDelivery(delivery);
+        orderSubject.requestToSendMessage(order, TextTemplates.NEW_ORDER_CREATED);
         return orderRepository.save(order);
     }
 
     @Transactional
-    public Order updateOrderStatus(SystemOrder systemOrder, OrderStatus newOrderStatus) {
-        //получаем экземпляр заказа из БД
-        Order order = orderRepository.getOne(systemOrder.getId());
-        //находим в базе новый статус заказа
-        OrderStatus orderStatus = findOrderStatusByTitle(newOrderStatus.getTitle());
-        //записываем в заказ обновленный объект статуса
+    public Order updateOrderStatus(Long orderId, String titleOfNewOrderStatus) {
+        Order order = findByIdOptional(orderId);
+        OrderStatus orderStatus = findOrderStatusByTitle(titleOfNewOrderStatus);
         order.setOrderStatus(orderStatus);
-        //сохраняем обновленный заказ в БД
         orderRepository.save(order);
+        orderSubject.requestToSendMessage(order, TextTemplates.ORDER_STATUS_CHANGED);
         return order;
-    }
-
-    @Transactional
-    public boolean updateOrderItems(SystemOrder systemOrder) {
-        //получаем экземпляр заказа из БД
-        Order order = orderRepository.getOne(systemOrder.getId());
-        //удаляем предыдущий список товаров заказа
-        orderItemRepository.deleteOrderItemsByOrderId(order.getId());
-        //сохраняем в БД и записываем в заказ обновленные объекты элементов заказа
-        order.setOrderItems(saveOrderItems(systemOrder.getOrderItems(), order));
-        //сохраняем обновленный заказ в БД
-        orderRepository.save(order);
-        return true;
     }
 
     @Transactional
@@ -170,7 +148,7 @@ public class OrderService {
         if(systemOrder.getId() == null) {
             order = new Order();
             order.setOrderStatus(orderStatusRepository
-                    .getOrderStatusByTitleEquals("Created"));
+                    .getOrderStatusByTitleEquals(OrderStatus.Statuses.Created.name()));
         } else {
             order = orderRepository.getOne(systemOrder.getId());
             order.setOrderStatus(systemOrder.getOrderStatus());
@@ -189,14 +167,7 @@ public class OrderService {
         orderRepository.deleteById(orderId);
     }
 
-    @Transactional
-    public void cancelOrder(Long orderId) {
-        //просто меняем статус на "Canceled" и оставляем заказ в списке
-        Order order = findById(orderId);
-        order.setOrderStatus(findOrderStatusByTitle("Canceled"));
-        orderRepository.save(order);
-    }
-
+    //TODO заменить на comparator
     public boolean isOrderSavedCorrectly(Order order, SystemOrder systemOrder) {
         //простая проверка сохраненного заказа
         return order.getOrderItems().size() == systemOrder.getOrderItems().size() &&
@@ -216,39 +187,13 @@ public class OrderService {
         return orderStatusRepository.findAll();
     }
 
-    private void recalculate(Order order) {
-        BigDecimal totalItemsCost = BigDecimal.ZERO;
-        if(order.getOrderItems() != null && !order.getOrderItems().isEmpty()) {
-            for (OrderItem o : order.getOrderItems()) {
-                recalculateItemCosts(o);
-                totalItemsCost = totalItemsCost.add(o.getItemCosts());
-            }
-        }
-        order.setTotalItemsCosts(totalItemsCost);
-        order.setTotalCosts(totalItemsCost.add(order.getDelivery().getDeliveryCost()));
-    }
-
-    private void recalculateItemCosts(OrderItem orderItem) {
-        orderItem.setItemCosts(BigDecimal.ZERO);
-        orderItem.setItemCosts(orderItem.getItemPrice()
-                .multiply(BigDecimal.valueOf(orderItem.getQuantity())));
-    }
-
-    public OrderItem findOrderItemById(Long id) {
-        return orderItemRepository.findById(id).orElseThrow(() -> new NotFoundException("The OrderItem with id=" + id + " is not found!"));
-    }
-
-    public OrderItem findOrderItemByProdId(List<OrderItem> orderItems, Long prodId) {
-        OrderItem orderItem = null;
-        for (OrderItem o : orderItems) {
-            if(o.getProduct().getId().equals(prodId)) {
-                orderItem = o;
-            }
-        }
-        return orderItem;
-    }
-
-    public OutEntity convertEventToOutEntity(Order order) {
+    public OutEntity convertOrderToOutEntity(Order order) {
         return outEntityService.convertEntityToOutEntity(order);
+    }
+
+    public Order changeOrderStatus(Long orderId, String newValue) {
+        Order order = findByIdOptional(orderId);
+        order.setOrderStatus(findOrderStatusByTitle(newValue));
+        return order;
     }
 }

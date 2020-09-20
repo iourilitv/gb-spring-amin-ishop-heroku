@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @Setter
 public class OrderStatus extends AbstractEntity {
     public enum Fields {id, title, description}
+    public enum Statuses {Created, Canceled}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

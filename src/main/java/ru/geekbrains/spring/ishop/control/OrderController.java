@@ -1,17 +1,15 @@
 package ru.geekbrains.spring.ishop.control;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.geekbrains.spring.ishop.entity.*;
-import ru.geekbrains.spring.ishop.informing.subjects.OrderSubject;
 import ru.geekbrains.spring.ishop.service.CategoryService;
 import ru.geekbrains.spring.ishop.service.OrderService;
 import ru.geekbrains.spring.ishop.service.ShoppingCartService;
-import ru.geekbrains.spring.ishop.informing.TextTemplates;
 import ru.geekbrains.spring.ishop.utils.SystemOrder;
 import ru.geekbrains.spring.ishop.utils.filters.OrderFilter;
 import ru.geekbrains.spring.ishop.utils.ShoppingCart;
@@ -22,21 +20,12 @@ import java.util.Map;
 
 @Component
 @RequestMapping("/profile/order")
+@RequiredArgsConstructor
 public class OrderController {
     private final CategoryService categoryService;
     private final ShoppingCartService cartService;
     private final OrderService orderService;
     private final OrderFilter orderFilter;
-    private final OrderSubject orderSubject;
-
-    @Autowired
-    public OrderController(CategoryService categoryService, ShoppingCartService cartService, OrderService orderService, OrderFilter orderFilter, OrderSubject orderSubject) {
-        this.categoryService = categoryService;
-        this.cartService = cartService;
-        this.orderService = orderService;
-        this.orderFilter = orderFilter;
-        this.orderSubject = orderSubject;
-    }
 
     @GetMapping("/all")
     public String allOrders(@RequestParam Map<String, String> params,
@@ -88,8 +77,6 @@ public class OrderController {
         if(order != null && orderService.isOrderSavedCorrectly(order, systemOrder)) {
             cartService.getClearedCartForSession(session);
             session.removeAttribute("order");
-            //send email to the user
-            orderSubject.requestToSendMessage(order, TextTemplates.NEW_ORDER_CREATED);
             return new RedirectView("/profile/order/all");
         }
         return new RedirectView("/profile/order/rollBack");

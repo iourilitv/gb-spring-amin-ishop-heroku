@@ -1,7 +1,7 @@
 package ru.geekbrains.spring.ishop.informing.observers;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.ActionType;
 import ru.geekbrains.spring.ishop.entity.Event;
@@ -13,14 +13,10 @@ import ru.geekbrains.spring.ishop.service.EventService;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class EventObserver implements IObserver {
-    private EventService eventService;
-
-    @Autowired
-    public void setEventService(EventService eventService) {
-        this.eventService = eventService;
-    }
+    private final EventService eventService;
 
     @Override
     public void update(AbstractSubject subject, Object arg) {
