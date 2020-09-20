@@ -168,10 +168,10 @@ GET http://localhost:8080/api/v1/event/1/eventId
 
 ###
 
-PUT http://localhost:8080/api/v1/event/1/eventId/serverAcceptedAt
-Content-Type: application/json
+PUT http://localhost:8080/api/v1/event/2/eventId/serverAcceptedAt/string
 
-"2020-09-04T06:24:32.773"
+2020-09-20T01:24:32.773
+
 ###
 #
 

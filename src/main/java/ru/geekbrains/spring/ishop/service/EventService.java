@@ -57,6 +57,12 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    public Event updateServerAcceptedAtFieldOfEvent(Long eventId, String newValue) {
+        Event event = findById(eventId);
+        event.setServerAcceptedAt(LocalDateTime.parse(newValue));
+        return save(event);
+    }
+
     //TODO For Studding and Testing only
     public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
         Event event = (Event) outEntityService.recognizeEntityFromOutEntityJsonString(outEntityJson);

@@ -10,7 +10,6 @@ import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.service.EventService;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/event")
@@ -31,14 +30,13 @@ public class EventResource extends AbstractResource {
                 .body(eventService.convertEventToOutEntity(eventService.findFirstByServerAcceptedAtIsNull()));
     }
 
-    @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt")
+    @PutMapping(value = "/{eventId}/eventId/serverAcceptedAt/string")
     public ResponseEntity<OutEntity> updateServerAcceptedAtFieldOfEventOutEntity(
-            @RequestBody @Valid LocalDateTime serverAcceptedAt,
+            @RequestBody @Valid String serverAcceptedAt,
             @PathVariable("eventId") Long eventId) {
-        Event oldEvent = eventService.findById(eventId);
-        oldEvent.setServerAcceptedAt(serverAcceptedAt);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(eventService.convertEventToOutEntity(eventService.save(oldEvent)));
+                .body(eventService.convertEventToOutEntity(
+                        eventService.updateServerAcceptedAtFieldOfEvent(eventId, serverAcceptedAt)));
     }
 
     //TODO For Studding and Testing only
