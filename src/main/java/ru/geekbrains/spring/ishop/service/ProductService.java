@@ -1,6 +1,6 @@
 package ru.geekbrains.spring.ishop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +11,8 @@ import ru.geekbrains.spring.ishop.entity.ProductImage;
 import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.ProductImageRepository;
 import ru.geekbrains.spring.ishop.repository.ProductRepository;
+import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
@@ -18,25 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    private ProductRepository productRepository;
-    private ProductImageRepository productImageRepository;
-    private UtilFilter utilFilter;
-
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    @Autowired
-    public void setProductImageRepository(ProductImageRepository productImageRepository) {
-        this.productImageRepository = productImageRepository;
-    }
-
-    @Autowired
-    public void setUtilFilter(UtilFilter utilFilter) {
-        this.utilFilter = utilFilter;
-    }
+    private final OutEntityService outEntityService;
+    private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
+    private final UtilFilter utilFilter;
 
     @Transactional(readOnly = true)
     public List<Product> getAll() {
@@ -87,4 +76,9 @@ public class ProductService {
     public void deleteAllProductImagesByProduct(Product product) {
         productImageRepository.deleteAllByProduct(product);
     }
+
+    public OutEntity convertProductToOutEntity(Product product) {
+        return outEntityService.convertEntityToOutEntity(product);
+    }
+
 }
