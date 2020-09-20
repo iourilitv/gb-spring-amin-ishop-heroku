@@ -158,7 +158,7 @@ PUT http://localhost:8080/api/v1/order/21/orderId/changeOrderStatus/string
 Accepted to work
 
 ###
-# getting a order by id - Works correctly!
+# updatting a orderStatuse by title - Works correctly!
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
 #  "entityType": "Order",

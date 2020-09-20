@@ -30,17 +30,17 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId
 # getting a order by id - Works correctly!
 #{
 #  "store": "gb-spring-amin-ishop-heroku",
-#  "entityClassSimpleName": "Order",
-#  "body": {
+#  "entityType": "Order",
+#  "entityFields": {
 #    "delivery": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entityClassSimpleName": "Delivery",
-#      "body": {
+#      "entityType": "Delivery",
+#      "entityFields": {
 #        "phoneNumber": "+79991234567",
 #        "deliveryAddress": {
 #          "store": "gb-spring-amin-ishop-heroku",
-#          "entityClassSimpleName": "Address",
-#          "body": {
+#          "entityType": "Address",
+#          "entityFields": {
 #            "country": "USA",
 #            "address": "18a Diagon Alley",
 #            "city": "New York",
@@ -58,26 +58,26 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId
 #    "totalCosts": 2962.00,
 #    "orderStatus": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entityClassSimpleName": "OrderStatus",
-#      "body": {
-#        "description": "Создан: Заказ сформирован пользователем и сохранен в списке заказов",
-#        "id": 1,
-#        "title": "Created"
+#      "entityType": "OrderStatus",
+#      "entityFields": {
+#        "description": "Принят в работу: Заказ обрабатывается",
+#        "id": 2,
+#        "title": "Accepted to work"
 #      }
 #    },
 #    "totalItemsCosts": 2862.00,
 #    "id": 1,
 #    "user": {
 #      "store": "gb-spring-amin-ishop-heroku",
-#      "entityClassSimpleName": "User",
-#      "body": {
+#      "entityType": "User",
+#      "entityFields": {
 #        "firstName": "superadmin first_name",
 #        "lastName": "superadmin last_name",
 #        "phoneNumber": "+79991234567",
 #        "deliveryAddress": {
 #          "store": "gb-spring-amin-ishop-heroku",
-#          "entityClassSimpleName": "Address",
-#          "body": {
+#          "entityType": "Address",
+#          "entityFields": {
 #            "country": "USA",
 #            "address": "18a Diagon Alley",
 #            "city": "New York",
@@ -92,25 +92,25 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId
 #    "orderItems": [
 #      {
 #        "store": "gb-spring-amin-ishop-heroku",
-#        "entityClassSimpleName": "OrderItem",
-#        "body": {
+#        "entityType": "OrderItem",
+#        "entityFields": {
 #          "itemCosts": 904.00,
 #          "product": {
 #            "store": "gb-spring-amin-ishop-heroku",
-#            "entityClassSimpleName": "Product",
-#            "body": {
-#              "price": 904.00,
+#            "entityType": "Product",
+#            "entityFields": {
 #              "id": 10,
-#              "shortDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
+#              "shortDescription": 904.00,
 #              "category": {
 #                "store": "gb-spring-amin-ishop-heroku",
-#                "entityClassSimpleName": "Category",
-#                "body": {
+#                "entityType": "Category",
+#                "entityFields": {
 #                  "id": 7,
 #                  "title": "Pets"
 #                }
 #              },
 #              "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
+#              "fullDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
 #              "vendorCode": "00000010"
 #            }
 #          },
@@ -122,25 +122,25 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId
 #      },
 #      {
 #        "store": "gb-spring-amin-ishop-heroku",
-#        "entityClassSimpleName": "OrderItem",
-#        "body": {
+#        "entityType": "OrderItem",
+#        "entityFields": {
 #          "itemCosts": 1958.00,
 #          "product": {
 #            "store": "gb-spring-amin-ishop-heroku",
-#            "entityClassSimpleName": "Product",
-#            "body": {
-#              "price": 979.00,
+#            "entityType": "Product",
+#            "entityFields": {
 #              "id": 9,
-#              "shortDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#              "shortDescription": 979.00,
 #              "category": {
 #                "store": "gb-spring-amin-ishop-heroku",
-#                "entityClassSimpleName": "Category",
-#                "body": {
+#                "entityType": "Category",
+#                "entityFields": {
 #                  "id": 6,
 #                  "title": "Книги"
 #                }
 #              },
 #              "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#              "fullDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
 #              "vendorCode": "00000009"
 #            }
 #          },
@@ -151,6 +151,149 @@ GET https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId
 #        }
 #      }
 #    ],
-#    "updatedAt": "2020-09-01T16:18:17"
+#    "updatedAt": "2020-09-05T13:51:32"
 #  }
 #}
+
+###
+# returns ResponseEntity<OutEntity>
+PUT https://dev-amin-ishop-heroku.herokuapp.com/api/v1/order/1/orderId/changeOrderStatus/string
+
+Transferred to delivery
+
+###
+#Accepted to work
+
+###
+# updatting a orderStatuse by title - Works correctly!
+#{
+#  "store": "gb-spring-amin-ishop-heroku",
+#  "entityType": "Order",
+#  "entityFields": {
+#    "delivery": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "Delivery",
+#      "entityFields": {
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityType": "Address",
+#          "entityFields": {
+#            "country": "USA",
+#            "address": "18a Diagon Alley",
+#            "city": "New York",
+#            "id": 1
+#          }
+#        },
+#        "id": 1,
+#        "deliveryExpectedAt": "2020-09-01T10:00:00",
+#        "order": 1,
+#        "deliveryCost": 100.00,
+#        "deliveredAt": null
+#      }
+#    },
+#    "createdAt": "2020-09-01T16:18:17",
+#    "totalCosts": 2962.00,
+#    "orderStatus": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "OrderStatus",
+#      "entityFields": {
+#        "description": "Передан в доставку: Заказ скомплектован и ждет доставки",
+#        "id": 3,
+#        "title": "Transferred to delivery"
+#      }
+#    },
+#    "totalItemsCosts": 2862.00,
+#    "id": 1,
+#    "user": {
+#      "store": "gb-spring-amin-ishop-heroku",
+#      "entityType": "User",
+#      "entityFields": {
+#        "firstName": "superadmin first_name",
+#        "lastName": "superadmin last_name",
+#        "phoneNumber": "+79991234567",
+#        "deliveryAddress": {
+#          "store": "gb-spring-amin-ishop-heroku",
+#          "entityType": "Address",
+#          "entityFields": {
+#            "country": "USA",
+#            "address": "18a Diagon Alley",
+#            "city": "New York",
+#            "id": 1
+#          }
+#        },
+#        "id": 1,
+#        "userName": "superadmin",
+#        "email": "superadmin@ mail.com"
+#      }
+#    },
+#    "orderItems": [
+#      {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entityType": "OrderItem",
+#        "entityFields": {
+#          "itemCosts": 904.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityType": "Product",
+#            "entityFields": {
+#              "id": 10,
+#              "shortDescription": 904.00,
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityType": "Category",
+#                "entityFields": {
+#                  "id": 7,
+#                  "title": "Pets"
+#                }
+#              },
+#              "title": "Зверье Моё / Когтеточка-столбик \"Зверьё Моё\" с полкой, джут, крем-брюле, 40*40*60 см",
+#              "fullDescription": "Многофункциональный комплекс Зверье Мое: поточить, поиграть, полежать. Преимущества: - Джут - натуральное текстильное волокно, изготавливаемое из растений одноимённого рода; - серхняя полочка с бортиком, обтянутая премиальным мехом, подарит чудесные минуты отдыха; - пропитка - это наше собственное ноу-хау, неуловимое для человека и притягательное для кошки; - подвесная игрушка не оставит равнодушным питомца; в связи с отзывами о том, что шарик быстро отрывается, подвесную игрушку сделали из джута; - сборка за 20 секунд без инструментов и дополнительных деталей. Когтеточка-столбик \"Зверье Мое\" поможет сохранить мебель и ковры в доме в целостности. Во время царапания кошка выполняет сразу три жизненно важных процесса: стачивает отросшие когти, одновременно затачивая их, метит территорию и выполняет гимнастику тела.",
+#              "vendorCode": "00000010"
+#            }
+#          },
+#          "quantity": 1,
+#          "itemPrice": 904.00,
+#          "id": 1,
+#          "order": 1
+#        }
+#      },
+#      {
+#        "store": "gb-spring-amin-ishop-heroku",
+#        "entityType": "OrderItem",
+#        "entityFields": {
+#          "itemCosts": 1958.00,
+#          "product": {
+#            "store": "gb-spring-amin-ishop-heroku",
+#            "entityType": "Product",
+#            "entityFields": {
+#              "id": 9,
+#              "shortDescription": 979.00,
+#              "category": {
+#                "store": "gb-spring-amin-ishop-heroku",
+#                "entityType": "Category",
+#                "entityFields": {
+#                  "id": 6,
+#                  "title": "Книги"
+#                }
+#              },
+#              "title": "Филипок и Ко / Скорочтение для детей от 6 до 9 лет.",
+#              "fullDescription": "\"Скорочтение. Как научить ребенка быстро читать\" - переработанное и усовершенствованное переиздание успешного бестселлера по методике скорочтения Ахмадуллина, разделенное на две книги по возрасту для более точечной проработки навыков. Шамиль Ахмадуллин - психолог-педагог, физик, PhD, разработчик более 40 методик эффективного обучения детей. Основатель школ скорочтения и развития памяти у детей. За 18 дней 20-30 минутных занятий Ваш ребенок научится читать в 2 раза быстрее, лучше понимать, запоминать и пересказывать прочитанное. А главное - вы заложите в ребенка один из самых важных навыков 21 века - быстрое усвоение любой текстовой информации. Это даст ребенку огромные преимущества во взрослой жизни! Книга-тренинг для младших школьников: 18-дневный тренинг; более 100 заданий; улучшение внимания; повысится успеваемость в школе; ребенок научится пересказывать; тренировка памяти; формирование навыка быстрого чтения; занятия по 30 минут в день.",
+#              "vendorCode": "00000009"
+#            }
+#          },
+#          "quantity": 2,
+#          "itemPrice": 979.00,
+#          "id": 2,
+#          "order": 1
+#        }
+#      }
+#    ],
+#    "updatedAt": "2020-09-05T13:51:32"
+#  }
+#}
+#
+#Response code: 200; Time: 370ms; Content length: 5404 bytes
+#
+#Cookies are preserved between requests:
+#> D:/GeekBrains/_MyJavaProjectsAndSamples/Java_Spring/gb.lys/gb-spring-amin-ishop-heroku/.idea/httpRequests/http-client.cookies
