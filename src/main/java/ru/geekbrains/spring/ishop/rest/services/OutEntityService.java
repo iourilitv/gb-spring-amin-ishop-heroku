@@ -10,8 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
-import ru.geekbrains.spring.ishop.rest.converters.DeserializerFabric;
-import ru.geekbrains.spring.ishop.rest.converters.SerializerFabric;
+import ru.geekbrains.spring.ishop.rest.converters.DeserializerFactory;
+import ru.geekbrains.spring.ishop.rest.converters.SerializerFactory;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.*;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.*;
 import ru.geekbrains.spring.ishop.rest.converters.deserializers.interfaces.IEntityDeserializer;
@@ -30,9 +30,9 @@ public class OutEntityService {
     public enum Converters {deserializer, serializer}
 
     private final OutEntityDeserializer outEntityDeserializer;
-    private final DeserializerFabric deserializerFabric;
+    private final DeserializerFactory deserializerFactory;
     private final OutEntitySerializer outEntitySerializer;
-    private final SerializerFabric serializerFabric;
+    private final SerializerFactory serializerFactory;
     private final ApplicationContext context;
 
     public OutEntity convertEntityToOutEntity(AbstractEntity entity) {
@@ -66,8 +66,8 @@ public class OutEntityService {
                 }
             }
         }
-        deserializerFabric.initDeserializerFabric(deserializers);
-        outEntityDeserializer.setDeserializerFabric(deserializerFabric);
+        deserializerFactory.initDeserializerFactory(deserializers);
+        outEntityDeserializer.setDeserializerFactory(deserializerFactory);
     }
 
     @PostConstruct
@@ -84,8 +84,8 @@ public class OutEntityService {
                 }
             }
         }
-        serializerFabric.initSerializerFabric(serializers);
-        outEntitySerializer.setSerializerFabric(serializerFabric);
+        serializerFactory.initSerializerFactory(serializers);
+        outEntitySerializer.setSerializerFactory(serializerFactory);
     }
 
 }

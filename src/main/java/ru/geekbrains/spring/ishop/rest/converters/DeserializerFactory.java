@@ -8,10 +8,10 @@ import java.util.Map;
 
 @Service
 @Getter
-public class DeserializerFabric {
+public class DeserializerFactory {
     private Map<String, IEntityDeserializer> deserializers;
 
-    public void initDeserializerFabric(Map<String, IEntityDeserializer> deserializers) {
+    public void initDeserializerFactory(Map<String, IEntityDeserializer> deserializers) {
         this.deserializers = deserializers;
     }
 

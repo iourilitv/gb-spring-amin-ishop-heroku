@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.AbstractEntity;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
-import ru.geekbrains.spring.ishop.rest.converters.DeserializerFabric;
+import ru.geekbrains.spring.ishop.rest.converters.DeserializerFactory;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
@@ -17,10 +17,10 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
-    private DeserializerFabric deserializerFabric;
+    private DeserializerFactory deserializerFactory;
 
-    public void setDeserializerFabric(DeserializerFabric deserializerFabric) {
-        this.deserializerFabric = deserializerFabric;
+    public void setDeserializerFactory(DeserializerFactory deserializerFactory) {
+        this.deserializerFactory = deserializerFactory;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
 
     public AbstractEntity deserializeEntityFromOutEntityJson(String entityType, JsonElement jsonElement) {
 
-        log.info("*** deserializeEntityFromOutEntityJson().deserializerFabric.getDeserializer(entityType): " + deserializerFabric.getDeserializer(entityType));
+        log.info("*** deserializeEntityFromOutEntityJson().deserializerFabric.getDeserializer(entityType): " + deserializerFactory.getDeserializer(entityType));
 
         AbstractEntity entity = null;
         if(isOutEntity(jsonElement)) {
@@ -52,7 +52,7 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
         EntityTypes[] entityTypes = EntityTypes.values();
         for (EntityTypes type : entityTypes) {
             if (entityType.equals(type.name())) {
-                entity = deserializerFabric.getDeserializer(entityType).recognize(jsonElement);
+                entity = deserializerFactory.getDeserializer(entityType).recognize(jsonElement);
             }
         }
         String finalEntityType = entityType;

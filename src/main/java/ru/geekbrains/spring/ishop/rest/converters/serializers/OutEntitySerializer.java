@@ -3,7 +3,7 @@ package ru.geekbrains.spring.ishop.rest.converters.serializers;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.OutEntitySerializeException;
-import ru.geekbrains.spring.ishop.rest.converters.SerializerFabric;
+import ru.geekbrains.spring.ishop.rest.converters.SerializerFactory;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
@@ -12,10 +12,10 @@ import java.util.*;
 
 @Service
 public class OutEntitySerializer {
-    private SerializerFabric serializerFabric;
+    private SerializerFactory serializerFactory;
 
-    public void setSerializerFabric(SerializerFabric serializerFabric) {
-        this.serializerFabric = serializerFabric;
+    public void setSerializerFactory(SerializerFactory serializerFactory) {
+        this.serializerFactory = serializerFactory;
     }
 
     public OutEntity convertEntityToOutEntity(AbstractEntity entity) {
@@ -29,7 +29,7 @@ public class OutEntitySerializer {
         EntityTypes[] entityTypes = EntityTypes.values();
         for (EntityTypes type : entityTypes) {
             if (entityType.equals(type.name())) {
-                IEntitySerializer serializer = serializerFabric.getSerializer(entityType);
+                IEntitySerializer serializer = serializerFactory.getSerializer(entityType);
                 if(serializer != null) {
                     serializer.fillEntityFields(entity, entityFields);
                 } else {
