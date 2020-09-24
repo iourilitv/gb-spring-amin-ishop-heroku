@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Slf4j
 public class Event extends AbstractEntity {
-    public static Event nullObject = initNullObject();
+    public static Event emptyObject = initEmptyObject();
     public enum Fields {id, actionType, entityType, entityId, createdAt, serverAcceptedAt}
 
     @Id
@@ -47,16 +47,16 @@ public class Event extends AbstractEntity {
     public Event() {
     }
 
-    private static Event initNullObject() {
-        nullObject = Event.builder()
+    private static Event initEmptyObject() {
+        emptyObject = Event.builder()
                 .id(0L)
-                .actionType(ActionType.nullObject)
+                .actionType(ActionType.emptyObject)
                 .entityType("")
                 .entityId(0L)
                 .createdAt(LocalDateTime.now())
                 .serverAcceptedAt(LocalDateTime.now())
                 .build();
-        return nullObject;
+        return emptyObject;
     }
 
     @Override

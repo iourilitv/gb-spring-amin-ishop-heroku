@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "action_types")
 public class ActionType extends AbstractEntity {
-    public static ActionType nullObject = initNullObject();
+    public static ActionType emptyObject = initEmptyObject();
     public enum Fields {id, title, description, entityType}
     public enum Titles {CREATED, STATUS_CHANGED, LOGGED_ID, LOGGED_OUT, ADDED_TO_CART, REMOVED_FROM_CART}
 
@@ -39,14 +39,14 @@ public class ActionType extends AbstractEntity {
     public ActionType() {
     }
 
-    private static ActionType initNullObject() {
-        nullObject = ActionType.builder()
+    private static ActionType initEmptyObject() {
+        emptyObject = ActionType.builder()
                 .id((short)0)
                 .title("")
                 .description("")
                 .entityType("")
                 .build();
-        return nullObject;
+        return emptyObject;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class EventService {
 
     public Event findFirstByServerAcceptedAtIsNull() {
         return eventRepository.findFirstByServerAcceptedAtIsNull()
-                .orElse(Event.nullObject);
+                .orElse(Event.emptyObject);
     }
 
     public ActionType findActionTypeByTitle(String actionTypeTitle) {
