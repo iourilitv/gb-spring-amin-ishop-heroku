@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 
 @Service
 public class ImageSaverService {
+    //TODO Почему amin?? может из-за этого докер не видит? Вынести в property файл
+    // Проверить загрузку картинок
     private static final String UPLOADED_FOLDER = "./images/amin/";
 
     public String saveFile(MultipartFile file, String subDirName) {

@@ -23,13 +23,6 @@
 
             <li><a href="#">Pages <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown">
-<!--                    <li><a href="./categories-list.html">Categories</a></li>-->
-<!--                    <li><a href="./categories-grid.html">Categories grid</a></li>-->
-<!--                    <li><a href="./typography.html">Typography</a></li>-->
-<!--                    <li><a href="./details-post-default.html">Post default</a></li>-->
-<!--                    <li><a href="./details-post-gallery.html">Post gallery</a></li>-->
-<!--                    <li><a href="./details-post-review.html">Post review</a></li>-->
-<!--                    <li><a href="./contact.html">Contact</a></li>-->
                     <li><a href="#">Categories</a></li>
                     <li><a href="#">Categories grid</a></li>
                     <li><a href="#">Typography</a></li>
@@ -180,8 +173,8 @@
                             <span>Catalog <i class="fa fa-angle-down"></i></span></a>
                         <div class="megamenu-wrapper">
                             <ul class="mw-nav">
+                                <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
                                 <li th:each="category : ${categories}">
-                                    <!--/*@thymesVar id="category" type="ru.geekbrains.spring.ishop.entity.Category"*/-->
                                     <a th:href="@{'/catalog/all?category=' + ${category.id} + ${filterDef}}">
                                         <span th:text="${category.title}"></span>
                                     </a>
@@ -197,15 +190,15 @@
                         </a>
                         <ul class="dropdown">
                             <li th:class="${activePage == 'How to pay' ? 'mega-menu active' : 'mega-menu'}">
-                                <a th:href="@{/contacts/how_to_pay}">How to pay</a>
+                                <a href="#">How to pay</a>
                             </li>
 
                             <li th:class="${activePage == 'Delivery' ? 'mega-menu active' : 'mega-menu'}">
-                                <a th:href="@{/contacts/delivery}">Delivery</a>
+                                <a href="#">Delivery</a>
                             </li>
 
                             <li th:class="${activePage == 'Contact' ? 'mega-menu active' : 'mega-menu'}">
-                                <a th:href="@{/contacts/contact}">Contact</a>
+                                <a href="#">Contact</a>
                             </li>
                         </ul>
                     </li>

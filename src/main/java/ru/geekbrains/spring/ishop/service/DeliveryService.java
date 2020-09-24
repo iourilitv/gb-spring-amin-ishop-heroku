@@ -1,9 +1,6 @@
 package ru.geekbrains.spring.ishop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +10,6 @@ import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.DeliveryRepository;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
-import ru.geekbrains.spring.ishop.utils.filters.DeliveryFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import javax.servlet.http.HttpSession;
@@ -33,13 +29,6 @@ public class DeliveryService {
 
     public List<Delivery> findAll(Sort sort) {
         return deliveryRepository.findAll(sort);
-    }
-
-    public Page<Delivery> findAll(DeliveryFilter filter, String property) {
-        //инициируем объект пагинации с сортировкой
-        Pageable pageRequest = PageRequest.of(utilFilter.getPageIndex(),
-                utilFilter.getLimit(), utilFilter.getDirection(), property);
-        return deliveryRepository.findAll(filter.getSpec(), pageRequest);
     }
 
     //TODO for REST only temporarily

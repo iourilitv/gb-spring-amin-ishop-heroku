@@ -1,14 +1,10 @@
 package ru.geekbrains.spring.ishop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.Address;
 import ru.geekbrains.spring.ishop.repository.AddressRepository;
-import ru.geekbrains.spring.ishop.utils.filters.AddressFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import java.util.List;
@@ -34,13 +30,6 @@ public class AddressService {
 
     public List<Address> findAll(Sort sort) {
         return addressRepository.findAll(sort);
-    }
-
-    public Page<Address> findAll(AddressFilter filter, String property) {
-        //инициируем объект пагинации с сортировкой
-        Pageable pageRequest = PageRequest.of(utilFilter.getPageIndex(),
-                utilFilter.getLimit(), utilFilter.getDirection(), property);
-        return addressRepository.findAll(filter.getSpec(), pageRequest);
     }
 
     public Address findById(Long id) {
