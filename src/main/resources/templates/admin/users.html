@@ -166,7 +166,8 @@
 
                     <td th:text="${user.email}"></td>
 
-                    <td th:text="${user.deliveryAddress}"></td>
+                    <td th:text="${user.deliveryAddress.country + ', ' + user.deliveryAddress.city
+                                    + ', ' + user.deliveryAddress.address}"></td>
 
                     <td>
                         <div th:if="${user.roles != null}"  th:each="role : ${user.roles}"
