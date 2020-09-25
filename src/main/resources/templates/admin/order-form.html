@@ -206,7 +206,12 @@
                             </label></td>
 
                             <td><label style="margin-bottom: 0;">
-                                <input type="text" th:field="*{deliveryAddress}" th:hidden="true" th:text="*{deliveryAddress}">
+                                <input type="text" th:field="*{deliveryAddress}" th:hidden="true"
+                                       th:text="*{deliveryAddress.country + ', ' + deliveryAddress.city + ', ' + deliveryAddress.address}">
+                                <!-- //TODO доделать по аналогии с changeOrderStatus() выше -->
+<!--                                <input id="del_deliveryAddress" type="text" th:field="*{deliveryAddress}" th:onchange="'changeDelivery()'"-->
+<!--                                       th:hidden="true" th:text="*{deliveryAddress.country + ', ' + deliveryAddress.city-->
+<!--                                    + ', ' + deliveryAddress.address}">-->
                             </label></td>
 
                             <td><label>
@@ -215,16 +220,24 @@
 
                             <td><label>
                                 <input type="text" th:field="*{deliveryExpectedAt}">
+                                <!-- //TODO доделать по аналогии с changeOrderStatus() выше -->
+<!--                                <input id="del_deliveryExpectedAt" type="text" th:field="*{deliveryExpectedAt}" th:onchange="'changeDelivery()'">-->
                             </label></td>
 
                             <td><label>
                                 <input type="text" th:field="*{deliveredAt}">
+                                <!-- //TODO доделать по аналогии с changeOrderStatus() выше -->
+<!--                                <input id="del_deliveredAt" type="text" th:field="*{deliveredAt}" th:onchange="'changeDelivery()'">-->
                             </label></td>
                         </tr></tbody>
                     </table>
                     <!-- Buttons -->
                     <div class="user_form__buttons__div">
-                        <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+<!--                        <button type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>-->
+                        <!-- //TODO доделать по аналогии с changeOrderStatus() выше -->
+                        <button id="delivery_button" style="visibility: hidden; font-size: 0; margin-bottom: 0; padding: 0 18px 0;"
+                                type="submit" class="catalog__product-card__price btn-subscribe">Save changing</button>
+
                     </div>
                 </form>
                 <!-- Form: Delivery End -->
