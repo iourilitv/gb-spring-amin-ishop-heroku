@@ -13,15 +13,15 @@ import java.nio.file.Paths;
 
 @Service
 public class ImageSaverService {
-    //TODO Почему amin?? может из-за этого докер не видит? Вынести в property файл
-    // Проверить загрузку картинок
-    private static final String UPLOADED_FOLDER = "./images/amin/";
+    //TODO Вынести в property файл?
+    private static final String UPLOADED_FOLDER = "./images/";
 
     public String saveFile(MultipartFile file, String subDirName) {
         if (file.isEmpty()) {
             return "";
         }
         String fileName = Paths.get(subDirName, file.getOriginalFilename()).toString();
+        //TODO заменить try-catch на собственное исключение FileOperationException
         try {
             Path path = Paths.get(UPLOADED_FOLDER, fileName);
             file.transferTo(path);
@@ -31,6 +31,8 @@ public class ImageSaverService {
         return fileName;
     }
 
+    //FIXME Файл не удаляется физически при удалении Product
+    //TODO заменить try-catch на собственное исключение FileOperationException
     public void deleteFile(String pathToFile) {
         try {
             Files.deleteIfExists(Paths.get(UPLOADED_FOLDER, pathToFile));
@@ -41,6 +43,7 @@ public class ImageSaverService {
 
     public MultipartFile getFile(String pathToFile) {
         String pathname = Paths.get(UPLOADED_FOLDER, pathToFile).toString();
+        //TODO заменить try-catch на собственное исключение FileOperationException
         try {
             return new MockMultipartFile(pathToFile,
                     new FileInputStream(new File(pathname)));
