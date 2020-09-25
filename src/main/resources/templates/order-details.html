@@ -149,8 +149,6 @@
                         <tr th:if="${delivery} != null">
                             <td th:text="${delivery.id}"></td>
                             <td th:text="${delivery.phoneNumber}"></td>
-
-<!--                            <td th:text="${delivery.deliveryAddress}"></td>-->
                             <td th:text="${delivery.deliveryAddress.country + ', ' + delivery.deliveryAddress.city
                                            + ', ' + delivery.deliveryAddress.address}"></td>
 
