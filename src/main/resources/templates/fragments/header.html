@@ -213,6 +213,10 @@
                            th:text="${cartItemsQuantity} == null or ${cartItemsQuantity} == 0 ?
                                             'Cart' : 'Cart(' + ${cartItemsQuantity} + ')'"></a>
                     </li>
+                    <!-- About item in top menu -->
+                    <li th:class="${activePage == 'About' ? 'mega-menu active' : 'mega-menu'}">
+                        <a th:href="@{'/about'}"><span th:text="'About '"></span></a>
+                    </li>
                 </ul>
             </div>
         </div>
