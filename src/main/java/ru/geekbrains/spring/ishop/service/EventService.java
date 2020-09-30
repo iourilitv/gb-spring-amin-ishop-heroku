@@ -48,6 +48,11 @@ public class EventService {
                 .orElse(Event.emptyObject);
     }
 
+    public ActionType findActionTypeByTitle(String title) {
+        return actionTypeRepository.getActionTypeByTitleEquals(title)
+                .orElseThrow(() -> new NotFoundException("ActionType with title=" + title + " is not found!"));
+    }
+
     public Event save(Event event) {
         return eventRepository.save(event);
     }
