@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.geekbrains.spring.ishop.service.interfaces.IUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +22,6 @@ import javax.annotation.PostConstruct;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final IUserService userService;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-    private BCryptPasswordEncoder encoder;
-
-    @PostConstruct
-    public void init() {
-        customAuthenticationSuccessHandler.setUserService(userService);
-        userService.setPasswordEncoder(encoder);
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -63,8 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
