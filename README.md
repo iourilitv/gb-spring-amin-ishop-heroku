@@ -25,6 +25,8 @@ No need to install anything to try this app. Just come to
 https://gb-spring-amin-ishop-heroku.herokuapp.com/ 
 and use it like a normal online store.
 
+Login as the default user: superadmin/superadmin, which has all permissions.
+
 Please note that all features available to user after authorisation only.
 For more details of how it works please get in the presentation below.
 
