@@ -1,5 +1,5 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,7 @@
                         <div class="dt-breadcrumb">
                             <div class="dt-bread-option">
                                 <a class="color-white" th:href="@{'/home'}"> Home</a>
-                                <span> Profile</span>
+                                <span> About Project</span>
                             </div>
                         </div>
                     </div>
@@ -50,16 +50,51 @@
                 <div class="col-lg-8 p-0">
                     <div class="details-text">
                         <h4 class="details-h4">About the project</h4>
-                        <div class="dt-last-desc">
-<!--                            <p th:text="${product.shortDescription}"></p>-->
-<!--                            <p th:text="${product.fullDescription}"></p>-->
-                            <p th:text="'какой-то контент из Readme.md'"></p>
-                        </div>
+                        <div class="dt-last-desc white">
+                            <p>This project has been developed within the course:<br>
+                                <b>20200812. GeekBrains. Java team development</b>.</p>
 
-                        <div class="col-lg-12 p-0">
-                            <h4><a href="#">Какая-то ссылка, например на github</a></h4>
-                        </div>
+                            <p>Result: <br>
+                                <b>Online store application that is integrated with CRM by Spring REST API</b>.</p>
 
+                            <h5 style="color: white; padding: 20px 0;">Problems which were solved and technologies used</h5>
+                            <p>Required that:</p>
+                            <ul style="color: white; padding-bottom: 10px">
+                                <li>CRM received all events created at online-stores which could be several</li>
+                                <li>Events generate for a new order creating or changing order status as well</li>
+                                <li>CRM sends back a time of accepting event, updated entities like a new order status etc.</li>
+                            </ul>
+                            <p>Technologies:</p>
+                            <ul style="color: white">
+                                <li>GUI: Java String Boot(Core, MVC, Data, Security), WebSocket, Thymeleaf</li>
+                                <li>Database: MySql</li>
+                                <li>CRM integration: Java String REST API</li>
+                                <li>My own solution - all responses from online-store is an instance of OutEntity object</li>
+                                <li>OutEntity is a template entity just for serializing/deserializing json-object with the recursion using</li>
+                                <li>The recursion using is my own idea in order to make converting process code simple, clearer and
+                                    more flexible for adding new entities to the project</li>
+                            </ul>
+
+                            <h5 style="color: white; padding: 20px 0;">Installation and trying</h5>
+                            <p>No need to install anything to try this app.</p>
+                            <p><a href="https://gb-spring-amin-ishop-heroku.herokuapp.com/" target="_blank">Just come to heroku with this link</a></p>
+                            <p>Then use it like a normal online store.</p>
+                            <p>Please note that all features available to user after authorisation only.
+                                For more details of how it works please get in the presentation below.</p>
+
+                            <h5 style="color: white; padding: 20px 0;">Presentation, code and other links</h5>
+                            <p><a href="https://geekbrains.ru/lessons/75327" target="_blank">About the course</a></p>
+                            <p><a href="https://drive.google.com/file/d/1p0yeu0XdvMrElp9mtxNhsKIyu-NarWG9/view?usp=sharing" target="_blank">MS Powerpoint presentation about the project</a></p>
+                            <p><a href="#" target="_blank">Video presentation</a></p>
+                            <p><a href="https://github.com/iourilitv/gb-spring-amin-ishop-heroku/tree/release" target="_blank">Code of the project is available on github.com</a></p>
+
+                            <h5 style="color: white; padding: 20px 0;">Developer</h5>
+                            <p>Litvinenko Yury.</p>
+                            <p>Professional profile: <b>Java Back-End developer</b>.</p>
+                            <p>telegram: <b>@yuryli</b></p>
+
+                            <h5 style="color: white; padding: 20px 0;">Please be free to contact me about this project or a new one!</h5>
+                        </div>
                     </div>
                 </div>
 
