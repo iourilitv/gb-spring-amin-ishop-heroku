@@ -240,6 +240,22 @@
             <artifactId>gson</artifactId>
         </dependency>
 
+        <!-- 24.1 Added manually to solve the problem of running the DeliveryResourceMockMvcUnitTest -->
+        <!-- javax.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath. -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.9.Final</version>
+        </dependency>
+        <!-- 24.2 Added manually to solve the problem of Email validation during the registration process(see SystemUser): -->
+        <!-- javax.validation.UnexpectedTypeException: HV000030: No validator could be found for constraint 'javax.validation.constraints.Email' validating type 'java.lang.String'. Check configuration for 'email' -->
+        <!-- Attention! Both versions should be 6.0.9.Final -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>6.0.9.Final</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -28,4 +28,12 @@ public class OutEntity {
                 ", entityFields=" + entityFields +
                 '}';
     }
+
+    public String toJsonString() {
+        return "{" +
+                "store=" + store +
+                ", entityType=" + entityType +
+                ", entityFields=" + entityFields +
+                '}';
+    }
 }
