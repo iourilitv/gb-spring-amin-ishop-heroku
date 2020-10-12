@@ -53,12 +53,10 @@ public class OutEntityService {
                 new OutEntityDeserializeException("Something wrong happened during incoming json-object deserialize process!"));
     }
 
-    @PostConstruct
-    private void initDeserializers() {
-        Map<String, IEntityDeserializer> deserializersBeans = context.getBeansOfType(IEntityDeserializer.class);
-        Map<String, IEntityDeserializer> deserializers = new HashMap<>();
-
-        //This was replaced
+//    @PostConstruct
+//    private void initDeserializers() {
+//        Map<String, IEntityDeserializer> deserializersBeans = context.getBeansOfType(IEntityDeserializer.class);
+//        Map<String, IEntityDeserializer> deserializers = new HashMap<>();
 //        Set<String> keys = deserializersBeans.keySet();
 //        for (String key :keys) {
 //            for (EntityTypes type : EntityTypes.values()) {
@@ -69,7 +67,19 @@ public class OutEntityService {
 //                }
 //            }
 //        }
-        //with this
+//        deserializerFactory.initDeserializerFactory(deserializers);
+//        outEntityDeserializer.setDeserializerFactory(deserializerFactory);
+//    }
+//    @PostConstruct
+//    private void initDeserializers() {
+//        deserializerFactory.initDeserializerFactory((Map<String, IEntityDeserializer>) initConverters(Converters.deserializer.name()));
+//        outEntityDeserializer.setDeserializerFactory(deserializerFactory);
+//    }
+    @PostConstruct
+    private void initDeserializers() {
+        Map<String, IEntityDeserializer> deserializersBeans = context.getBeansOfType(IEntityDeserializer.class);
+        Map<String, IEntityDeserializer> deserializers = new HashMap<>();
+
         initConverter(deserializersBeans, deserializers, Converters.deserializer.name());
 
         deserializerFactory.initDeserializerFactory(deserializers);
@@ -80,21 +90,16 @@ public class OutEntityService {
     private void initSerializers() {
         Map<String, IEntitySerializer> serializersBeans = context.getBeansOfType(IEntitySerializer.class);
         Map<String, IEntitySerializer> serializers = new HashMap<>();
-
-        //This was replaced
-//        Set<String> keys = serializersBeans.keySet();
-//        for (String key :keys) {
-//            for (EntityTypes type : EntityTypes.values()) {
-//                String modifiedKey = key.toLowerCase().replace(Converters.serializer.name(), "");
-//                if(modifiedKey.equals(type.name().toLowerCase())) {
-//                    serializers.put(type.name(), serializersBeans.get(key));
-//                    break;
-//                }
-//            }
-//        }
-        //with this
-        initConverter(serializersBeans, serializers, Converters.serializer.name());
-
+        Set<String> keys = serializersBeans.keySet();
+        for (String key :keys) {
+            for (EntityTypes type : EntityTypes.values()) {
+                String modifiedKey = key.toLowerCase().replace(Converters.serializer.name(), "");
+                if(modifiedKey.equals(type.name().toLowerCase())) {
+                    serializers.put(type.name(), serializersBeans.get(key));
+                    break;
+                }
+            }
+        }
         serializerFactory.initSerializerFactory(serializers);
         outEntitySerializer.setSerializerFactory(serializerFactory);
     }
