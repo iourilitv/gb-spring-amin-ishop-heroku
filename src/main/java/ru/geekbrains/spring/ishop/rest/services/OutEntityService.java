@@ -30,6 +30,7 @@ import java.util.*;
 public class OutEntityService {
     public enum Converters {deserializer, serializer}
 
+//    private final OutEntityDeserializer outEntityDeserializer;
     private final OutEntityDeserializer outEntityDeserializer;
     private final DeserializerFactory deserializerFactory;
     private final OutEntitySerializer outEntitySerializer;
