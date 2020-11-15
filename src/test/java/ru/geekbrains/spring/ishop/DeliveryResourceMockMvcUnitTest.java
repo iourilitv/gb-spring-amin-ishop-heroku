@@ -2,6 +2,8 @@ package ru.geekbrains.spring.ishop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,14 +14,19 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.geekbrains.spring.ishop.entity.*;
 import ru.geekbrains.spring.ishop.exception.OutEntitySerializeException;
 import ru.geekbrains.spring.ishop.repository.RoleRepository;
+import ru.geekbrains.spring.ishop.rest.converters.deserializers.OutEntityDeserializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.DeliverySerializer;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.rest.resources.DeliveryResource;
+import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
+import ru.geekbrains.spring.ishop.service.AddressService;
 import ru.geekbrains.spring.ishop.service.DeliveryService;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
@@ -43,15 +50,35 @@ public class DeliveryResourceMockMvcUnitTest {
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private DeliveryResource deliveryResource;
+
     @MockBean
     private DeliveryService deliveryService;
+    @MockBean
+    private OutEntityService outEntityService;
+    @MockBean
+    private AddressService addressService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         objectMapper.registerModule(new JavaTimeModule());
-        deliveryResource = new DeliveryResource(deliveryService);
+        deliveryResource = new DeliveryResource(deliveryService, outEntityService, addressService);
         mockMvc = MockMvcBuilders.standaloneSetup(deliveryResource).alwaysDo(print()).build();
+    }
+
+    @Test
+    public void givenId_whenGetExistingAddress_thenStatus200andOutEntityReturned() throws Exception {
+        Address address = createAddress();
+        OutEntity outEntity = convertEntityToOutEntity(address);
+        Mockito.when(addressService.findById(Mockito.any())).thenReturn(address);
+        Mockito.when(outEntityService.convertEntityToOutEntity(Mockito.any())).thenReturn(outEntity);
+
+        mockMvc.perform(
+                get("/api/v1/order/delivery/1/addressId"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.store").value(outEntity.getStore()))
+                .andExpect(jsonPath("$.entityType").value(outEntity.getEntityType()))
+                .andExpect(jsonPath("$.entityFields").value(outEntity.getEntityFields()));
     }
 
     @Test
@@ -59,7 +86,7 @@ public class DeliveryResourceMockMvcUnitTest {
         Delivery delivery = createDelivery();
         OutEntity outEntity = convertEntityToOutEntity(delivery);
         Mockito.when(deliveryService.findByIdOptional(Mockito.any())).thenReturn(delivery);
-        Mockito.when(deliveryService.convertDeliveryToOutEntity(Mockito.any())).thenReturn(outEntity);
+        Mockito.when(outEntityService.convertEntityToOutEntity(Mockito.any())).thenReturn(outEntity);
 
         mockMvc.perform(
                 get("/api/v1/order/delivery/1/deliveryId"))
@@ -68,8 +95,64 @@ public class DeliveryResourceMockMvcUnitTest {
                 .andExpect(jsonPath("$.entityType").value(outEntity.getEntityType()))
                 .andExpect(jsonPath("$.entityFields").value(outEntity.getEntityFields()));
     }
+//    @Test
+//    public void givenId_whenGetExistingDelivery_thenStatus200andOutEntityReturned() throws Exception {
+//        Delivery delivery = createDelivery();
+//        OutEntity outEntity = convertEntityToOutEntity(delivery);
+//        Mockito.when(deliveryService.findByIdOptional(Mockito.any())).thenReturn(delivery);
+//        Mockito.when(deliveryService.convertDeliveryToOutEntity(Mockito.any())).thenReturn(outEntity);
+//
+//        mockMvc.perform(
+//                get("/api/v1/order/delivery/1/deliveryId"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.store").value(outEntity.getStore()))
+//                .andExpect(jsonPath("$.entityType").value(outEntity.getEntityType()))
+//                .andExpect(jsonPath("$.entityFields").value(outEntity.getEntityFields()));
+//    }
 
-    public OutEntity convertEntityToOutEntity(AbstractEntity entity) {
+    @Test
+    public void giveDeliveryServerAcceptedAt_whenUpdate_thenStatus200andUpdatedOutEntityReturns() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        Delivery delivery = createDelivery();
+        delivery.setDeliveredAt(now);
+        OutEntity outEntity = convertEntityToOutEntity(delivery);
+
+
+        Mockito.when(deliveryService.updateServerAcceptedAt(Mockito.any(Long.class), Mockito.any(String.class))).thenReturn(delivery);
+        Mockito.when(outEntityService.convertEntityToOutEntity(Mockito.any())).thenReturn(outEntity);
+//        Mockito.when(deliveryService.getJsonString(Mockito.any())).thenReturn(outEntity.toJsonString());
+//        Mockito.when(deliveryService.getEntityFields(Mockito.any())).thenReturn(outEntity.getEntityFields());
+//        Mockito.when(deliveryService.getAddressEntityFields(Mockito.any())).thenReturn(addressFields);
+
+        mockMvc.perform(
+                put("/api/v1/order/delivery/1/deliveryId/deliveredAt/string")
+                        .content(now.toString())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.store").value(outEntity.getStore()))
+                .andExpect(jsonPath("$.entityType").value(outEntity.getEntityType()))
+                .andExpect(jsonPath("$.entityFields").value(outEntity.getEntityFields()));
+    }
+//    @Test
+//    public void giveDeliveryServerAcceptedAt_whenUpdate_thenStatus200andUpdatedOutEntityReturns() throws Exception {
+//        LocalDateTime now = LocalDateTime.now();
+//        Delivery delivery = createDelivery();
+//        delivery.setDeliveredAt(now);
+//        OutEntity outEntity = convertEntityToOutEntity(delivery);
+//        Mockito.when(deliveryService.updateServerAcceptedAt(Mockito.any(Long.class), Mockito.any(String.class))).thenReturn(delivery);
+//        Mockito.when(deliveryService.convertDeliveryToOutEntity(Mockito.any())).thenReturn(outEntity);
+//
+//        mockMvc.perform(
+//                put("/api/v1/order/delivery/1/deliveryId/deliveredAt/string")
+//                        .content(now.toString())
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.store").value(outEntity.getStore()))
+//                .andExpect(jsonPath("$.entityType").value(outEntity.getEntityType()))
+//                .andExpect(jsonPath("$.entityFields").value(outEntity.getEntityFields()));
+//    }
+
+    private OutEntity convertEntityToOutEntity(AbstractEntity entity) {
         Map<String, Object> entityFields = new HashMap<>();
         String entityType = "";
 
@@ -153,26 +236,6 @@ public class DeliveryResourceMockMvcUnitTest {
 //    private Address createAddress() {
 //        return Address.builder().id(3L).country("Russia").city("Королев МО").address("Секина 99, кв.99").build();
 //    }
-
-    @Test
-    public void giveDeliveryServerAcceptedAt_whenUpdate_thenStatus200andUpdatedOutEntityReturns() throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        Delivery delivery = createDelivery();
-        delivery.setDeliveredAt(now);
-        OutEntity outEntity = convertEntityToOutEntity(delivery);
-        Mockito.when(deliveryService.updateServerAcceptedAt(Mockito.any(Long.class), Mockito.any(String.class))).thenReturn(delivery);
-        Mockito.when(deliveryService.convertDeliveryToOutEntity(Mockito.any())).thenReturn(outEntity);
-
-        mockMvc.perform(
-                put("/api/v1/order/delivery/1/deliveryId/deliveredAt/string")
-                        .content(now.toString())
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.store").value(outEntity.getStore()))
-                .andExpect(jsonPath("$.entityType").value(outEntity.getEntityType()))
-                .andExpect(jsonPath("$.entityFields").value(outEntity.getEntityFields()));
-    }
-
 
 }
 //#{

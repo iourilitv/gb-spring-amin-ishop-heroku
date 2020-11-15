@@ -1,21 +1,20 @@
 package ru.geekbrains.spring.ishop.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.spring.ishop.entity.Delivery;
 import ru.geekbrains.spring.ishop.exception.NotFoundException;
 import ru.geekbrains.spring.ishop.repository.DeliveryRepository;
-import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
-import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 
 import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
-    private final OutEntityService outEntityService;
 
     //TODO for REST only temporarily
     @Transactional(readOnly = true)
@@ -46,7 +45,4 @@ public class DeliveryService {
         return delivery;
     }
 
-    public OutEntity convertDeliveryToOutEntity(Delivery delivery) {
-        return outEntityService.convertEntityToOutEntity(delivery);
-    }
 }

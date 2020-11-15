@@ -22,12 +22,20 @@ public class OutEntity {
 
     @Override
     public String toString() {
-        return "OutEntity{" +
-                "store='" + store + '\'' +
-                ", entityType='" + entityType + '\'' +
+        return "{" +
+                "store=" + store +
+                ", entityType=" + entityType +
                 ", entityFields=" + entityFields +
                 '}';
     }
+//    @Override
+//    public String toString() {
+//        return "OutEntity{" +
+//                "store='" + store + '\'' +
+//                ", entityType='" + entityType + '\'' +
+//                ", entityFields=" + entityFields +
+//                '}';
+//    }
 
     public String toJsonString() {
         return "{" +
