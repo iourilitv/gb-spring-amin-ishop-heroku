@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Role extends AbstractEntity {
+    public enum rolesNames {ROLE_SUPERADMIN}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

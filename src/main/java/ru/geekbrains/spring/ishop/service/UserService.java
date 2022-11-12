@@ -1,6 +1,7 @@
 package ru.geekbrains.spring.ishop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,7 @@ public class UserService implements IUserService {
     private final UtilFilter utilFilter;
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Override
+    @Autowired
     public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
@@ -75,8 +76,8 @@ public class UserService implements IUserService {
     //TODO replace with findByIdOptional without renaming
     @Override
     @Transactional
-    public User findById(Long user_id) {
-        return userRepository.findById(user_id).orElse(null);
+    public User findById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
     }
 
     @Override
@@ -132,23 +133,23 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void updateFirstName(User user, String first_name) {
+    public void updateFirstName(User user, String firstName) {
         User theUser = userRepository.getOne(user.getId());
-        if(theUser.getFirstName().equals(first_name)) {
+        if(theUser.getFirstName().equals(firstName)) {
             return;
         }
-        theUser.setFirstName(first_name);
+        theUser.setFirstName(firstName);
         userRepository.save(theUser);
     }
 
     @Override
     @Transactional
-    public void updateLastName(User user, String last_name) {
+    public void updateLastName(User user, String lastName) {
         User theUser = userRepository.getOne(user.getId());
-        if(theUser.getLastName().equals(last_name)) {
+        if(theUser.getLastName().equals(lastName)) {
             return;
         }
-        theUser.setLastName(last_name);
+        theUser.setLastName(lastName);
         userRepository.save(theUser);
     }
 
@@ -165,27 +166,36 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void addRoleToUser(Long user_id, Short role_id) {
-        User theUser = userRepository.findById(user_id).orElseThrow(RuntimeException::new);
-        theUser.getRoles().add(roleRepository.getOne(role_id));
+    public void addRoleToUser(Long userId, Short roleId) {
+        User theUser = userRepository.findById(userId).orElseThrow(() ->
+                new NotFoundException("The User with id=" + userId + " is not found!"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() ->
+                new NotFoundException("The Role with id=" + roleId + " is not found!"));
+        theUser.getRoles().add(role);
         userRepository.save(theUser);
     }
 
     @Override
     @Transactional
-    public void removeRoleFromUser(Long user_id, Short role_id) {
-        User theUser = userRepository.findById(user_id).orElseThrow(RuntimeException::new);
-        theUser.getRoles().remove(roleRepository.getOne(role_id));
+    public void removeRoleFromUser(Long userId, Short roleId) {
+        User theUser = userRepository.findById(userId).orElseThrow(() ->
+                new NotFoundException("The User with id=" + userId + " is not found!"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() ->
+                new NotFoundException("The Role with id=" + roleId + " is not found!"));
+        theUser.getRoles().remove(role);
         userRepository.save(theUser);
     }
 
     @Override
     @Transactional
-    public List<Role> getRemainingAvailableRoles(Long user_id) {
-        User user = userRepository.findById(user_id).orElseThrow(RuntimeException::new);
+    public List<Role> getRemainingAvailableRoles(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new NotFoundException("The User with id=" + userId + " is not found!"));
         List<Role> allRoles = roleRepository.findAll();
         allRoles.removeAll(user.getRoles());
-        allRoles.remove(roleRepository.findRoleByName("ROLE_SUPERADMIN"));
+        allRoles.remove(roleRepository.findRoleByName(Role.rolesNames.ROLE_SUPERADMIN.name())
+                .orElseThrow(() -> new NotFoundException("The Role with name=" +
+                        Role.rolesNames.ROLE_SUPERADMIN.name() + " is not found!")));
         return allRoles;
     }
 

@@ -45,12 +45,7 @@ public class EventService {
 
     public Event findFirstByServerAcceptedAtIsNull() {
         return eventRepository.findFirstByServerAcceptedAtIsNull()
-                .orElse(Event.nullObject);
-    }
-
-    public ActionType findActionTypeByTitle(String actionTypeTitle) {
-        return actionTypeRepository.getActionTypeByTitleEquals(actionTypeTitle)
-                .orElseThrow(() -> new NotFoundException("The ActionType with title=" + actionTypeTitle + " is not found!"));
+                .orElse(Event.emptyObject);
     }
 
     public Event save(Event event) {
@@ -63,15 +58,15 @@ public class EventService {
         return save(event);
     }
 
+    public OutEntity convertEventToOutEntity(Event event) {
+        return outEntityService.convertEntityToOutEntity(event);
+    }
+
     //TODO For Studding and Testing only
     public Event recognizeAndSaveEventFromOutEntityJsonString(String outEntityJson) {
         Event event = (Event) outEntityService.recognizeEntityFromOutEntityJsonString(outEntityJson);
         event.setServerAcceptedAt(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
         return event;
-//        return eventService.save(event);
     }
 
-    public OutEntity convertEventToOutEntity(Event event) {
-        return outEntityService.convertEntityToOutEntity(event);
-    }
 }

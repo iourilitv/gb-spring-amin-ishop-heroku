@@ -17,7 +17,6 @@ import ru.geekbrains.spring.ishop.utils.filters.ProductFilter;
 import ru.geekbrains.spring.ishop.utils.filters.UtilFilter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +25,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
     private final UtilFilter utilFilter;
-
-    @Transactional(readOnly = true)
-    public List<Product> getAll() {
-        return productRepository.findAll();
-    }
 
     public Page<Product> findAll(ProductFilter filter, String property) {
         //инициируем объект пагинации с сортировкой
@@ -44,7 +38,6 @@ public class ProductService {
     public Product findByIdOptional(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new NotFoundException("The Product with id=" + id + " is not found!"));
     }
-
     //TODO replace with findByIdOptional without renaming
     public Product findById(Long id) {
         return productRepository.getOne(id);

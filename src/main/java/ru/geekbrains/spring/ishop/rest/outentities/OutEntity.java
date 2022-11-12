@@ -12,8 +12,6 @@ import java.util.Map;
 @Builder
 @Data
 public class OutEntity {
-    public static OutEntity nullObject = initNullObject();
-
     public enum Fields {store, entityType, entityFields}
 
     private final String store = "gb-spring-amin-ishop-heroku";
@@ -22,16 +20,27 @@ public class OutEntity {
 
     private Map<String, Object> entityFields;
 
-    private static OutEntity initNullObject() {
-        nullObject = OutEntity.builder().build();
-        return nullObject;
-    }
-
     @Override
     public String toString() {
-        return "OutEntity{" +
-                "store='" + store + '\'' +
-                ", entityType='" + entityType + '\'' +
+        return "{" +
+                "store=" + store +
+                ", entityType=" + entityType +
+                ", entityFields=" + entityFields +
+                '}';
+    }
+//    @Override
+//    public String toString() {
+//        return "OutEntity{" +
+//                "store='" + store + '\'' +
+//                ", entityType='" + entityType + '\'' +
+//                ", entityFields=" + entityFields +
+//                '}';
+//    }
+
+    public String toJsonString() {
+        return "{" +
+                "store=" + store +
+                ", entityType=" + entityType +
                 ", entityFields=" + entityFields +
                 '}';
     }

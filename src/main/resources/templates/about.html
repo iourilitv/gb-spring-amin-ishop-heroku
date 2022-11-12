@@ -1,0 +1,247 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin | Profile</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/barfiller.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/my-changes.css}" type="text/css">
+</head>
+
+<body>
+    <!-- Items list Section Begin -->
+    <section class="cart-list-section spad">
+        <div class="container">
+            <!-- Блок Хлебные крошки and Product title Begin-->
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="details-text typography-page">
+                        <div class="dt-breadcrumb">
+                            <div class="dt-bread-option">
+                                <a class="color-white" th:href="@{'/home'}"> Home</a>
+                                <span> About Project</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок Хлебные крошки and Product title  End -->
+
+            <!--  Левый блок with content from Readme.md Begin -->
+            <div class="row">
+                <div class="col-lg-8 p-0">
+                    <div class="details-text">
+                        <h4 class="details-h4">About the project</h4>
+                        <div class="dt-last-desc white">
+                            <p>This project has been developed within the course:<br>
+                                <b>20200812. GeekBrains. Java team development</b>.</p>
+
+                            <p>Result: <br>
+                                <b>Online store application that is integrated with CRM by Spring REST API</b>.</p>
+
+                            <h5 style="color: white; padding: 20px 0;">Problems which were solved and technologies used</h5>
+                            <p>Required that:</p>
+                            <ul style="color: white; padding-bottom: 10px">
+                                <li>CRM received all events created at online-stores which could be several</li>
+                                <li>Events generate for a new order creating or changing order status as well</li>
+                                <li>CRM sends back a time of accepting event, updated entities like a new order status etc.</li>
+                            </ul>
+                            <p>Technologies:</p>
+                            <ul style="color: white">
+                                <li>GUI: Java String Boot(Core, MVC, Data, Security), WebSocket, Thymeleaf</li>
+                                <li>Database: MySql</li>
+                                <li>CRM integration: Java String REST API</li>
+                                <li>My own solution - all responses from online-store is an instance of OutEntity object</li>
+                                <li>OutEntity is a template entity just for serializing/deserializing json-object with the recursion using</li>
+                                <li>The recursion using is my own idea in order to make converting process code simple, clearer and
+                                    more flexible for adding new entities to the project</li>
+                            </ul>
+
+                            <h5 style="color: white; padding: 20px 0;">Installation and trying</h5>
+                            <p>No need to install anything to try this app.</p>
+                            <p><a href="https://gb-spring-amin-ishop-heroku.herokuapp.com/" target="_blank">Just come to heroku with this link</a></p>
+                            <p>Then use it like a normal online store.</p>
+                            <p>Login as the default user: superadmin/superadmin, which has all permissions.</p>
+                            <p>Please note that all features available to user after authorisation only.
+                                For more details of how it works please get in the presentation below.</p>
+
+                            <h5 style="color: white; padding: 20px 0;">Presentation, code and other links</h5>
+                            <p><a href="https://geekbrains.ru/lessons/75327" target="_blank">About the course</a></p>
+                            <p><a href="https://drive.google.com/file/d/1p0yeu0XdvMrElp9mtxNhsKIyu-NarWG9/view?usp=sharing" target="_blank">MS Powerpoint presentation about the project</a></p>
+                            <p><a href="#" target="_blank">Video presentation</a></p>
+                            <p><a href="https://github.com/iourilitv/gb-spring-amin-ishop-heroku/tree/release" target="_blank">Code of the project is available on github.com</a></p>
+
+                            <h5 style="color: white; padding: 20px 0;">Developer</h5>
+                            <p>Litvinenko Yury.</p>
+                            <p>Professional profile: <b>Java Back-End developer</b>.</p>
+                            <p>telegram: <b>@yuryli</b></p>
+
+                            <h5 style="color: white; padding: 20px 0;">Please be free to contact me about this project or a new one!</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правый блок Begin -->
+                <div class="col-lg-4 col-md-7">
+                    <div class="sidebar-option">
+                        <div class="hardware-guides">
+                            <div class="section-title">
+                                <h5>Hardware guides</h5>
+                            </div>
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img th:src="@{/img/trending/trending-1.jpg}" alt="trending-1.jpg" src="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="#">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
+                                    </h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 12</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img th:src="@{/img/trending/trending-2.jpg}" alt="trending-2.jpg" src="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="#">Facebook wants to read your thoughts with its augmented...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 12</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img th:src="@{/img/trending/trending-3.jpg}" alt="trending-3.jpg" src="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660 Ti and 32GB of RAM is down...</a>
+                                    </h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 12</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insta-media">
+                            <div class="section-title">
+                                <h5>Instagram</h5>
+                            </div>
+                            <div class="insta-pic">
+                                <img th:src="@{/img/instagram/ip-1.jpg}" alt="instagram ip-1.jpg" src="">
+                                <img th:src="@{/img/instagram/ip-2.jpg}" alt="instagram ip-2.jpg" src="">
+                                <img th:src="@{/img/instagram/ip-3.jpg}" alt="instagram ip-3.jpg" src="">
+                                <img th:src="@{/img/instagram/ip-4.jpg}" alt="instagram ip-4.jpg" src="">
+                            </div>
+                        </div>
+
+                        <div class="best-of-post">
+                            <div class="section-title">
+                                <h5>Best of</h5>
+                            </div>
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-1" data-cpvalue="95"
+                                                  data-cpcolor="#c20000"></span>
+                                            <div class="review-point">9.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-2" data-cpvalue="85"
+                                                  data-cpcolor="#c20000"></span>
+                                            <div class="review-point">8.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-3" data-cpvalue="80"
+                                                  data-cpcolor="#c20000"></span>
+                                            <div class="review-point">8.0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="#">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Правый блок End -->
+            </div>
+            <!-- Левый блок with content from Readme.md End -->
+        </div>
+    </section>
+    <!-- Items list Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="~{fragments/footer.html}"></footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/circle-progress.min.js}"></script>
+    <script th:src="@{/js/jquery.barfiller.js}"></script>
+    <script th:src="@{/js/jquery.slicknav.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -13,8 +13,6 @@ import java.util.List;
 
 public interface IUserService extends UserDetailsService {
 
-    void setPasswordEncoder(BCryptPasswordEncoder encoder);
-
     Page<User> findAll(UserFilter userFilter, String id);
 
     User findById(Long user_id);
