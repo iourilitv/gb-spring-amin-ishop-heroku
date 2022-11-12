@@ -1,12 +1,11 @@
 package ru.geekbrains.spring.ishop.utils;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import ru.geekbrains.spring.ishop.entity.User;
 import ru.geekbrains.spring.ishop.validation.FieldMatch;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Data
 @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")

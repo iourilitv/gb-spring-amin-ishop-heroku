@@ -1,15 +1,19 @@
 package ru.geekbrains.spring.ishop.rest.resources;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.rest.services.OutEntityService;
 import ru.geekbrains.spring.ishop.service.AddressService;
 import ru.geekbrains.spring.ishop.service.DeliveryService;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/order/delivery")
