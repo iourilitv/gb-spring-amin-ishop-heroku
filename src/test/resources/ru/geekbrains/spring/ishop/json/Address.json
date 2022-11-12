@@ -1,0 +1,10 @@
+{
+  "store" : "gb-spring-amin-ishop-heroku",
+  "entityType" : "Address",
+  "entityFields" : {
+    "country" : "Russia",
+    "address" : "Секина 99, кв.99",
+    "city" : "Королев МО",
+    "id" : 3
+  }
+}

@@ -1,6 +1,11 @@
 package ru.geekbrains.spring.ishop.rest.converters.deserializers;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.AbstractEntity;
@@ -10,7 +15,6 @@ import ru.geekbrains.spring.ishop.rest.outentities.OutEntity;
 import ru.geekbrains.spring.ishop.utils.EntityTypes;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,8 +34,9 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
                     OutEntity.Fields.entityType.name() + " or " + OutEntity.Fields.entityFields.name() +
                     " in json object!");
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put(OutEntity.Fields.entityFields.name(), getEntityFields(json));
+        Gson gson = new Gson();
+        Type entityFieldsMapType = new TypeToken<Map<String, Object>>() {}.getType();
+        Map<String, Object> map = gson.fromJson(getEntityFields(json), entityFieldsMapType);
         OutEntity outEntity = OutEntity.builder()
                 .entityType(getEntityType(json).getAsString())
                 .entityFields(map)
