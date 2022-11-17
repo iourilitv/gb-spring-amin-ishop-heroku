@@ -1,22 +1,15 @@
 package ru.geekbrains.spring.ishop.rest.converters;
 
-import lombok.Getter;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
 import ru.geekbrains.spring.ishop.rest.converters.serializers.interfaces.IEntitySerializer;
 
 import java.util.Map;
 
-@Service
-@Getter
+@AllArgsConstructor
 public class SerializerFactory {
-    private Map<String, IEntitySerializer> serializers;
-
-    public void initSerializerFactory(Map<String, IEntitySerializer> serializers) {
-        this.serializers = serializers;
-    }
+    private final Map<String, IEntitySerializer> serializers;
 
     public IEntitySerializer getSerializer(String entityType) {
         return serializers.get(entityType);
     }
-
 }

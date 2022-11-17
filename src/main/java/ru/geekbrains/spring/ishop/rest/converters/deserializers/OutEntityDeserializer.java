@@ -6,8 +6,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import ru.geekbrains.spring.ishop.entity.AbstractEntity;
 import ru.geekbrains.spring.ishop.exception.OutEntityDeserializeException;
 import ru.geekbrains.spring.ishop.rest.converters.DeserializerFactory;
@@ -18,14 +18,10 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@AllArgsConstructor
 public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
-    private DeserializerFactory deserializerFactory;
-
-    public void setDeserializerFactory(DeserializerFactory deserializerFactory) {
-        this.deserializerFactory = deserializerFactory;
-    }
+    private final DeserializerFactory factory;
 
     @Override
     public OutEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -46,9 +42,9 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
     }
 
     public AbstractEntity deserializeEntityFromOutEntityJson(String entityType, JsonElement jsonElement) {
-
-        log.info("*** deserializeEntityFromOutEntityJson().deserializerFabric.getDeserializer(entityType): " + deserializerFactory.getDeserializer(entityType));
-
+        if (log.isDebugEnabled()) {
+            log.debug("deserializeEntityFromOutEntityJson().deserializing... entityType: {}", entityType);
+        }
         AbstractEntity entity = null;
         if(isOutEntity(jsonElement)) {
             entityType = getEntityType(jsonElement).getAsString();
@@ -57,7 +53,7 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
         EntityTypes[] entityTypes = EntityTypes.values();
         for (EntityTypes type : entityTypes) {
             if (entityType.equals(type.name())) {
-                entity = deserializerFactory.getDeserializer(entityType).recognize(jsonElement);
+                entity = factory.getDeserializer(entityType).recognize(jsonElement);
             }
         }
         String finalEntityType = entityType;
@@ -76,5 +72,4 @@ public class OutEntityDeserializer implements JsonDeserializer<OutEntity> {
     private JsonElement getEntityFields(JsonElement json) {
         return json.getAsJsonObject().get(OutEntity.Fields.entityFields.name());
     }
-
 }
