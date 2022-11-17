@@ -51,19 +51,15 @@ public class AddressJsonTest {
 
     @PostConstruct
     public void init() {
-        outEntitySerializer = new OutEntitySerializer();
         Map<String, IEntitySerializer> serializers = new HashMap<>();
         serializers.put(EntityTypes.Address.name(), new AddressSerializer());
-        SerializerFactory serializerFactory = new SerializerFactory();
-        serializerFactory.initSerializerFactory(serializers);
-        outEntitySerializer.setSerializerFactory(serializerFactory);
+        SerializerFactory serializerFactory = new SerializerFactory(serializers);
+        outEntitySerializer = new OutEntitySerializer(serializerFactory);
 
-        outEntityDeserializer = new OutEntityDeserializer();
         Map<String, IEntityDeserializer> deserializers = new HashMap<>();
         deserializers.put(EntityTypes.Address.name(), new AddressDeserializerImpl());
-        DeserializerFactory deserializerFactory = new DeserializerFactory();
-        deserializerFactory.initDeserializerFactory(deserializers);
-        outEntityDeserializer.setDeserializerFactory(deserializerFactory);
+        DeserializerFactory deserializerFactory = new DeserializerFactory(deserializers);
+        outEntityDeserializer = new OutEntityDeserializer(deserializerFactory);
     }
 
     @Test
